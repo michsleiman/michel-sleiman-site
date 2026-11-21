@@ -1,0 +1,81 @@
+{
+  "figure": {
+    "model": "models/vinyl-figure-split2.glb",
+    "rig": {
+      "height": 1.8,
+      "hipY": 0.236,
+      "shoulderY": 0.47,
+      "shoulderX": 0.152,
+      "headY": 0.5,
+      "legX": 0.06,
+      "roughness": 0.5,
+      "pivotX": 0.157,
+      "handY": 0.195,
+      "pivotDY": -0.033,
+      "pivotDZ": -0.008
+    },
+    "colors": {
+      "skin": "#efc6a2",
+      "hair": "#4e331f",
+      "eyes": "#43271c",
+      "glasses": "#121212",
+      "jacket": "#131313",
+      "shirt": "#ad4e3f",
+      "pants": "#121111",
+      "boots": "#161210"
+    },
+    "head": {
+      "width": 0.91,
+      "height": 0.85,
+      "depth": 0.84,
+      "round": 3
+    },
+    "face": {
+      "eyeSize": 0.078,
+      "eyeX": 0.23,
+      "eyeY": -0.13,
+      "browY": 0,
+      "browW": 0.2,
+      "noseY": -0.24,
+      "earY": -0.12
+    },
+    "glasses": {
+      "radius": 0.19,
+      "thickness": 0.03,
+      "y": -0.135,
+      "oval": 0.76
+    },
+    "hair": {
+      "volume": 1.4,
+      "hairline": 0.56,
+      "wave": 0.04,
+      "back": -0.84
+    },
+    "body": {
+      "width": 0.6,
+      "height": 0.5,
+      "shirtWidth": 0.2,
+      "seams": 3,
+      "legLength": 0.26,
+      "bootSize": 1
+    },
+    "anim": {
+      "cadence": 3.4,
+      "stride": 0.5,
+      "waddle": 0.06,
+      "bob": 0.03,
+      "armSwing": 0.45
+    },
+    "look": {
+      "yaw": 0.35,
+      "pitch": 0.12
+    },
+    "wave": {
+      "raise": 122,
+      "forward": 0.2,
+      "twist": 75,
+      "rock": 0.5,
+      "speed": 8
+    }
+  }
+}
