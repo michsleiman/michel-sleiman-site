@@ -2204,7 +2204,8 @@ function buildPath(){
   const isSt = q=>q && q.type==="dwell" && q.station!=null;
   SEG.forEach((q,i)=>{ const A = SEG[i-1], B = SEG[i+1];
     if(isSt(q)){ q.holdIn = !!(A && A.type==="walk" && isSt(SEG[i-2]) && SEG[i-2].k===q.k); q.holdOut = !!(B && B.type==="walk" && isSt(SEG[i+2]) && SEG[i+2].k===q.k); }
-    else if(q.type==="walk" && isSt(A) && isSt(B) && A.k===q.k && B.k===q.k) q.between = [A.station, B.station]; });
+    else if(q.type==="walk" && isSt(A) && isSt(B) && A.k===q.k && B.k===q.k) q.between = [A.station, B.station];
+    else if(q.type==="walk" && q.k===LAST && isSt(B) && B.k===q.k && !isSt(A)){ q.approach = B.station; B.holdIn = true; } });   // ground floor: close in as soon as he steps off the stairs, past the client logos
   $("#scroller").style.height = (TOTAL + VH) + "px";
   $("#prog").innerHTML = FLOORS.map((F,k)=>`<button data-k="${k}" aria-label="${F.name}"><span>${F.name}</span></button>`).join("");
   $("#prog").querySelectorAll("button").forEach(b=>b.onclick=()=>goFloor(+b.dataset.k));
@@ -2763,9 +2764,10 @@ function frame(now){
   lookS.x = damp(lookS.x, look.x, 2.5, dt); lookS.y = damp(lookS.y, look.y, 2.5, dt);
   desired.set(pos.x*.5, pos.y + 4.3, 26*narrow); desiredLook.set(pos.x*.58, pos.y + 2.0, -2);
   if(s.type==="stairs" || s.type==="step"){ const sd = side(s.k); desired.set(clamp(pos.x - sd*1.2, -W/2+7, W/2-7), pos.y + 3.2, 27*narrow); desiredLook.set(clamp(pos.x - sd*1.0, -W/2+6, W/2-6), pos.y + 1.6, -4); }
-  if(dwellSt>=0 || s.between){
+  if(dwellSt>=0 || s.between || s.approach!=null){
     let sx, sy, dz, tIn;
     if(dwellSt>=0){ const st = STATIONS[dwellSt]; sx = st.x; sy = st.y; dz = st.w.big ? 24 : 17.5; tIn = (s.holdIn ? 1 : smooth(0, .28, P.t)) * (s.holdOut ? 1 : 1 - smooth(.82, 1, P.t)); }
+    else if(s.approach!=null){ const st = STATIONS[s.approach], u = smooth(.55, 1, P.t); sx = lerp(pos.x, st.x, u); sy = st.y; dz = 17.5 + ((st.w.big ? 24 : 17.5) - 17.5)*u; tIn = smooth(0, .25, P.t); }
     else { const a = STATIONS[s.between[0]], b = STATIONS[s.between[1]], u = smooth(0, 1, P.t); sx = lerp(a.x, b.x, u); sy = lerp(a.y, b.y, u); dz = lerp(a.w.big ? 24 : 17.5, b.w.big ? 24 : 17.5, u); tIn = 1; }   // walking between two pieces: stay in close
     const off = clamp(pos.x - sx, -4, 4);   // frame the piece and Michel beside it
     desired.lerp(tmp.set(sx + off*.4, sy + 3.1, dz*narrow), tIn);
