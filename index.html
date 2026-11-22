@@ -2823,6 +2823,7 @@ function frame(now){
   }
   desired.x += lookS.x*1.6; desired.y += lookS.y*.9; desiredLook.x += lookS.x*3.2; desiredLook.y += lookS.y*1.6;
   desired.x += Math.sin(time*.3)*.15; desired.y += Math.sin(time*.41)*.08;
+  if(tele && tele.base){ camera.position.copy(tele.base.p); camLook.copy(tele.base.l); }   // the telescope blend sits on top of the normal camera, never feeds back into it
   if(focus){
     focus.t = Math.min(1, focus.t + dt/focus.dur);
     const e = focus.t < .5 ? 4*focus.t**3 : 1 - Math.pow(-2*focus.t+2,3)/2;
@@ -2836,7 +2837,7 @@ function frame(now){
     camera.position.x = damp(camera.position.x, desired.x, l, dt); camera.position.y = damp(camera.position.y, desired.y, l, dt); camera.position.z = damp(camera.position.z, desired.z, l*.8, dt);
     camLook.x = damp(camLook.x, desiredLook.x, l*1.2, dt); camLook.y = damp(camLook.y, desiredLook.y, l*1.2, dt); camLook.z = damp(camLook.z, desiredLook.z, l*1.2, dt);
   }
-  if(tele){ const k = smooth(0, 1, tele.k), T = ROOF.tele; T.aim.lookAt(T.target); const ep = T.eye.getWorldPosition(new THREE.Vector3()), dir = T.target.clone().sub(ep).normalize();
+  if(tele){ tele.base = { p: camera.position.clone(), l: camLook.clone() }; const k = smooth(0, 1, tele.k), T = ROOF.tele; T.aim.lookAt(T.target); const ep = T.eye.getWorldPosition(new THREE.Vector3()), dir = T.target.clone().sub(ep).normalize();
     const cp = ep.clone().addScaledVector(dir, -.62); cp.y += .07;   // just behind the eyepiece, looking along the brass tube
     camera.position.lerp(cp, k); camLook.lerp(ep.clone().addScaledVector(dir, 4), k); if(!tele.on && tele.k < .01) tele = null; }
   camera.lookAt(camLook);
