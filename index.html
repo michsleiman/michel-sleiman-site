@@ -2981,7 +2981,7 @@ const t0 = performance.now();
     vapi.on("speech-start", () => { al.textContent = "Talking"; hero.nod = .5; hero.talking = true; });
     vapi.on("speech-end", () => { al.textContent = "Listening"; hero.talking = false; hero.talkLv = 0; });
     vapi.on("volume-level", v => { btn.style.setProperty("--lv", Math.min(1, v).toFixed(3)); hero.talkLv = Math.min(1, v*1.6); });
-    vapi.on("message", m => { if(m && m.type === "transcript" && m.role === "assistant" && m.transcript) say(m.transcript); });
+    vapi.on("message", m => { if(m && m.type === "transcript" && m.role === "assistant" && m.transcript) say(m.transcript.replace(/\bMich(?:elle|ele|el|ell)\b/gi, "Michel")); });
     vapi.on("error", e => { console.warn("voice", e); if(VOICE_ON || busy) end("Hmm, I lost the line. Try again in a moment?"); });
   }
   async function start(){
