@@ -487,6 +487,15 @@ body.scoping #intro,body.scoping #hint,body.scoping #bubble{opacity:0!important}
 .cs-sum .p-stats.sumstats span{font-size:14px;margin-top:8px}
 @media(max-width:760px){.cs-sum .p-stats.sumstats{grid-template-columns:1fr 1fr;row-gap:28px}}
 
+
+/* side directory on dark backgrounds: light ink so it keeps its contrast */
+#prog button{transition:transform .3s, background .6s}
+#prog .track,#prog .track b,#prog button span{transition:background .6s, color .6s, opacity .25s}
+body.dusk #prog button,body.lobbyk #prog button{background:rgba(255,255,255,.55);box-shadow:0 0 0 1px rgba(0,0,0,.18)}
+body.dusk #prog button.on,body.lobbyk #prog button.on{background:#fff}
+body.dusk #prog .track,body.lobbyk #prog .track{background:rgba(255,255,255,.35)}
+body.dusk #prog .track b,body.lobbyk #prog .track b{background:#fff}
+body.dusk #prog button span,body.lobbyk #prog button span{color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.55)}
 /* ---- polish pass ---- */
 #topfade{position:fixed;left:0;right:0;top:0;height:110px;z-index:15;pointer-events:none;background:linear-gradient(rgba(246,244,240,.62),rgba(246,244,240,0));transition:opacity 1s, background 1.2s}
 body.outside #topfade{background:linear-gradient(rgba(24,18,28,.34),rgba(24,18,28,0))}
@@ -1525,7 +1534,7 @@ function timeOfDay(p){
   const envK = L(A.env,B.env);
   if(Math.abs(envK - (timeOfDay.lastEnv ?? -1)) > .005){ timeOfDay.lastEnv = envK; ENVMATS.forEach(([m,b])=>{ m.envMapIntensity = b*envK; }); }
   timeOfDay.p = p; cityNight(smooth(.74, .96, p), performance.now()/1000);
-  { const w = smooth(.62, .95, p); if(Math.abs(w - (timeOfDay.w ?? -1)) > .01){ timeOfDay.w = w; const r = document.documentElement.style; r.setProperty("--glass", `rgba(255,${Math.round(255 - 20*w)},${Math.round(255 - 44*w)},.62)`); r.setProperty("--tipbg", `rgb(${Math.round(29 + 30*w)},${Math.round(29 + 10*w)},${Math.round(31 - 2*w)})`); } }
+  { const w = smooth(.62, .95, p); document.body.classList.toggle("dusk", p > .8); if(Math.abs(w - (timeOfDay.w ?? -1)) > .01){ timeOfDay.w = w; const r = document.documentElement.style; r.setProperty("--glass", `rgba(255,${Math.round(255 - 20*w)},${Math.round(255 - 44*w)},.62)`); r.setProperty("--tipbg", `rgb(${Math.round(29 + 30*w)},${Math.round(29 + 10*w)},${Math.round(31 - 2*w)})`); } }
   M.sand.color.setHex(0xe3dbcf).lerp(_c1.setHex(0xd59a72), smooth(.45, .8, p)).lerp(_c2.setHex(0x2c2628), smooth(.82, 1, p));
   skyU.warm.value = smooth(.3, 1, p); grade.uniforms.uWarm.value = smooth(.4, 1, p);
 }
@@ -1931,7 +1940,7 @@ function roofUpdate(dt, t, heroP, night){
       P.head.rotation.x = pk*1.1; P.b.rotation.x = pk*.35; P.head.position.z = .12 + Math.sin(t*9 + g.position.x)*.006;
       if(P.hop < 0){ P.hop = 1.6 + Math.random()*2.6; P.from.copy(g.position); const a = Math.random()*6.28; P.to.set(P.home.x + Math.cos(a)*.5, P.home.y, P.home.z + Math.sin(a)*.4); P.ht = 0; g.rotation.y = Math.atan2(P.to.x - P.from.x, P.to.z - P.from.z); }
       if(P.ht != null){ P.ht += dt/.3; const u = Math.min(1, P.ht); g.position.lerpVectors(P.from, P.to, u); g.position.y = P.home.y + Math.sin(u*Math.PI)*.07; if(u >= 1) P.ht = null; }
-      if(near < 2.8 && dy < 1 && introDone){ featherBurst(g.position); P.state = "fly"; P.t = 0; P.from.copy(g.position); P.to.copy(P.perch); P.ht = null; }
+      if(near < 2.8 && dy < 1 && introDone){ featherBurst(g.position); sfx("flap", .7); P.state = "fly"; P.t = 0; P.from.copy(g.position); P.to.copy(P.perch); P.ht = null; }
     } else if(P.state === "fly" || P.state === "back"){
       P.t += dt/(P.state === "fly" ? 1.25 : 1.6); const u = Math.min(1, P.t), e = u*u*(3 - 2*u);
       g.position.lerpVectors(P.from, P.to, e); g.position.y += Math.sin(u*Math.PI)*(P.state === "fly" ? 2.2 : 1.6);
@@ -2307,12 +2316,39 @@ function initAudio(){
     const lfo=ctx.createOscillator(); lfo.frequency.value=.03+i*.013; const lg=ctx.createGain(); lg.gain.value=.011; lfo.connect(lg).connect(og.gain); lfo.start(); o.connect(og).connect(master); o.start(); });
 }
 { const b = document.getElementById("sndBtn"); if(b) b.onclick = ()=>{ if(!audio.ctx) initAudio(); if(audio.ctx.state === "suspended") audio.ctx.resume();
-  audio.on = !audio.on; const g = audio.master.gain, t = audio.ctx.currentTime; g.cancelScheduledValues(t); g.setTargetAtTime(audio.on ? .55 : 0, t, .3);
+  audio.on = !audio.on; music(); const g = audio.master.gain, t = audio.ctx.currentTime; g.cancelScheduledValues(t); g.setTargetAtTime(audio.on ? .55 : 0, t, .3);
   document.body.classList.toggle("sound", audio.on); b.setAttribute("aria-pressed", audio.on); b.querySelector(".t").textContent = audio.on ? "Sound on" : "Sound off"; }; }
+function music(){
+  if(!audio.ctx || audio.mus) return; const ctx = audio.ctx;
+  const bus = ctx.createGain(); bus.gain.value = .0; const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2600;
+  const dl = ctx.createDelay(1.5); dl.delayTime.value = .42; const fb = ctx.createGain(); fb.gain.value = .32; dl.connect(fb).connect(dl);
+  bus.connect(lp); lp.connect(audio.master); lp.connect(dl); dl.connect(audio.master);
+  audio.mus = { bus };
+  const scale = [261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25];   // C major pentatonic, two octaves
+  let i = 2;
+  const note = ()=>{ if(!audio.mus) return; const t = ctx.currentTime;
+    if(audio.on){ i = Math.max(0, Math.min(scale.length - 1, i + [-2,-1,-1,1,1,2][Math.floor(Math.random()*6)]));
+      const f = scale[i]*(timeOfDay.p > .8 ? .5 : 1);   // a little lower once the evening comes in
+      [[1,"sine",.06],[2,"sine",.012],[3.01,"triangle",.006]].forEach(([m,ty,a])=>{ const o = ctx.createOscillator(); o.type = ty; o.frequency.value = f*m; const g = ctx.createGain();
+        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(a, t + .02); g.gain.exponentialRampToValueAtTime(.0005, t + 3.2); o.connect(g).connect(bus); o.start(t); o.stop(t + 3.3); }); }
+    setTimeout(note, 2200 + Math.random()*3400); };
+  bus.gain.setTargetAtTime(.9, ctx.currentTime, 2); setTimeout(note, 1200);
+}
 function sfx(kind, vol=.5){
   if(!audio.on) return; const ctx = audio.ctx, t = ctx.currentTime;
   if(kind==="step"){ const s=ctx.createBufferSource(); s.buffer=audio.noise; const f=ctx.createBiquadFilter(); f.type="bandpass"; f.frequency.value=1400+Math.random()*500; f.Q.value=2.5;
     const g=ctx.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol*1.4,t+.004); g.gain.exponentialRampToValueAtTime(.001,t+.09); s.connect(f).connect(g).connect(audio.master); s.start(t,Math.random()*3,.1); }
+  if(kind==="stair"){ // a hollow wooden tread, with a soft knock under it
+    const s=ctx.createBufferSource(); s.buffer=audio.noise; const f=ctx.createBiquadFilter(); f.type="bandpass"; f.frequency.value=520+Math.random()*120; f.Q.value=3.5;
+    const g=ctx.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol*1.6,t+.005); g.gain.exponentialRampToValueAtTime(.001,t+.16); s.connect(f).connect(g).connect(audio.master); s.start(t,Math.random()*3,.18);
+    const o=ctx.createOscillator(); o.type="sine"; o.frequency.setValueAtTime(150+Math.random()*20,t); o.frequency.exponentialRampToValueAtTime(70,t+.12); const og=ctx.createGain(); og.gain.setValueAtTime(vol*.5,t); og.gain.exponentialRampToValueAtTime(.001,t+.14); o.connect(og).connect(audio.master); o.start(t); o.stop(t+.15); }
+  if(kind==="roofstep"){ // grit on the roof pavers: brighter and drier
+    const s=ctx.createBufferSource(); s.buffer=audio.noise; const f=ctx.createBiquadFilter(); f.type="highpass"; f.frequency.value=2200+Math.random()*600;
+    const g=ctx.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol*1.1,t+.003); g.gain.exponentialRampToValueAtTime(.001,t+.07); s.connect(f).connect(g).connect(audio.master); s.start(t,Math.random()*3,.08); }
+  if(kind==="flap"){ // a flurry of wing beats that slows as the bird climbs away
+    let tt=t; for(let i=0;i<11;i++){ const s=ctx.createBufferSource(); s.buffer=audio.noise; const f=ctx.createBiquadFilter(); f.type="bandpass"; f.frequency.value=900+Math.random()*500; f.Q.value=1.2;
+      const g=ctx.createGain(), a=vol*(1-i/13); g.gain.setValueAtTime(0,tt); g.gain.linearRampToValueAtTime(a,tt+.012); g.gain.exponentialRampToValueAtTime(.001,tt+.06);
+      s.connect(f).connect(g).connect(audio.master); s.start(tt,Math.random()*3,.07); tt += .045 + i*.007; } }
   if(kind==="swell"){ const s=ctx.createBufferSource(); s.buffer=audio.noise; s.loop=true; const f=ctx.createBiquadFilter(); f.type="lowpass"; f.frequency.value=900; const g=ctx.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol*.9,t+1.4); g.gain.exponentialRampToValueAtTime(.001,t+4.5); s.connect(f).connect(g).connect(audio.master); s.start(t); s.stop(t+4.6); }
   if(kind==="shutter"){ [0,.06].forEach(dl=>{ const s=ctx.createBufferSource(); s.buffer=audio.noise; const f=ctx.createBiquadFilter(); f.type="highpass"; f.frequency.value=3000; const g=ctx.createGain(); g.gain.setValueAtTime(.9,t+dl); g.gain.exponentialRampToValueAtTime(.001,t+dl+.04); s.connect(f).connect(g).connect(audio.master); s.start(t+dl,Math.random(),.05); }); }
   if(kind==="chime"){ [880, 1318.5].forEach((fq,i)=>{ const o=ctx.createOscillator(); o.type="sine"; o.frequency.value=fq; const g=ctx.createGain(); g.gain.setValueAtTime(0,t+i*.09); g.gain.linearRampToValueAtTime(.07,t+i*.09+.01); g.gain.exponentialRampToValueAtTime(.001,t+i*.09+1.2); o.connect(g).connect(audio.master); o.start(t+i*.09); o.stop(t+i*.09+1.3); }); }
@@ -2796,7 +2832,7 @@ function frame(now){
   POOF.update(dt); wheelUpdate(dt);
   if(s.k <= 1 || roofT > 0){ roofUpdate(dt, time, heroAt, timeOfDay.p ? smooth(.74, .96, timeOfDay.p) : 0); } roofT = s.k <= 1 ? .5 : Math.max(0, roofT - dt);   // pigeons, wind and lights rest once you're well below the roof signUpdate(dt, timeOfDay.p ? smooth(.74, .96, timeOfDay.p) : 0);
   WATERT.value = time; WIND.value = time;   // grass and screens keep moving on every floor
-  if(moving){ stepAcc += dist; if(stepAcc > (speed>3 ? 1.25 : .78)){ stepAcc = 0; sfx("step", clamp(speed/4,.25,.7)); } }
+  if(moving){ stepAcc += dist; const onStairs = s.type==="stairs" || s.type==="step"; if(stepAcc > (onStairs ? .55 : speed>3 ? 1.25 : .78)){ stepAcc = 0; sfx(onStairs ? "stair" : s.k === 0 ? "roofstep" : "step", clamp(speed/4,.25,.7)); } }
   // ---- sun travels from morning to golden hour as you descend ----
   { const so = SEG.find(q=>q.type==="out"); const tp = cur < so.a ? (cur/so.a)*.9 : .9 + .1*smooth(0, 1, (cur - so.a)/so.len); timeOfDay(tp);
     const outside = s.end || (s.type==="out" && P.t > .55);
@@ -2898,6 +2934,7 @@ function frame(now){
       fl.textContent = s.k===0||s.k===LAST ? F.name : `Level ${F.n} · ${F.name}`; fl.classList.toggle("dn", dn);
       if(was !== -1) requestAnimationFrame(()=>{ wrap.style.width = fl.offsetWidth + "px"; });
       if(was !== -1){ fl.classList.remove("roll"); $("#homeBtn").classList.remove("pulse"); void fl.offsetWidth; fl.classList.add("roll"); $("#homeBtn").classList.add("pulse"); } }
+    document.body.classList.toggle("lobbyk", s.k === LAST);
     $("#prog").querySelectorAll("button").forEach(b=>{ const on = +b.dataset.k===s.k; b.classList.toggle("on", on); if(on && was !== -1){ b.classList.add("flash"); clearTimeout(b._ft); b._ft = setTimeout(()=>b.classList.remove("flash"), 1800); } });
     $("#menuList").querySelectorAll("button").forEach(b=>b.classList.toggle("on", +b.dataset.k===s.k));
   }
