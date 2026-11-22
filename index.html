@@ -2766,8 +2766,8 @@ function frame(now){
   if(s.type==="stairs" || s.type==="step"){ const sd = side(s.k); desired.set(clamp(pos.x - sd*1.2, -W/2+7, W/2-7), pos.y + 3.2, 27*narrow); desiredLook.set(clamp(pos.x - sd*1.0, -W/2+6, W/2-6), pos.y + 1.6, -4); }
   if(dwellSt>=0 || s.between || s.approach!=null){
     let sx, sy, dz, tIn;
-    if(dwellSt>=0){ const st = STATIONS[dwellSt]; sx = st.x; sy = st.y; dz = st.w.big ? 24 : 17.5; tIn = (s.holdIn ? 1 : smooth(0, .28, P.t)) * (s.holdOut ? 1 : 1 - smooth(.82, 1, P.t)); }
-    else if(s.approach!=null){ const st = STATIONS[s.approach], u = smooth(.55, 1, P.t); sx = lerp(pos.x, st.x, u); sy = st.y; dz = 17.5 + ((st.w.big ? 24 : 17.5) - 17.5)*u; tIn = smooth(0, .25, P.t); }
+    if(dwellSt>=0){ const st = STATIONS[dwellSt]; sx = st.x; sy = st.y; dz = st.w.big && s.k !== LAST ? 24 : 17.5; tIn = (s.holdIn ? 1 : smooth(0, .28, P.t)) * (s.holdOut ? 1 : 1 - smooth(.82, 1, P.t)); }
+    else if(s.approach!=null){ const st = STATIONS[s.approach], u = smooth(.55, 1, P.t); sx = lerp(pos.x, st.x, u); sy = st.y; dz = 17.5; tIn = smooth(0, .25, P.t); }   // one steady distance all the way to the contact wall
     else { const a = STATIONS[s.between[0]], b = STATIONS[s.between[1]], u = smooth(0, 1, P.t); sx = lerp(a.x, b.x, u); sy = lerp(a.y, b.y, u); dz = lerp(a.w.big ? 24 : 17.5, b.w.big ? 24 : 17.5, u); tIn = 1; }   // walking between two pieces: stay in close
     const off = clamp(pos.x - sx, -4, 4);   // frame the piece and Michel beside it
     desired.lerp(tmp.set(sx + off*.4, sy + 3.1, dz*narrow), tIn);
