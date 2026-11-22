@@ -2316,7 +2316,7 @@ function initAudio(){
     const lfo=ctx.createOscillator(); lfo.frequency.value=.03+i*.013; const lg=ctx.createGain(); lg.gain.value=.011; lfo.connect(lg).connect(og.gain); lfo.start(); o.connect(og).connect(master); o.start(); });
 }
 { const b = document.getElementById("sndBtn"); if(b) b.onclick = ()=>{ if(!audio.ctx) initAudio(); if(audio.ctx.state === "suspended") audio.ctx.resume();
-  audio.on = !audio.on; music(); const g = audio.master.gain, t = audio.ctx.currentTime; g.cancelScheduledValues(t); g.setTargetAtTime(audio.on ? .55 : 0, t, .3);
+  audio.on = !audio.on; music(); beds(); if(audio.beds) audio.beds.key = ""; const g = audio.master.gain, t = audio.ctx.currentTime; g.cancelScheduledValues(t); g.setTargetAtTime(audio.on ? .55 : 0, t, .3);
   document.body.classList.toggle("sound", audio.on); b.setAttribute("aria-pressed", audio.on); b.querySelector(".t").textContent = audio.on ? "Sound on" : "Sound off"; }; }
 function music(){
   if(!audio.ctx || audio.mus) return; const ctx = audio.ctx;
@@ -2334,10 +2334,26 @@ function music(){
     setTimeout(note, 2200 + Math.random()*3400); };
   bus.gain.setTargetAtTime(.9, ctx.currentTime, 2); setTimeout(note, 1200);
 }
+// ambient beds: rooftop wind, and the city heard through the lobby glass; levels follow where Michel is
+function beds(){
+  if(!audio.ctx || audio.beds) return; const ctx = audio.ctx;
+  const mk = (type, freq, q)=>{ const n = ctx.createBufferSource(); n.buffer = audio.noise; n.loop = true; const f = ctx.createBiquadFilter(); f.type = type; f.frequency.value = freq; f.Q.value = q; const g = ctx.createGain(); g.gain.value = 0; n.connect(f).connect(g).connect(audio.master); n.start(); return { f, g }; };
+  const wind = mk("lowpass", 420, .7), city = mk("bandpass", 280, .6);
+  const lfo = ctx.createOscillator(); lfo.frequency.value = .09; const lg = ctx.createGain(); lg.gain.value = 180; lfo.connect(lg).connect(wind.f.frequency); lfo.start();   // gusts
+  audio.beds = { wind, city, key: "" };
+}
+function bedsUpdate(k, outside){
+  const B = audio.beds; if(!B) return; const key = k + ":" + outside; if(key === B.key) return; B.key = key; const t = audio.ctx.currentTime;
+  B.wind.g.gain.setTargetAtTime(k === 0 ? .55 : 0, t, 1.2);
+  B.city.g.gain.setTargetAtTime(outside ? .5 : k === LAST ? .28 : k >= 3 ? .08 : 0, t, 1.5);
+  if(Math.random() < .5 && k === LAST) setTimeout(()=>sfx("horn", .12), 1500 + Math.random()*4000);
+}
 function sfx(kind, vol=.5){
   if(!audio.on) return; const ctx = audio.ctx, t = ctx.currentTime;
   if(kind==="step"){ const s=ctx.createBufferSource(); s.buffer=audio.noise; const f=ctx.createBiquadFilter(); f.type="bandpass"; f.frequency.value=1400+Math.random()*500; f.Q.value=2.5;
     const g=ctx.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol*1.4,t+.004); g.gain.exponentialRampToValueAtTime(.001,t+.09); s.connect(f).connect(g).connect(audio.master); s.start(t,Math.random()*3,.1); }
+  if(kind==="click"){ const o=ctx.createOscillator(); o.type="triangle"; o.frequency.setValueAtTime(2200,t); o.frequency.exponentialRampToValueAtTime(900,t+.03); const g=ctx.createGain(); g.gain.setValueAtTime(vol*.35,t); g.gain.exponentialRampToValueAtTime(.001,t+.05); o.connect(g).connect(audio.master); o.start(t); o.stop(t+.06); }
+  if(kind==="horn"){ [311, 392].forEach(fq=>{ const o=ctx.createOscillator(); o.type="sawtooth"; o.frequency.value=fq; const f=ctx.createBiquadFilter(); f.type="lowpass"; f.frequency.value=700; const g=ctx.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol*.25,t+.05); g.gain.setValueAtTime(vol*.25,t+.35); g.gain.exponentialRampToValueAtTime(.001,t+.6); o.connect(f).connect(g).connect(audio.master); o.start(t); o.stop(t+.65); }); }
   if(kind==="stair"){ // a hollow wooden tread, with a soft knock under it
     const s=ctx.createBufferSource(); s.buffer=audio.noise; const f=ctx.createBiquadFilter(); f.type="bandpass"; f.frequency.value=520+Math.random()*120; f.Q.value=3.5;
     const g=ctx.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol*1.6,t+.005); g.gain.exponentialRampToValueAtTime(.001,t+.16); s.connect(f).connect(g).connect(audio.master); s.start(t,Math.random()*3,.18);
@@ -2472,7 +2488,7 @@ function openAlbum(ai, ph){
 function showPanel(title, html, accent, ctx){
   panelCtx = ctx; $("#pTtl").textContent = title;
   $("#panel").style.setProperty("--pa", accent); $("#pIn").innerHTML = html; $("#panel").scrollTop = 0;
-  if(!panelOpen){ $("#panel").classList.add("open"); panelOpen = true; panelAt = performance.now(); document.body.style.overflow = "hidden"; sfx("chime"); }
+  if(!panelOpen){ sfx("click", .6); $("#panel").classList.add("open"); panelOpen = true; panelAt = performance.now(); document.body.style.overflow = "hidden"; sfx("chime"); }
   const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }), {root:$("#panel"), threshold:.08});
   $("#pIn").querySelectorAll(".rv").forEach((el,i)=>{ el.style.transitionDelay = Math.min(i*.05,.3)+"s"; io.observe(el); });
   $("#pIn").querySelectorAll(".p-gal.photos img").forEach(im=>im.onclick=()=>{ $("#lbImg").src = im.src; $("#lightbox").classList.add("on"); });
@@ -2840,7 +2856,7 @@ function frame(now){
     door.position.x = DOORX + 4.3*(s.end ? 1 : s.type==="out" ? smooth(.04, .3, P.t) : 0);
     doorLight.intensity = 22*smooth(.85, 1, tp);
     $("#footer").classList.toggle("on", !!((s.end || (s.type === "out" && P.t > .4)) && !panelOpen));   // from the moment he is through the door
-    if(outside && !wasOutside) sfx("swell", .6); wasOutside = outside;
+    if(outside && !wasOutside) sfx("swell", .6); wasOutside = outside; if(audio.on) bedsUpdate(s.k, outside);
     document.body.classList.toggle("outside", outside); }
   sun.target.position.set(pos.x*.6, pos.y + 1, -1); sun.position.copy(sun.target.position).addScaledVector(SUNDIR, 55);
 
