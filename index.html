@@ -2911,7 +2911,7 @@ function frame(now){
     if(near && !st._near) st.pulse = 1; st._near = near; st.pulse = Math.max(0, (st.pulse || 0) - dt/1.3);   // he arrives: the piece brightens once and its button breathes
     const bump = st.pulse > 0 ? Math.sin((1 - st.pulse)*Math.PI) : 0;
     st.baseE = damp(st.baseE ?? .3, near||hov ? .5 : .3, 5, dt); st.mat.emissiveIntensity = st.baseE + bump*.28 + (st.powerK||0)*.5;
-    st.lift = damp(st.lift || 0, hov && !act ? 1 : 0, 6, dt); st.art.position.z = .16 + .06*st.lift; st.art2.position.z = .165 + .06*st.lift;   // the screen eases toward you on hover st.fade.emissiveIntensity = st.mat.emissiveIntensity;
+    st.lift = damp(st.lift || 0, hov && !act ? 1 : 0, 6, dt); if(st.az0 == null){ st.az0 = st.art.position.z; st.az1 = st.art2.position.z; } if(!st.w.about){ st.art.position.z = st.az0 + .06*st.lift; st.art2.position.z = st.az1 + .06*st.lift; }   // the screen eases toward you on hover st.fade.emissiveIntensity = st.mat.emissiveIntensity;
     st.group.position.z = damp(st.group.position.z, WALLZ + (hov && !st.swing ? .12 : 0), 6, dt);
     if(st.swing){ const S = st.swing, B = st.btn.userData, tt = performance.now()/1000, h = Math.min(dt, 1/30);
       if(hov && !S.hov){ S.vx += .14; S.vz += (mouse.x > (S.mx||0) ? 1 : -1)*.12; }   // a little nudge as you touch it
