@@ -152,10 +152,11 @@ body.sound .dots i:nth-child(2){animation-delay:.2s}body.sound .dots i:nth-child
 #pIn{transition:opacity .7s}
 body.flipping #pIn{opacity:0;transition:none}
 body.flipping #panel.open{transition:opacity 1.2s ease-in}
-#scope{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:0;transition:opacity .7s}
-#scope.on{opacity:1}
-#scope .view{position:absolute;left:50%;top:50%;width:76vmin;height:76vmin;border-radius:50%;transform:translate(-50%,-50%) scale(1.25);background:#9cc8f0 url(img/telescope-view.jpg) 46% 38%/auto 112% no-repeat;opacity:0;transition:transform 1.6s cubic-bezier(.2,.8,.2,1),opacity .5s .35s;box-shadow:inset 0 0 6vmin 2vmin rgba(0,0,0,.55)}
-#scope.on .view{transform:translate(-50%,-50%) scale(1);opacity:1}
+#scope{position:fixed;inset:0;z-index:60;pointer-events:none;background:#08080a;opacity:0;transition:opacity .45s cubic-bezier(.4,0,.2,1) .28s}
+#scope.in{opacity:1;transition:opacity .5s cubic-bezier(.4,0,.2,1)}
+#scope .view{position:absolute;left:50%;top:50%;width:76vmin;height:76vmin;border-radius:50%;transform:translate(-50%,-50%) scale(.88);filter:blur(14px);background:#9cc8f0 url(img/telescope-view.jpg) 46% 38%/auto 112% no-repeat;opacity:0;transition:transform .35s ease-in,filter .3s,opacity .3s;box-shadow:inset 0 0 6vmin 2vmin rgba(0,0,0,.55)}
+#scope.in .view{transform:translate(-50%,-50%) scale(1);filter:blur(0);opacity:1;transition:transform 1.4s cubic-bezier(.2,.8,.2,1) .35s,filter 1.1s cubic-bezier(.2,.8,.2,1) .35s,opacity .8s .35s}
+#scope span{opacity:0;transition:opacity .3s}#scope.in span{opacity:1;transition:opacity .6s 1.2s}
 #scope .ring{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,transparent 0,transparent 36vmin,rgba(8,8,10,.6) 38vmin,rgba(8,8,10,.97) 40vmin)}
 body.scoping #intro,body.scoping #hint,body.scoping #bubble{opacity:0!important}
 #scope span{z-index:2;position:absolute;left:50%;bottom:7vh;transform:translateX(-50%);font:500 13px var(--sans);color:rgba(255,255,255,.75)}
@@ -858,6 +859,7 @@ const M = {
   ceiling: new THREE.MeshStandardMaterial({map:ctex(plasterC,6,2), roughness:.97, envMapIntensity:.6}),
   poche:   new THREE.MeshStandardMaterial({color:0xd6d0c7, roughness:.9, envMapIntensity:.4}),
   oak:     new THREE.MeshStandardMaterial({map:ctex(oakC,3,1), roughness:.55, envMapIntensity:.6}),
+  walnut:  new THREE.MeshStandardMaterial({map:ctex(oakC,3,1), color:0x7a5236, roughness:.48, envMapIntensity:.7}),   // darker wood for the benches, so they read against the oak floors
   trav:    new THREE.MeshStandardMaterial({map:ctex(travC,2,1), roughness:.6, envMapIntensity:.6}),
   conc:    new THREE.MeshStandardMaterial({map:ctex(concC,3,3), roughness:.85, envMapIntensity:.6}),
   alu:     new THREE.MeshStandardMaterial({color:0xc9cbcc, roughness:.38, metalness:.85, envMapIntensity:1}),
@@ -958,7 +960,7 @@ box(W + 2.82, .035, .02, M.gap, 0, fy(0) + .18, -D/2 - .59, false);
   box(px1 - px0 + .4, .26, .26, M.white, (px0+px1)/2, top, pz0); box(px1 - px0 + .4, .26, .26, M.white, (px0+px1)/2, top, pz1);
   const n = 36, g = new THREE.BoxGeometry(.09, .22, pz1 - pz0 + .6), im = new THREE.InstancedMesh(g, M.oak, n); im.castShadow = true;
   const m = new THREE.Matrix4(); for(let i=0;i<n;i++){ m.makeTranslation(lerp(px0, px1, i/(n-1)), top + .24, (pz0+pz1)/2); im.setMatrixAt(i, m); } add(im);
-  box(4.2, .42, 1.1, M.oak, (px0+px1)/2, fy(0) + .21, pz0 + 1.6);
+  box(4.2, .42, 1.1, M.walnut, (px0+px1)/2, fy(0) + .21, pz0 + 1.6);
 }
 // greenery
 const grassGeo = new THREE.ConeGeometry(.035, 1, 3); grassGeo.translate(0,.5,0);
@@ -1394,7 +1396,7 @@ const CITY = { night:[], cross:null, beacon:null, bridgeLights:null, wheelLights
     const hm = inst(unit, hedgeM, hedges); hm.castShadow = true; hm.receiveShadow = true;
     // benches facing the water and the lawns
     const benches = []; for(const x of [-44, -36, 40, 48]) benches.push({x, z:-15.5, w:2.4, h:.45, d:.6}); for(const x of [-30, 30]) benches.push({x, z:22, w:2.4, h:.45, d:.6});
-    inst(unit, M.oak, benches).castShadow = true;
+    inst(unit, M.walnut, benches).castShadow = true;
     // quay: a low metal railing and lamp posts, skipping the terrace view and the bridge
     const skip = x => (x > -3 && x < 33) || Math.abs(x - 74) < 8;
     const posts = [], rails = [], poles = [], heads = [];
@@ -1716,7 +1718,7 @@ HANG.forEach((prints, k)=>{
   const hd = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 2.6*220/1024), new THREE.MeshBasicMaterial({map: galleryTex(k, [...new Set([a0, a1, a2])].map(i=>ALBUMS[i].title)), transparent:true, toneMapped:false}));
   const outer = ROW[ROW.length - 1]; hd.position.set(X0 + sd*outer.x - outer.w/2 + 1.3, y0 + .78, wallZ + .02); add(hd);   // under the print nearest the end wall   // left-aligned under the row   // a gallery label under the cluster, left-aligned with it
   // an oak bench facing the prints, and a plinth with an open photo book
-  box(2.9, .06, .62, M.oak, X0, y0 + .44, -3.7); for(const dx of [-1.3, 1.3]) box(.06, .41, .52, M.alu, X0 + dx, y0 + .205, -3.7, false);
+  box(2.9, .06, .62, M.walnut, X0, y0 + .44, -3.7); for(const dx of [-1.3, 1.3]) box(.06, .41, .52, M.alu, X0 + dx, y0 + .205, -3.7, false);
 
   const sp = new THREE.SpotLight(0xffe2b8, 10, 12, .85, .8, 1.4);
   sp.position.set(X0, fy(k) - .9, -D/2 + 3.8); sp.target.position.set(X0, y0 + 3, -D/2 - .2); add(sp); add(sp.target);
@@ -1733,7 +1735,7 @@ CUR = FG[LAST];
   for(const dx of [-.3,.3]) mesh(new THREE.CylinderGeometry(.06,.05,.1,16), M.white, cx + .8 + dx, y + 1.16, -D/2 + 2.3);
   mesh(new THREE.CylinderGeometry(.9,.75,.9,40), M.conc, DOORX + 5.4, y + .45, -D/2 + 2.4);
   addTree(DOORX + 5.4, y + .9, -D/2 + 2.4, 1.15);
-  box(3.6, .42, .9, M.oak, stationX(LAST, .2), y + .21, 2.2);
+  box(3.6, .42, .9, M.walnut, stationX(LAST, .2), y + .21, 2.2);
   // client logos engraved on a travertine wall
   const lx = stationX(LAST, .22), lw = 9, lh = 3.4;
   box(lw, lh + .6, .3, M.trav, lx, y + (lh+.6)/2, -D/2 + .4);
@@ -1745,10 +1747,10 @@ CUR = FG[LAST];
     m.position.set(lx - lw/2 + mg + (col + .5)*cellW, top - (row + .5)*cellH, -D/2 + .56); add(m); });
 }
 CUR = FG[2];
-box(5.4, .08, 1.1, M.oak, stationX(2,.5), fy(2) + .44, 3.4);
+box(5.4, .08, 1.1, M.walnut, stationX(2,.5), fy(2) + .44, 3.4);
 for(const dx of [-2.4, 2.4]) box(.08, .4, .9, M.alu, stationX(2,.5) + dx, fy(2) + .2, 3.4);
-CUR = FG[3]; box(3.4, .42, .9, M.oak, stationX(3,.86), fy(3) + .21, 2.2); planter(stationX(3,.1), fy(3), -D/2 + 1.0, 1.6, .9);
-CUR = FG[1]; box(3.4, .42, .9, M.oak, stationX(1,.5), fy(1) + .21, 2.4); planter(stationX(1,.94), fy(1), -D/2 + 1.0, 1.6, .9);
+CUR = FG[3]; box(3.4, .42, .9, M.walnut, stationX(3,.86), fy(3) + .21, 2.2); planter(stationX(3,.1), fy(3), -D/2 + 1.0, 1.6, .9);
+CUR = FG[1]; box(3.4, .42, .9, M.walnut, stationX(1,.5), fy(1) + .21, 2.4); planter(stationX(1,.94), fy(1), -D/2 + 1.0, 1.6, .9);
 CUR = root;
 
 /* ============================ the rooftop: a real working roof, with life on it ============================ */
@@ -1904,8 +1906,10 @@ function roofUpdate(dt, t, heroP, night){
 }
 // the telescope: Michel's view of the cross on Mount Royal
 let tele = null;
-function openTele(){ tele = { k: 0, on: true }; $("#scope").classList.add("on"); document.body.classList.add("scoping"); bubble(""); document.body.style.overflow = "hidden"; sfx("air"); }
-function closeTele(){ if(!tele || !tele.on) return; tele.on = false; $("#scope").classList.remove("on"); document.body.classList.remove("scoping"); document.body.style.overflow = ""; sfx("air"); }
+// the telescope: walk the camera up to the eyepiece first, then fade to black and open the view inside the lens
+function openTele(){ tele = { k: 0, on: true, inside: false }; document.body.classList.add("scoping"); bubble(""); document.body.style.overflow = "hidden"; sfx("air"); }
+function closeTele(){ if(!tele || !tele.on || tele.leaving) return; const t = tele; t.leaving = true; $("#scope").classList.remove("in"); sfx("air");
+  setTimeout(()=>{ t.on = false; document.body.classList.remove("scoping"); document.body.style.overflow = ""; }, t.inside ? 380 : 0); }
 
 /* ============================ themed corners: at the top of each helix, a glimpse of how that floor works ============================ */
 {
@@ -2777,7 +2781,8 @@ function frame(now){
     desiredLook.lerp(tmp.set(pos.x - 4 + pan*16, pos.y + .2, pos.z - 60), b);
     fovT = s.end ? 34 : lerp(28, 38, smooth(.35, .6, P.t)) - (38-34)*smooth(.75, 1, P.t);
   }
-  if(tele){ tele.k = damp(tele.k, tele.on ? 1 : 0, 2.2, dt); fovT = lerp(fovT, 4.2, smooth(0, 1, tele.k)); }
+  if(tele){ tele.k = damp(tele.k, tele.on ? 1 : 0, 2.4, dt); fovT = lerp(fovT, fovT*.82, smooth(0, 1, tele.k));
+    if(tele.on && !tele.leaving && !tele.inside && tele.k > .93){ tele.inside = true; $("#scope").classList.add("in"); } }
   camera.fov = damp(camera.fov, fovT, tele ? 5 : 2.5, dt); camera.updateProjectionMatrix();
   // opening crane: from high above the landscape down to the rooftop
   if(!introDone){
@@ -2821,8 +2826,9 @@ function frame(now){
     camera.position.x = damp(camera.position.x, desired.x, l, dt); camera.position.y = damp(camera.position.y, desired.y, l, dt); camera.position.z = damp(camera.position.z, desired.z, l*.8, dt);
     camLook.x = damp(camLook.x, desiredLook.x, l*1.2, dt); camLook.y = damp(camLook.y, desiredLook.y, l*1.2, dt); camLook.z = damp(camLook.z, desiredLook.z, l*1.2, dt);
   }
-  if(tele){ const k = smooth(0, 1, tele.k), T = ROOF.tele; T.aim.lookAt(T.target); const ep = T.eye.getWorldPosition(new THREE.Vector3()); ep.add(T.target.clone().sub(ep).normalize().multiplyScalar(1.7));   // just past the lens, looking down the barrel
-    camera.position.lerp(ep, k); camLook.lerp(T.target, k); if(!tele.on && tele.k < .01) tele = null; }
+  if(tele){ const k = smooth(0, 1, tele.k), T = ROOF.tele; T.aim.lookAt(T.target); const ep = T.eye.getWorldPosition(new THREE.Vector3()), dir = T.target.clone().sub(ep).normalize();
+    const cp = ep.clone().addScaledVector(dir, -.62); cp.y += .07;   // just behind the eyepiece, looking along the brass tube
+    camera.position.lerp(cp, k); camLook.lerp(ep.clone().addScaledVector(dir, 4), k); if(!tele.on && tele.k < .01) tele = null; }
   camera.lookAt(camLook);
 
   // ---- state & UI ----
