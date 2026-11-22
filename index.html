@@ -105,8 +105,11 @@ body.sound .dots i:nth-child(2){animation-delay:.2s}body.sound .dots i:nth-child
 @keyframes wheel{0%{opacity:0;transform:translateY(-3px)}30%{opacity:1}100%{opacity:0;transform:translateY(10px)}}
 
 #hudFl{display:inline-block}
-#hudFl.roll{animation:flIn .85s .12s both}
-@keyframes flIn{0%{opacity:0;transform:translateY(115%);animation-timing-function:cubic-bezier(.3,.7,.4,1)}55%{opacity:1;transform:translateY(-16%);animation-timing-function:cubic-bezier(.45,0,.55,1)}78%{transform:translateY(5%);animation-timing-function:cubic-bezier(.45,0,.55,1)}100%{opacity:1;transform:translateY(0)}}
+.flwrap{position:relative;display:inline-block;overflow:hidden;vertical-align:bottom;height:1.3em;line-height:1.3em;white-space:nowrap;transition:width .55s cubic-bezier(.65,0,.35,1)}
+#hudFl{white-space:nowrap}
+#hudFl.roll{animation:flInUp .8s .1s both}#hudFl.roll.dn{animation-name:flInDn}
+@keyframes flInUp{0%{transform:translateY(110%);animation-timing-function:cubic-bezier(.3,.7,.4,1)}55%{transform:translateY(-16%);animation-timing-function:cubic-bezier(.45,0,.55,1)}78%{transform:translateY(5%);animation-timing-function:cubic-bezier(.45,0,.55,1)}100%{transform:translateY(0)}}
+@keyframes flInDn{0%{transform:translateY(-110%);animation-timing-function:cubic-bezier(.3,.7,.4,1)}55%{transform:translateY(16%);animation-timing-function:cubic-bezier(.45,0,.55,1)}78%{transform:translateY(-5%);animation-timing-function:cubic-bezier(.45,0,.55,1)}100%{transform:translateY(0)}}
 #homeBtn.pulse{animation:pillPulse 1.4s cubic-bezier(.2,.8,.2,1)}
 @keyframes pillPulse{0%{transform:scale(1)}22%{transform:scale(1.045);box-shadow:0 6px 22px rgba(0,0,0,.12)}100%{transform:scale(1)}}
 #card{display:none!important;left:0;right:0;top:14vh;text-align:center;opacity:0;transition:opacity .9s, transform 1.2s cubic-bezier(.2,.8,.2,1);transform:translateY(12px)}
@@ -492,8 +495,8 @@ body.found #hudTR .count{opacity:1;transform:none}
 #hudTR b{display:inline-block}#hudTR b.bump{animation:cntBump .7s cubic-bezier(.2,1.6,.4,1)}
 @keyframes cntBump{0%{transform:translateY(60%);opacity:0}60%{transform:translateY(-12%);opacity:1}100%{transform:none}}
 #homeBtn{position:relative;overflow:hidden}
-.flGhost{position:absolute;pointer-events:none;animation:flOut .45s cubic-bezier(.65,0,.35,1) forwards}
-@keyframes flOut{to{opacity:0;transform:translateY(-115%)}}
+.flGhost{position:absolute;left:0;top:0;pointer-events:none;animation:flOutUp .45s cubic-bezier(.65,0,.35,1) forwards}.flGhost.dn{animation-name:flOutDn}
+@keyframes flOutUp{to{transform:translateY(-110%)}}@keyframes flOutDn{to{transform:translateY(110%)}}
 #prog{gap:14px}
 #prog .track{position:absolute;left:50%;top:4px;bottom:4px;width:1px;margin-left:-.5px;background:rgba(0,0,0,.1);pointer-events:none}
 #prog .track b{position:absolute;left:0;top:0;width:100%;height:100%;background:var(--ink);transform-origin:top;transform:scaleY(0)}
@@ -685,7 +688,7 @@ body.outside #hudBR,body.outside #prog{opacity:0;pointer-events:none}
   </div>
 </div>
 
-<nav class="ui fade" id="hudTL" aria-label="Main"><div class="pill" id="homeBtn"><span class="nm">Michel Sleiman</span><span class="sep"></span><span class="fl" id="hudFl">Who I am</span></div><div class="navm" id="navm"><button class="pill" id="menuBtn" aria-haspopup="true" aria-expanded="false" aria-controls="menuList">Floors<svg class="chev" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="menuList" role="menu"></div></div><button class="pill" id="aboutBtn">About</button><a class="pill" id="hireBtn" href="#contact">Get in touch</a></nav>
+<nav class="ui fade" id="hudTL" aria-label="Main"><div class="pill" id="homeBtn"><span class="nm">Michel Sleiman</span><span class="sep"></span><span class="flwrap"><span class="fl" id="hudFl">Who I am</span></span></div><div class="navm" id="navm"><button class="pill" id="menuBtn" aria-haspopup="true" aria-expanded="false" aria-controls="menuList">Floors<svg class="chev" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="menuList" role="menu"></div></div><button class="pill" id="aboutBtn">About</button><a class="pill" id="hireBtn" href="#contact">Get in touch</a></nav>
 <div class="ui fade" id="hudTR"><div class="pill count">Work <b id="cW">0</b>/<span id="tW"></span>&nbsp;&nbsp;Photographs <b id="cP">0</b>/<span id="tP"></span></div></div>
 
 <div class="ui fade" id="hudBR"><button class="pill" id="sndBtn" type="button" aria-pressed="false"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="t">Sound off</span></button></div>
@@ -2890,8 +2893,10 @@ function frame(now){
 
   // ---- state & UI ----
   if(introDone && s.k !== curFloor){ const was = curFloor; curFloor = s.k; const F = FLOORS[s.k];
-    { const fl = $("#hudFl"); if(was !== -1 && fl.textContent){ const gh = fl.cloneNode(true); gh.removeAttribute("id"); gh.className = "fl flGhost"; gh.style.left = fl.offsetLeft + "px"; gh.style.top = fl.offsetTop + "px"; fl.parentNode.appendChild(gh); setTimeout(()=>gh.remove(), 600); }
-      fl.textContent = s.k===0||s.k===LAST ? F.name : `Level ${F.n} · ${F.name}`;
+    { const fl = $("#hudFl"), wrap = fl.parentNode, dn = was !== -1 && s.k < was;   // going back up: the names scroll down
+      if(was !== -1 && fl.textContent){ wrap.style.width = fl.offsetWidth + "px"; const gh = fl.cloneNode(true); gh.removeAttribute("id"); gh.className = "fl flGhost" + (dn ? " dn" : ""); wrap.appendChild(gh); setTimeout(()=>gh.remove(), 600); }
+      fl.textContent = s.k===0||s.k===LAST ? F.name : `Level ${F.n} · ${F.name}`; fl.classList.toggle("dn", dn);
+      if(was !== -1) requestAnimationFrame(()=>{ wrap.style.width = fl.offsetWidth + "px"; });
       if(was !== -1){ fl.classList.remove("roll"); $("#homeBtn").classList.remove("pulse"); void fl.offsetWidth; fl.classList.add("roll"); $("#homeBtn").classList.add("pulse"); } }
     $("#prog").querySelectorAll("button").forEach(b=>{ const on = +b.dataset.k===s.k; b.classList.toggle("on", on); if(on && was !== -1){ b.classList.add("flash"); clearTimeout(b._ft); b._ft = setTimeout(()=>b.classList.remove("flash"), 1800); } });
     $("#menuList").querySelectorAll("button").forEach(b=>b.classList.toggle("on", +b.dataset.k===s.k));
