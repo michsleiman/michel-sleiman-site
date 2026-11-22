@@ -2340,11 +2340,18 @@ function beds(){
   const mk = (type, freq, q)=>{ const n = ctx.createBufferSource(); n.buffer = audio.noise; n.loop = true; const f = ctx.createBiquadFilter(); f.type = type; f.frequency.value = freq; f.Q.value = q; const g = ctx.createGain(); g.gain.value = 0; n.connect(f).connect(g).connect(audio.master); n.start(); return { f, g }; };
   const wind = mk("lowpass", 420, .7), city = mk("bandpass", 280, .6);
   const lfo = ctx.createOscillator(); lfo.frequency.value = .09; const lg = ctx.createGain(); lg.gain.value = 180; lfo.connect(lg).connect(wind.f.frequency); lfo.start();   // gusts
-  audio.beds = { wind, city, key: "" };
+  audio.beds = { wind, city, key: "" }; setTimeout(ambientTick, 4000);
+}
+// now and then, a small far-off sound that fits where Michel is
+function ambientTick(){
+  if(audio.on && audio.beds){ const k = audio.beds.k ?? 0, out = audio.beds.out;
+    const pool = out ? ["horn","bell","gull","plane"] : k === 0 ? ["bird","bird","plane","gull"] : k === LAST ? ["horn","bell","door"] : ["door","bird","plane"];
+    sfx(pool[Math.floor(Math.random()*pool.length)], .1 + Math.random()*.08); }
+  setTimeout(ambientTick, 7000 + Math.random()*9000);
 }
 function bedsUpdate(k, outside){
   const B = audio.beds; if(!B) return; const key = k + ":" + outside; if(key === B.key) return; B.key = key; const t = audio.ctx.currentTime;
-  B.wind.g.gain.setTargetAtTime(k === 0 ? .55 : 0, t, 1.2);
+  B.wind.g.gain.setTargetAtTime(k === 0 ? .2 : 0, t, 1.2); B.k = k; B.out = outside;
   B.city.g.gain.setTargetAtTime(outside ? .5 : k === LAST ? .28 : k >= 3 ? .08 : 0, t, 1.5);
   if(Math.random() < .5 && k === LAST) setTimeout(()=>sfx("horn", .12), 1500 + Math.random()*4000);
 }
@@ -2352,6 +2359,12 @@ function sfx(kind, vol=.5){
   if(!audio.on) return; const ctx = audio.ctx, t = ctx.currentTime;
   if(kind==="step"){ const s=ctx.createBufferSource(); s.buffer=audio.noise; const f=ctx.createBiquadFilter(); f.type="bandpass"; f.frequency.value=1400+Math.random()*500; f.Q.value=2.5;
     const g=ctx.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol*1.4,t+.004); g.gain.exponentialRampToValueAtTime(.001,t+.09); s.connect(f).connect(g).connect(audio.master); s.start(t,Math.random()*3,.1); }
+  if(kind==="bird"){ let tt=t; const n=2+Math.floor(Math.random()*3), base=2600+Math.random()*900; for(let i=0;i<n;i++){ const o=ctx.createOscillator(); o.type="sine"; o.frequency.setValueAtTime(base,tt); o.frequency.exponentialRampToValueAtTime(base*1.35,tt+.07); const g=ctx.createGain(); g.gain.setValueAtTime(0,tt); g.gain.linearRampToValueAtTime(vol*.5,tt+.015); g.gain.exponentialRampToValueAtTime(.001,tt+.09); o.connect(g).connect(audio.master); o.start(tt); o.stop(tt+.1); tt += .12 + Math.random()*.05; } }
+  if(kind==="gull"){ const o=ctx.createOscillator(); o.type="triangle"; o.frequency.setValueAtTime(1300,t); o.frequency.exponentialRampToValueAtTime(800,t+.45); const f=ctx.createBiquadFilter(); f.type="bandpass"; f.frequency.value=1100; f.Q.value=2; const g=ctx.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol*.35,t+.05); g.gain.exponentialRampToValueAtTime(.001,t+.5); o.connect(f).connect(g).connect(audio.master); o.start(t); o.stop(t+.55); }
+  if(kind==="plane"){ const s=ctx.createBufferSource(); s.buffer=audio.noise; s.loop=true; const f=ctx.createBiquadFilter(); f.type="lowpass"; f.frequency.setValueAtTime(250,t); f.frequency.linearRampToValueAtTime(500,t+4); f.frequency.linearRampToValueAtTime(200,t+9); const g=ctx.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol*.9,t+4); g.gain.linearRampToValueAtTime(.0001,t+9); s.connect(f).connect(g).connect(audio.master); s.start(t); s.stop(t+9.2); }
+  if(kind==="bell"){ [0,.16].forEach(d=>{ const o=ctx.createOscillator(); o.type="sine"; o.frequency.value=2093; const g=ctx.createGain(); g.gain.setValueAtTime(0,t+d); g.gain.linearRampToValueAtTime(vol*.3,t+d+.005); g.gain.exponentialRampToValueAtTime(.001,t+d+.7); o.connect(g).connect(audio.master); o.start(t+d); o.stop(t+d+.75); }); }
+  if(kind==="door"){ const o=ctx.createOscillator(); o.type="sine"; o.frequency.setValueAtTime(110,t); o.frequency.exponentialRampToValueAtTime(55,t+.2); const g=ctx.createGain(); g.gain.setValueAtTime(vol*.8,t); g.gain.exponentialRampToValueAtTime(.001,t+.3); o.connect(g).connect(audio.master); o.start(t); o.stop(t+.32);
+    const s=ctx.createBufferSource(); s.buffer=audio.noise; const f=ctx.createBiquadFilter(); f.type="lowpass"; f.frequency.value=900; const g2=ctx.createGain(); g2.gain.setValueAtTime(vol*.5,t); g2.gain.exponentialRampToValueAtTime(.001,t+.12); s.connect(f).connect(g2).connect(audio.master); s.start(t,Math.random()*3,.14); }
   if(kind==="click"){ const o=ctx.createOscillator(); o.type="triangle"; o.frequency.setValueAtTime(2200,t); o.frequency.exponentialRampToValueAtTime(900,t+.03); const g=ctx.createGain(); g.gain.setValueAtTime(vol*.35,t); g.gain.exponentialRampToValueAtTime(.001,t+.05); o.connect(g).connect(audio.master); o.start(t); o.stop(t+.06); }
   if(kind==="horn"){ [311, 392].forEach(fq=>{ const o=ctx.createOscillator(); o.type="sawtooth"; o.frequency.value=fq; const f=ctx.createBiquadFilter(); f.type="lowpass"; f.frequency.value=700; const g=ctx.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol*.25,t+.05); g.gain.setValueAtTime(vol*.25,t+.35); g.gain.exponentialRampToValueAtTime(.001,t+.6); o.connect(f).connect(g).connect(audio.master); o.start(t); o.stop(t+.65); }); }
   if(kind==="stair"){ // a hollow wooden tread, with a soft knock under it
