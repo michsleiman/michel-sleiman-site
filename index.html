@@ -7,7 +7,7 @@
 <meta name="description" content="Designing products people love, and systems teams trust. Product design and strategy by Michel Sleiman, Montréal.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 <script type="importmap">
 { "imports": {
   "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
@@ -16,7 +16,7 @@
 </script>
 <style>
 :root{--ink:#1d1d1f;--ink2:#6e6e73;--ink3:#a1a1a6;--bg:#f5f5f7;--line:rgba(0,0,0,.08);--glass:rgba(255,255,255,.62);--blue:#0071e3;
-  --serif:"Bodoni Moda",Didot,"Bodoni 72",serif;--body:"Cormorant Garamond",Georgia,serif;
+  --serif:"Bodoni Moda",Didot,"Bodoni 72",serif;--body:"Bodoni Moda",Didot,"Bodoni 72",serif;
   --sans:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",system-ui,sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:#eceae6;color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
@@ -78,7 +78,7 @@ body.titled .ui.fade{opacity:1}
 #menuList button:hover,#menuList button:focus-visible{background:rgba(0,0,0,.05);outline:none}
 #menuList button.on{background:rgba(0,113,227,.08)}
 #menuList .n{grid-row:span 2;font:600 12px var(--sans);color:var(--ink3);font-variant-numeric:tabular-nums}
-#menuList button.on .n{color:var(--blue)}
+#menuList button.on .n{color:var(--ink)}
 #menuList .t{font:600 16px/1.2 var(--sans);letter-spacing:-.02em}
 #menuList .s{font:500 12.5px/1.35 var(--sans);color:var(--ink2)}
 #hudTL .pill{gap:12px}
@@ -120,9 +120,9 @@ body.sound .dots i:nth-child(2){animation-delay:.2s}body.sound .dots i:nth-child
 .lbl .t{font:600 22px/1.15 var(--sans);letter-spacing:-.03em;margin-top:2px}
 .lbl .d{font:500 15px/1.35 var(--sans);color:var(--ink);background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:10px 14px;border-radius:14px;max-width:32ch;white-space:normal;margin:0 auto;opacity:0;transition:opacity .5s}
 .lbl.near .d{opacity:1}
-.lbl .cta{display:inline-flex;gap:6px;margin-top:10px;font:500 13px var(--sans);padding:7px 14px;border-radius:980px;background:var(--blue);color:#fff;opacity:0;transform:translateY(6px);transition:.4s}
+.lbl .cta{display:inline-flex;gap:6px;margin-top:10px;font:500 13px var(--sans);padding:7px 14px;border-radius:980px;background:var(--ink);color:#fff;opacity:0;transform:translateY(6px);transition:.4s}
 .lbl.near .cta{opacity:1;transform:none}
-.lbl.seen .k::after{content:"  ✓";color:var(--blue)}
+.lbl.seen .k::after{content:"  ✓";color:var(--ink)}
 #bubble{position:fixed;z-index:13;transform:translate(-50%,calc(-100% - 40px)) scale(.92);transform-origin:40% 100%;transition:opacity .45s,transform .5s cubic-bezier(.2,1.4,.4,1);font:500 14px var(--sans);color:var(--ink);background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:8px 14px;border-radius:16px;white-space:nowrap;opacity:0;box-shadow:0 4px 18px rgba(0,0,0,.08)}
 #bubble.talk{white-space:normal;width:max-content;max-width:min(340px,78vw);text-align:left;line-height:1.42}
 #voiceBar{position:fixed;z-index:13;left:-999px;top:0;display:flex;align-items:center;gap:9px;transform:translate(-50%,14px) scale(.94);opacity:0;pointer-events:none;transition:opacity .35s,transform .45s cubic-bezier(.2,1.4,.4,1);background:var(--glass);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid rgba(255,255,255,.7);box-shadow:0 4px 18px rgba(0,0,0,.08);padding:6px 6px 6px 13px;border-radius:980px;font:500 12.5px var(--sans);color:var(--ink);white-space:nowrap}
@@ -483,6 +483,25 @@ body.scoping #intro,body.scoping #hint,body.scoping #bubble{opacity:0!important}
 .cs-sum .p-stats.sumstats b{font-size:clamp(44px,5.2vw,68px)}
 .cs-sum .p-stats.sumstats span{font-size:14px;margin-top:8px}
 @media(max-width:760px){.cs-sum .p-stats.sumstats{grid-template-columns:1fr 1fr;row-gap:28px}}
+
+/* ---- polish pass ---- */
+#topfade{position:fixed;left:0;right:0;top:0;height:110px;z-index:15;pointer-events:none;background:linear-gradient(rgba(246,244,240,.62),rgba(246,244,240,0));transition:opacity 1s, background 1.2s}
+body.outside #topfade{background:linear-gradient(rgba(24,18,28,.34),rgba(24,18,28,0))}
+#hudTR .count{opacity:0;transform:translateY(-10px) scale(.96);transition:opacity .7s ease, transform .8s cubic-bezier(.2,1.3,.4,1)}
+body.found #hudTR .count{opacity:1;transform:none}
+#hudTR b{display:inline-block}#hudTR b.bump{animation:cntBump .7s cubic-bezier(.2,1.6,.4,1)}
+@keyframes cntBump{0%{transform:translateY(60%);opacity:0}60%{transform:translateY(-12%);opacity:1}100%{transform:none}}
+#homeBtn{position:relative;overflow:hidden}
+.flGhost{position:absolute;pointer-events:none;animation:flOut .55s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes flOut{to{opacity:0;transform:translateY(-90%);filter:blur(2px)}}
+#prog{gap:14px}
+#prog .track{position:absolute;left:50%;top:4px;bottom:4px;width:1px;margin-left:-.5px;background:rgba(0,0,0,.1);pointer-events:none}
+#prog .track b{position:absolute;left:0;top:0;width:100%;height:100%;background:var(--ink);transform-origin:top;transform:scaleY(0)}
+#prog button{z-index:1}
+#prog button.flash span{opacity:1}
+#sndBtn{gap:9px;color:var(--ink2);cursor:pointer;border:0;font:500 12.5px var(--sans)}
+body.sound #sndBtn{color:var(--ink)}
+#tip{background:var(--tipbg,var(--ink))}
 /* the mess: a wall of the old screens */
 .cs-wall{margin-top:48px;border-radius:28px;background:#f5f5f7;padding:clamp(24px,4vw,48px);display:grid;gap:clamp(28px,4vw,44px)}
 .cs-wall .row{display:grid;gap:clamp(14px,2vw,24px);align-items:end}
@@ -622,10 +641,13 @@ body.scoping #intro,body.scoping #hint,body.scoping #bubble{opacity:0!important}
 .logos{display:grid;grid-template-columns:repeat(7,1fr);gap:16px}
 .logos div{aspect-ratio:3/2;background:#f5f5f7;border-radius:18px;display:flex;align-items:center;justify-content:center;padding:18px}
 .logos img{max-width:100%;max-height:100%;filter:grayscale(1);opacity:.75}
-#footer{position:fixed;left:24px;right:24px;bottom:22px;z-index:25;display:grid;grid-template-columns:1.3fr 1fr 1.4fr 1.3fr;gap:36px;padding:28px 34px;border-radius:24px;
-  background:rgba(18,18,22,.42);backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);border:1px solid rgba(255,255,255,.12);color:#f5f2ec;
+#footer{position:fixed;left:24px;right:24px;bottom:22px;z-index:25;display:grid;grid-template-columns:1.3fr 1fr 1.4fr 1.3fr;gap:36px;padding:22px 30px;border-radius:22px;
+  background:rgba(18,18,22,.3);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);border:1px solid rgba(255,255,255,.12);color:#f5f2ec;
   opacity:0;transform:translateY(24px);pointer-events:none;transition:opacity 1.2s ease, transform 1.4s cubic-bezier(.2,.8,.2,1)}
 #footer.on{opacity:1;transform:none;pointer-events:auto}
+#footer .fcol{opacity:0;transform:translateY(14px);transition:opacity .9s ease, transform 1s cubic-bezier(.2,.8,.2,1)}
+#footer.on .fcol{opacity:1;transform:none}
+#footer.on .fcol:nth-child(1){transition-delay:.25s}#footer.on .fcol:nth-child(2){transition-delay:.38s}#footer.on .fcol:nth-child(3){transition-delay:.51s}#footer.on .fcol:nth-child(4){transition-delay:.64s}
 #footer .fk{font:500 10.5px var(--sans);letter-spacing:.24em;text-transform:uppercase;color:rgba(245,242,236,.6);margin-bottom:12px}
 #footer .brand .fk{font:400 24px var(--serif);letter-spacing:0;text-transform:none;color:#fff}
 #footer p{font:italic 400 17px/1.4 var(--body);color:rgba(245,242,236,.85)}
@@ -666,6 +688,8 @@ body.outside #hudBR,body.outside #prog{opacity:0;pointer-events:none}
 <nav class="ui fade" id="hudTL" aria-label="Main"><div class="pill" id="homeBtn"><span class="nm">Michel Sleiman</span><span class="sep"></span><span class="fl" id="hudFl">Who I am</span></div><div class="navm" id="navm"><button class="pill" id="menuBtn" aria-haspopup="true" aria-expanded="false" aria-controls="menuList">Floors<svg class="chev" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="menuList" role="menu"></div></div><button class="pill" id="aboutBtn">About</button><a class="pill" id="hireBtn" href="#contact">Get in touch</a></nav>
 <div class="ui fade" id="hudTR"><div class="pill count">Work <b id="cW">0</b>/<span id="tW"></span>&nbsp;&nbsp;Photographs <b id="cP">0</b>/<span id="tP"></span></div></div>
 
+<div class="ui fade" id="hudBR"><button class="pill" id="sndBtn" type="button" aria-pressed="false"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="t">Sound off</span></button></div>
+<div id="topfade" aria-hidden="true"></div>
 <div id="prog"></div>
 <div class="ui" id="hint">Scroll to explore<span class="m"></span></div>
 <div class="ui" id="card"><div class="k" id="cardK"></div><h2 id="cardT"></h2><div class="s" id="cardS"></div></div>
@@ -697,6 +721,7 @@ import { loadHero } from "./figure.js?v=smooth1";
 /* ============================ CONTENT — all copy from michelsleiman.com ============================ */
 const DATA = {"albums": [{"id": "by-the-sea", "title": "By the Sea", "photos": [["by_the_sea_1.jpg", 800, 998], ["by_the_sea_2.jpg", 800, 998], ["by_the_sea_3.jpg", 800, 1000], ["by_the_sea_4.jpg", 800, 997], ["by_the_sea_5.jpg", 800, 997], ["by_the_sea_6.jpg", 800, 997], ["by_the_sea_7.jpg", 800, 1000], ["by_the_sea_8.jpg", 800, 1000], ["by_the_sea_9.jpg", 800, 1000], ["by_the_sea_10.jpg", 800, 1000]]}, {"id": "in-between", "title": "In Between", "photos": [["in_between_1.jpg", 800, 1000], ["in_between_2.jpg", 800, 998], ["in_between_3.jpg", 800, 1000], ["in_between_4.jpg", 800, 1000], ["in_between_5.jpg", 800, 1000]]}, {"id": "aya", "title": "Aya", "photos": [["aya_1.jpg", 800, 1000], ["aya_2.jpg", 800, 1000], ["aya_3.jpg", 800, 1000], ["aya_4.jpg", 800, 1000], ["aya_5.jpg", 800, 1000], ["aya_6.jpg", 800, 1000], ["aya_7.jpg", 800, 1000], ["aya_8.jpg", 800, 1000], ["aya_9.jpg", 800, 1000], ["aya_10.jpg", 800, 1000]]}, {"id": "projecting-emotions", "title": "Projecting Emotions", "photos": [["projecting_1.jpg", 800, 1000], ["projecting_2.jpg", 800, 1000], ["projecting_3.jpg", 800, 1000], ["projecting_4.jpg", 800, 1000], ["projecting_5.jpg", 800, 1000], ["projecting_6.jpg", 800, 1000], ["projecting_7.jpg", 800, 1000], ["projecting_8.jpg", 800, 1000], ["projecting_9.jpg", 800, 1000], ["projecting_10.jpg", 800, 1000]]}, {"id": "light-dancing", "title": "Light Dancing", "photos": [["light_1.jpg", 800, 1000], ["light_2.jpg", 800, 1000], ["light_9.jpg", 800, 1000], ["light_10.jpg", 800, 1000], ["light_5.jpg", 800, 1000], ["light_7.jpg", 800, 1000], ["light_8.jpg", 800, 1000], ["light_6.jpg", 800, 999], ["light_4.jpg", 800, 1000], ["light_3.jpg", 800, 1000]]}, {"id": "people", "title": "People", "photos": [["people_8.jpg", 800, 998], ["people_7.jpg", 800, 998], ["people_5.jpg", 800, 1000], ["people_4.jpg", 800, 1000], ["people_6.jpg", 800, 1000], ["people_27.jpg", 800, 1000], ["people_25.jpg", 800, 1000], ["people_26.jpg", 800, 1000], ["people_23.jpg", 800, 1035], ["people_30.jpg", 774, 1000], ["people_3.jpg", 800, 1422], ["people_2.jpg", 800, 1422], ["people_11.jpg", 800, 1000], ["people_12.jpg", 800, 1000], ["people_16.jpg", 800, 1000], ["people_15.jpg", 800, 1000], ["people_10.jpg", 800, 1009], ["people_31.jpg", 794, 1000], ["people_19.jpg", 800, 1200], ["people_20.jpg", 800, 1200], ["people_1.jpg", 800, 998], ["people_21.jpg", 800, 1000], ["people_17.jpg", 800, 1000], ["people_18.jpg", 800, 1000]]}, {"id": "landscapes", "title": "Landscapes", "photos": [["landscapes_1.jpg", 800, 998], ["landscapes_3.jpg", 800, 1000], ["landscapes_2.jpg", 800, 1000], ["landscapes_6.jpg", 800, 998], ["landscapes_4.jpg", 800, 1000], ["landscapes_5.jpg", 800, 1000], ["landscapes_8.jpg", 800, 998], ["landscapes_7.jpg", 800, 997], ["landscapes_14.jpg", 800, 1000], ["landscapes_11.jpg", 800, 1000], ["landscapes_10.jpg", 800, 1000], ["landscapes_13.jpg", 800, 1000], ["landscapes_9.jpg", 800, 1000], ["landscapes_16.jpg", 800, 1000], ["landscapes_17.jpg", 800, 1000], ["landscapes_15.jpg", 800, 1000], ["landscapes_18.jpg", 800, 1000], ["landscapes_12.jpg", 800, 1000]]}, {"id": "naviglio-grande", "title": "Naviglio Grande", "photos": [["naviglio_grande_5.jpg", 800, 1000], ["naviglio_grande_1.jpg", 800, 1000], ["naviglio_grande_2.jpg", 800, 1000], ["naviglio_grande_3.jpg", 800, 1000], ["naviglio_grande_4.jpg", 800, 1000], ["naviglio_grande_6.jpg", 800, 1001], ["naviglio_grande_7.jpg", 800, 1000], ["naviglio_grande_8.jpg", 800, 1000], ["naviglio_grande_9.jpg", 800, 1000], ["naviglio_grande_10.jpg", 800, 1000]]}, {"id": "black-white", "title": "Black & White", "photos": [["black_white_5.jpg", 800, 1000], ["black_white_1.jpg", 800, 600], ["black_white_2.jpg", 800, 600], ["black_white_3.jpg", 800, 1000], ["black_white_4.jpg", 800, 1000], ["black_white_6.jpg", 800, 1000], ["black_white_7.jpg", 800, 1000], ["black_white_8.jpg", 800, 1000], ["black_white_9.jpg", 800, 1000], ["black_white_10.jpg", 800, 1000], ["black_white_11.jpg", 800, 1000], ["black_white_13.jpg", 800, 1000]]}, {"id": "where-did-you-go", "title": "Where Did You Go", "photos": [["wdyg_3.jpg", 800, 1000], ["wdyg_1.jpg", 800, 1000], ["wdyg_2.jpg", 800, 1000], ["wdyg_4.jpg", 800, 1000], ["wdyg_5.jpg", 800, 1000], ["wdyg_6.jpg", 800, 1000], ["wdyg_7.jpg", 800, 1000], ["wdyg_8.jpg", 800, 1000], ["IMG_1654-1.jpg", 444, 555]]}], "projects": {"about": {"cover": ["michel-portrait-social.jpg", 1240, 1550]}, "spectra": {"cover": ["spectra-screen-full-scaled.webp", 2000, 1109], "gallery": [["spectra-screen-full-scaled.webp", 2000, 1109], ["spectra-logo.webp", 800, 217]]}, "armani": {"cover": ["cover_armani.jpg", 1600, 1050], "gallery": [["three_Screens.webp", 2000, 654], ["armani_map_old.jpg", 1240, 990], ["armani_map_new.jpg", 1240, 990], ["map_details-1.jpg", 1240, 936], ["armani_room_1.jpg", 1240, 698], ["armani_room_2.jpg", 1240, 698], ["armani_room_3.jpg", 1240, 698], ["armani_room_4.jpg", 1240, 698], ["armani_room_5.jpg", 1240, 698], ["armani_room_6.jpg", 1240, 698], ["armani_start_screen.webp", 1294, 857], ["armani_video_screen.webp", 1294, 857], ["armani_map_screen.webp", 1294, 857], ["armani_room_screen.webp", 1294, 857], ["armani_panel_screen.webp", 1294, 857]]}, "moncler": {"cover": ["cover_moncler.jpg", 1600, 1050], "gallery": [["before_after.webp", 1240, 1549], ["fullscreen_page.webp", 1000, 1156], ["side_padding.webp", 1442, 824], ["top_down_padding.webp", 1442, 823], ["all_sides_padding.webp", 1442, 824], ["moncler_euqual_padding.webp", 2000, 1186], ["before_info_adjust.webp", 1524, 904], ["after_info_adjust.webp", 1524, 904], ["long_Section.webp", 1100, 1535], ["header_black_2.webp", 1460, 1784], ["product_image_before.webp", 641, 1213], ["product_image_after.webp", 640, 1146]]}, "shaa": {"cover": ["cover_shaa.jpg", 1600, 1050], "gallery": [["shaa_two_screens.jpg", 1600, 1860], ["split_Screen_mobile.jpg", 852, 1645], ["survey_poll_shaa.jpg", 852, 1645], ["live_translation_shaa.jpg", 852, 1645], ["login_two.jpg", 1240, 620], ["full_stream_two.jpg", 1240, 620], ["split_stream_two.jpg", 1240, 620]]}, "marangoni": {"cover": ["cover_marangoni.jpg", 1600, 1050], "gallery": [["screens_marangoni.webp", 2000, 622], ["tree_updated.webp", 1500, 2000], ["marangoni_languages.webp", 2000, 532], ["start_desktop.webp", 1601, 988], ["video_intro_desktop.webp", 1100, 679], ["menu_desktop.webp", 1100, 679], ["future_1_desktop.webp", 1238, 763], ["future_2_desktop.webp", 1100, 679], ["future_3_desktop.webp", 1238, 763], ["future_4_desktop.webp", 1238, 763]]}, "realtor": {"cover": ["realtor-cover.jpg", 1600, 1050], "gallery": [["components-header-scaled.webp", 2000, 941], ["step-1-seeking-answers.webp", 1240, 665], ["step-2-out-and-in.webp", 1240, 665], ["step-3-baby-steps.webp", 1240, 665], ["step-4-design-approach.webp", 1240, 665], ["step-5-buyin.webp", 1240, 665], ["step-6-building-scaled.webp", 2000, 1073], ["color-tokens-1-scaled.webp", 2000, 802], ["dimensions-2-scaled.webp", 2000, 802], ["grid-layout-scaled.webp", 2000, 802], ["Typography-1-scaled.webp", 2000, 802], ["Border-strokes-scaled.webp", 2000, 802], ["effects-scaled.webp", 2000, 802], ["componenets-light-v2.webp", 2000, 1274], ["componenets-dark-v2.webp", 2000, 1274], ["old-map-1.webp", 1440, 888], ["new-map-1.webp", 1440, 888]], "components": [["Banner.webp", 1142, 598], ["Breadcrumbs.webp", 1142, 598], ["Carousel.webp", 1142, 598], ["Clusters-and-pins.webp", 1142, 598], ["Dialog.webp", 1142, 598], ["Dropdown.webp", 1142, 598], ["Empty-state.webp", 1142, 598], ["Link.webp", 1142, 598], ["Navigation-header.webp", 1142, 598], ["Pagination.webp", 1142, 598], ["Password.webp", 1142, 598], ["Placeholder.webp", 1142, 598], ["Popover.webp", 1142, 598], ["Progress.webp", 1142, 598], ["Search.webp", 1142, 598], ["Segmented-control.webp", 1142, 598], ["Select-field.webp", 1142, 598], ["Selection-controls.webp", 1142, 598], ["Sheet.webp", 1142, 598], ["Slider.webp", 1142, 598], ["Snackbar.webp", 1142, 598], ["System-banner.webp", 1142, 598], ["Tags.webp", 1142, 598], ["Text-area.webp", 1142, 598], ["Toast.webp", 1142, 598], ["Tooltip.webp", 1142, 598], ["Tree-view.webp", 1142, 598], ["badges.webp", 1142, 598], ["button-groups.webp", 1142, 598], ["buttons-2.webp", 1142, 598]]}}, "logos": [["airfrance.webp", 1000, 563], ["armani_casa.webp", 261, 141], ["Beko.webp", 1000, 576], ["clarins.webp", 1000, 208], ["cotril.webp", 450, 87], ["davines.webp", 261, 141], ["finish.webp", 702, 320], ["garnier.webp", 261, 141], ["IED.webp", 1600, 662], ["istituto_marangoni.webp", 261, 141], ["miamo.webp", 1000, 320], ["michelin.webp", 1837, 951], ["naba.webp", 261, 141], ["sephora.webp", 261, 141]]};
 const SITE = "https://michelsleiman.com";
+const STAIRHD = [];
 const P = DATA.projects, ALBUMS = DATA.albums;
 const FLOORS = [
   {n:"R",  name:"Who I am", sub:"Rooftop"},
@@ -1496,6 +1521,7 @@ function timeOfDay(p){
   const envK = L(A.env,B.env);
   if(Math.abs(envK - (timeOfDay.lastEnv ?? -1)) > .005){ timeOfDay.lastEnv = envK; ENVMATS.forEach(([m,b])=>{ m.envMapIntensity = b*envK; }); }
   timeOfDay.p = p; cityNight(smooth(.74, .96, p), performance.now()/1000);
+  { const w = smooth(.62, .95, p); if(Math.abs(w - (timeOfDay.w ?? -1)) > .01){ timeOfDay.w = w; const r = document.documentElement.style; r.setProperty("--glass", `rgba(255,${Math.round(255 - 20*w)},${Math.round(255 - 44*w)},.62)`); r.setProperty("--tipbg", `rgb(${Math.round(29 + 30*w)},${Math.round(29 + 10*w)},${Math.round(31 - 2*w)})`); } }
   M.sand.color.setHex(0xe3dbcf).lerp(_c1.setHex(0xd59a72), smooth(.45, .8, p)).lerp(_c2.setHex(0x2c2628), smooth(.82, 1, p));
   skyU.warm.value = smooth(.3, 1, p); grade.uniforms.uWarm.value = smooth(.4, 1, p);
 }
@@ -1511,7 +1537,7 @@ function cardTex(kind, title, foot, {w=1200,h=760,bg="#f5f5f7",big=170,accent="#
   const B = Math.round(big*.72); x.fillStyle = "#1d1d1f"; x.font = `400 ${B}px "Bodoni Moda", Didot, "Bodoni 72", Georgia, serif`;
   const words = title.split(" "); let line="", out=[]; for(const wd of words){ const t=line?line+" "+wd:wd; if(x.measureText(t).width > w*.84 && line){ out.push(line); line=wd; } else line=t; } out.push(line);
   const y0 = h*.56 - (out.length-1)*B*.55; out.forEach((l,i)=>x.fillText(l, w*.08, y0 + i*B*1.1));
-  x.fillStyle = "#6e6e73"; x.font = `italic 400 ${Math.round(h*.05)}px "Cormorant Garamond", Georgia, serif`; x.fillText(foot||"", w*.08, h*.88);
+  x.fillStyle = "#6e6e73"; x.font = `italic 400 ${Math.round(h*.045)}px "Bodoni Moda", Didot, serif`; x.fillText(foot||"", w*.08, h*.88);
   }, tt);
 }
 function whenFont(draw, t){ draw(); if(document.fonts && document.fonts.load) Promise.all([document.fonts.load('600 92px Inter'), document.fonts.load('400 72px Inter'), document.fonts.load('300 100px Inter'), document.fonts.load('200 100px Inter'), document.fonts.load('500 44px Inter'), document.fonts.load('400 100px "Bodoni Moda"'), document.fonts.load('italic 400 60px "Cormorant Garamond"'), document.fonts.load('italic 500 60px "Cormorant Garamond"')]).then(()=>{ draw(); t.needsUpdate = true; }).catch(()=>{}); return t; }
@@ -1622,7 +1648,7 @@ WORK.forEach((w,i)=>{
   art.userData = art2.userData = {type:"work", i}; pickables.push(art);
   // Realtor: a whole wall of components, the system as architecture
   if(w.big){
-    const comps = P.realtor.components, cols = 3, rows = 5, cw = 1.45, chh = .86, gap = .12;
+    const comps = P.realtor.components, cols = 2, rows = 3, cw = 2.2, chh = 1.42, gap = .2;
     comps.slice(0, cols*rows*2).forEach((c, j)=>{
       const sideJ = j < cols*rows ? -1 : 1, jj = j % (cols*rows), col = jj % cols, row = Math.floor(jj/cols);
       const cx = sideJ*(iw/2 + .5 + cw/2 + col*(cw+gap)), cy = .6 + chh/2 + (rows-1-row)*(chh+gap);
@@ -1650,7 +1676,7 @@ WORK.forEach((w,i)=>{
     const bw = 1.1, bh = .34, by = w.big ? .4 : .42;
     btn = new THREE.Group(); btn.position.set(0, by, .12); g.add(btn);
     const bezel = new THREE.Mesh(pillGeo(bw + .07, bh + .07, .025, .006), M.alu); btn.add(bezel);
-    const capMat = new THREE.MeshStandardMaterial({ color: w.contact ? 0x1d1d1f : 0x0058d6, roughness: .3, metalness: 0, emissive: w.contact ? 0x1d1d1f : 0x0071e3, emissiveIntensity: .05 });
+    const capMat = new THREE.MeshStandardMaterial({ color: 0x1d1d1f, roughness: .3, metalness: 0, emissive: 0x1d1d1f, emissiveIntensity: .05 });
     const cap = new THREE.Mesh(pillGeo(bw, bh, .07), capMat); cap.position.z = .02; cap.castShadow = true; btn.add(cap);
     const txt = new THREE.Mesh(new THREE.PlaneGeometry(bw*.92, bw*.92*150/512), new THREE.MeshBasicMaterial({ map: btnTex(w.contact ? "Say hello" : w.about ? "Meet me" : "Explore"), transparent: true, toneMapped: false, depthWrite: false }));
     txt.position.z = .072; cap.add(txt);
@@ -1718,7 +1744,7 @@ HANG.forEach((prints, k)=>{
   });
   // heading on the wall, the series below it
   const hd = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 2.6*220/1024), new THREE.MeshBasicMaterial({map: galleryTex(k, [...new Set([a0, a1, a2])].map(i=>ALBUMS[i].title)), transparent:true, toneMapped:false}));
-  const outer = ROW[ROW.length - 1]; hd.position.set(X0 + sd*outer.x - outer.w/2 + 1.3, y0 + .78, wallZ + .02); add(hd);   // under the print nearest the end wall   // left-aligned under the row   // a gallery label under the cluster, left-aligned with it
+  const outer = ROW[ROW.length - 1]; hd.position.set(X0 + sd*outer.x - outer.w/2 + 1.3, y0 + .78, wallZ + .02); add(hd); STAIRHD.push({ m: hd, k, y0: hd.position.y, t: 0 });   // under the print nearest the end wall   // left-aligned under the row   // a gallery label under the cluster, left-aligned with it
   // an oak bench facing the prints, and a plinth with an open photo book
   box(2.9, .06, .62, M.walnut, X0, y0 + .44, -3.7); for(const dx of [-1.3, 1.3]) box(.06, .41, .52, M.alu, X0 + dx, y0 + .205, -3.7, false);
 
@@ -1732,6 +1758,14 @@ CUR = FG[LAST];
 {
   const y = fy(LAST), cx = stationX(LAST, .6) + 5.2;
   box(4.6, 1.05, 1.1, M.trav, cx, y + .52, -D/2 + 2.2);
+  { const sl = []; for(let i=0;i<30;i++) sl.push(i); const g = new THREE.BoxGeometry(.11, .92, .05), im = new THREE.InstancedMesh(g, M.walnut, sl.length), m4 = new THREE.Matrix4();   // fluted walnut front
+    sl.forEach(i=>{ m4.makeTranslation(cx - 2.175 + i*.15, y + .5, -D/2 + 2.2 + .57); im.setMatrixAt(i, m4); }); im.castShadow = true; im.receiveShadow = true; add(im); }
+  { const leaf = new THREE.MeshStandardMaterial({color:0x6f8a5a, roughness:.8});   // a small olive plant and a brass pendant
+    mesh(new THREE.CylinderGeometry(.13, .1, .24, 20), M.white, cx + 1.75, y + 1.22, -D/2 + 2.05);
+    for(let i=0;i<7;i++){ const a = i/7*Math.PI*2, r = .07 + (i%2)*.05; mesh(new THREE.IcosahedronGeometry(.1 + (i%3)*.02, 1), leaf, cx + 1.75 + Math.cos(a)*r, y + 1.46 + (i%3)*.07, -D/2 + 2.05 + Math.sin(a)*r, false); }
+    const brass = new THREE.MeshStandardMaterial({color:0xb8925a, roughness:.3, metalness:.9, emissive:0xffcf8a, emissiveIntensity:.0});
+    for(const dx of [-.6, .9]){ mesh(new THREE.CylinderGeometry(.006, .006, 1.6, 6), M.alu, cx + dx, y + 3.15, -D/2 + 2.2, false); const sh = mesh(new THREE.CylinderGeometry(.08, .2, .22, 24, 1, true), brass, cx + dx, y + 2.28, -D/2 + 2.2, false); sh.material.side = THREE.DoubleSide;
+      const bulb = mesh(new THREE.SphereGeometry(.05, 12, 8), new THREE.MeshBasicMaterial({color:0xfff1d6}), cx + dx, y + 2.2, -D/2 + 2.2, false); } }
   box(4.8, .05, 1.25, M.oak, cx, y + 1.08, -D/2 + 2.2);
   box(.7, .62, .5, M.alu, cx - 1.1, y + 1.42, -D/2 + 2.1);
   for(const dx of [-.3,.3]) mesh(new THREE.CylinderGeometry(.06,.05,.1,16), M.white, cx + .8 + dx, y + 1.16, -D/2 + 2.3);
@@ -1744,7 +1778,7 @@ CUR = FG[LAST];
   const mg = .65, cols = 7, rowsN = Math.ceil(DATA.logos.length/cols), cellW = (lw - mg*2)/cols, top = y + lh - .55, bot = y + .45, cellH = (top - bot)/rowsN;
   const hdr = new THREE.Mesh(new THREE.PlaneGeometry(4, .5), new THREE.MeshBasicMaterial({map:labelTex("Brands I've designed for"), transparent:true})); hdr.position.set(lx - lw/2 + mg + 2, y + lh + .02, -D/2 + .56); add(hdr);
   DATA.logos.forEach((l, j)=>{ const col = j % cols, row = Math.floor(j/cols);
-    const t = T(l[0], false); const a = l[1]/l[2]; let pw = cellW*.72, ph = pw/a; if(ph > cellH*.42){ ph = cellH*.42; pw = ph*a; }   // every logo fits its cell
+    const t = T(l[0], false); const a = l[1]/l[2], A = cellW*cellH*.13; let pw = Math.sqrt(A*a), ph = Math.sqrt(A/a); if(pw > cellW*.78){ pw = cellW*.78; ph = pw/a; } if(ph > cellH*.5){ ph = cellH*.5; pw = ph*a; }   // every logo fits its cell
     const m = new THREE.Mesh(new THREE.PlaneGeometry(pw, ph), new THREE.MeshStandardMaterial({map:t, transparent:true, color:0x8a7f72, roughness:.7}));
     m.position.set(lx - lw/2 + mg + (col + .5)*cellW, top - (row + .5)*cellH, -D/2 + .56); add(m); });
 }
@@ -2005,12 +2039,12 @@ function buildName(font){
   const mill = new THREE.Mesh(new THREE.BoxGeometry(1,1,1).translate(0,.5,0), facade(new THREE.MeshStandardMaterial({color:0xe4ded3, roughness:.85, emissive:0xffffff, emissiveIntensity:0}), { bay: 2.2, fl: 3.4, tint: .7, lit: .72, base: .6 }));
   mill.scale.set(20, mh, 14); mill.position.set(cx, GYs, zf - 7); scene.add(mill); CITY.night.push([mill.material, 1.2]);
   const size = 2.0, res = font.data.resolution, text = "MICHEL SLEIMAN";
-  SIGN.steady = new THREE.MeshStandardMaterial({color:0xb3221d, roughness:.5, emissive:0xff2414, emissiveIntensity:0});
+  SIGN.steady = new THREE.MeshStandardMaterial({color:0xf1ece4, roughness:.45, emissive:0xffd9a6, emissiveIntensity:0});
   SIGN.flick = SIGN.steady.clone();
   const items = []; let adv = 0;
   [...text].forEach((ch, i)=>{ if(ch === " "){ adv += size*.5; return; }
     const g = new TextGeometry(ch, {font, size, height:.25, curveSegments:4, bevelEnabled:false});
-    items.push({ g, x: adv, flick: i === 10 || i === 4 }); adv += font.data.glyphs[ch].ha*size/res + size*.06; });
+    items.push({ g, x: adv, flick: false }); adv += font.data.glyphs[ch].ha*size/res + size*.06; });
   const total = adv, top = GYs + mh + 2;
   items.forEach(it=>{ const m = new THREE.Mesh(it.g, it.flick ? SIGN.flick : SIGN.steady); m.position.set(cx - total/2 + it.x, top, zf - .6); m.castShadow = true; scene.add(m); });
   // the steel lattice the letters stand on
@@ -2128,7 +2162,7 @@ const POOF = (()=>{
   const pts = new THREE.Points(g, mat); pts.frustumCulled = false; pts.renderOrder = 6; root.add(pts);
   // glowing rings on the floor
   const ringGeo = new THREE.RingGeometry(.86, 1, 64); ringGeo.rotateX(-Math.PI/2);
-  const RINGS = [0,1,2,3].map(()=>{ const m = new THREE.Mesh(ringGeo, new THREE.MeshBasicMaterial({color:0x0071e3, transparent:true, opacity:0, depthWrite:false, fog:false})); m.visible = false; m.renderOrder = 5; root.add(m); return {m, age:9, life:.8}; });
+  const RINGS = [0,1,2,3].map(()=>{ const m = new THREE.Mesh(ringGeo, new THREE.MeshBasicMaterial({color:0xffe2b8, transparent:true, opacity:0, depthWrite:false, fog:false})); m.visible = false; m.renderOrder = 5; root.add(m); return {m, age:9, life:.8}; });
   const COLS = [[0,.44,.89],[.25,.58,1],[.55,.75,1],[1,.76,.3],[1,.88,.55],[1,1,1]];
   let head = 0, ri = 0, live = 0;
   function take(){ const i = head; head = (head + 1) % N; return i; }
@@ -2139,7 +2173,7 @@ const POOF = (()=>{
       for(let k=0;k<130;k++){ const i = take(), a = Math.random()*6.2832, r = Math.random()*.32, h = .1 + Math.random()*1.7, sp = 1 + Math.random()*2.4;
         P[i*3]=p.x+Math.cos(a)*r; P[i*3+1]=p.y+h; P[i*3+2]=p.z+Math.sin(a)*r;
         V[i*3]=Math.cos(a)*sp; V[i*3+1]=.4 + Math.random()*2.6; V[i*3+2]=Math.sin(a)*sp; M[i]=0; L[i]=.7 + Math.random()*.8; look(i, k%9===0 ? .55 : .3); }
-      ring(p, 0x0071e3, .9, 1.9); ring(p, 0xffc45a, .7, 1.2); live = 2; aC.needsUpdate = aS.needsUpdate = true;
+      ring(p, 0xffe9c7, .9, 1.9); ring(p, 0xffc45a, .7, 1.2); live = 2; aC.needsUpdate = aS.needsUpdate = true;
     },
     gather(p){   // sparkles spiral in to where he will appear
       for(let k=0;k<110;k++){ const i = take(), a = Math.random()*6.2832, r = 1.2 + Math.random()*1.1, h = Math.random()*2.3;
@@ -2151,7 +2185,7 @@ const POOF = (()=>{
       for(let k=0;k<60;k++){ const i = take(), a = Math.random()*6.2832, sp = 1.4 + Math.random()*1.8;
         P[i*3]=p.x; P[i*3+1]=p.y+.6+Math.random()*.8; P[i*3+2]=p.z;
         V[i*3]=Math.cos(a)*sp; V[i*3+1]=Math.random()*1.6; V[i*3+2]=Math.sin(a)*sp; M[i]=0; L[i]=.45 + Math.random()*.4; look(i, k%7===0 ? .5 : .26); }
-      ring(p, 0x0071e3, .7, 1.5); live = 2; aC.needsUpdate = aS.needsUpdate = true;
+      ring(p, 0xffe9c7, .7, 1.5); live = 2; aC.needsUpdate = aS.needsUpdate = true;
     },
     update(dt){
       RINGS.forEach(R=>{ if(R.age > R.life){ R.m.visible = false; return; } R.age += dt; const u = Math.min(1, R.age/R.life), e = 1 - Math.pow(1-u, 3);
@@ -2207,7 +2241,7 @@ function buildPath(){
     else if(q.type==="walk" && isSt(A) && isSt(B) && A.k===q.k && B.k===q.k) q.between = [A.station, B.station];
     else if(q.type==="walk" && q.k===LAST && isSt(B) && B.k===q.k && !isSt(A)){ q.approach = B.station; B.holdIn = true; } });   // ground floor: close in as soon as he steps off the stairs, past the client logos
   $("#scroller").style.height = (TOTAL + VH) + "px";
-  $("#prog").innerHTML = FLOORS.map((F,k)=>`<button data-k="${k}" aria-label="${F.name}"><span>${F.name}</span></button>`).join("");
+  $("#prog").innerHTML = `<i class="track" aria-hidden="true"><b id="progFill"></b></i>` + FLOORS.map((F,k)=>`<button data-k="${k}" aria-label="${F.name}"><span>${F.name}</span></button>`).join("");
   $("#prog").querySelectorAll("button").forEach(b=>b.onclick=()=>goFloor(+b.dataset.k));
 }
 function posAt(p){
@@ -2268,10 +2302,14 @@ function initAudio(){
   [261.6, 329.6, 392, 493.9, 587.3].forEach((f,i)=>{ const o=ctx.createOscillator(); o.type="sine"; o.frequency.value=f/2; const og=ctx.createGain(); og.gain.value=0;
     const lfo=ctx.createOscillator(); lfo.frequency.value=.03+i*.013; const lg=ctx.createGain(); lg.gain.value=.011; lfo.connect(lg).connect(og.gain); lfo.start(); o.connect(og).connect(master); o.start(); });
 }
+{ const b = document.getElementById("sndBtn"); if(b) b.onclick = ()=>{ if(!audio.ctx) initAudio(); if(audio.ctx.state === "suspended") audio.ctx.resume();
+  audio.on = !audio.on; const g = audio.master.gain, t = audio.ctx.currentTime; g.cancelScheduledValues(t); g.setTargetAtTime(audio.on ? .55 : 0, t, .3);
+  document.body.classList.toggle("sound", audio.on); b.setAttribute("aria-pressed", audio.on); b.querySelector(".t").textContent = audio.on ? "Sound on" : "Sound off"; }; }
 function sfx(kind, vol=.5){
   if(!audio.on) return; const ctx = audio.ctx, t = ctx.currentTime;
   if(kind==="step"){ const s=ctx.createBufferSource(); s.buffer=audio.noise; const f=ctx.createBiquadFilter(); f.type="bandpass"; f.frequency.value=1400+Math.random()*500; f.Q.value=2.5;
     const g=ctx.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol*1.4,t+.004); g.gain.exponentialRampToValueAtTime(.001,t+.09); s.connect(f).connect(g).connect(audio.master); s.start(t,Math.random()*3,.1); }
+  if(kind==="swell"){ const s=ctx.createBufferSource(); s.buffer=audio.noise; s.loop=true; const f=ctx.createBiquadFilter(); f.type="lowpass"; f.frequency.value=900; const g=ctx.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol*.9,t+1.4); g.gain.exponentialRampToValueAtTime(.001,t+4.5); s.connect(f).connect(g).connect(audio.master); s.start(t); s.stop(t+4.6); }
   if(kind==="shutter"){ [0,.06].forEach(dl=>{ const s=ctx.createBufferSource(); s.buffer=audio.noise; const f=ctx.createBiquadFilter(); f.type="highpass"; f.frequency.value=3000; const g=ctx.createGain(); g.gain.setValueAtTime(.9,t+dl); g.gain.exponentialRampToValueAtTime(.001,t+dl+.04); s.connect(f).connect(g).connect(audio.master); s.start(t+dl,Math.random(),.05); }); }
   if(kind==="chime"){ [880, 1318.5].forEach((fq,i)=>{ const o=ctx.createOscillator(); o.type="sine"; o.frequency.value=fq; const g=ctx.createGain(); g.gain.setValueAtTime(0,t+i*.09); g.gain.linearRampToValueAtTime(.07,t+i*.09+.01); g.gain.exponentialRampToValueAtTime(.001,t+i*.09+1.2); o.connect(g).connect(audio.master); o.start(t+i*.09); o.stop(t+i*.09+1.3); }); }
   if(kind==="floor"){ [523.25, 659.25, 783.99].forEach((fq,i)=>{ const o=ctx.createOscillator(); o.type="sine"; o.frequency.value=fq; const g=ctx.createGain(); g.gain.setValueAtTime(0,t+i*.12); g.gain.linearRampToValueAtTime(.05,t+i*.12+.02); g.gain.exponentialRampToValueAtTime(.001,t+i*.12+1.6); o.connect(g).connect(audio.master); o.start(t+i*.12); o.stop(t+i*.12+1.7); }); }
@@ -2629,7 +2667,12 @@ function showAlbum(ai){
     <div class="p-gal photos" style="margin-top:56px">${A.photos.map(f=>fig(f)).join("")}</div>
     <a class="p-link ghost rv" href="${SITE}/portfolio-item/${A.id}/" target="_blank" rel="noopener">View on michelsleiman.com ›</a>`, "#bf4800", {type:"album", ai});
 }
-function counts(){ $("#cW").textContent = WORK.filter(w=>seenW.has(w.id)).length; $("#tW").textContent = WORK.length; $("#cP").textContent = seenP.size; $("#tP").textContent = ALBUMS.length; }
+function bumpEl(e){ e.classList.remove("bump"); void e.offsetWidth; e.classList.add("bump"); }
+let lastCounts = null;
+function counts(){ const nw = WORK.filter(w=>seenW.has(w.id)).length, np = seenP.size;
+  if(lastCounts){ if(nw > lastCounts[0]) bumpEl($("#cW")); if(np > lastCounts[1]) bumpEl($("#cP")); } lastCounts = [nw, np];
+  document.body.classList.toggle("found", nw + np > 0);
+  $("#cW").textContent = WORK.filter(w=>seenW.has(w.id)).length; $("#tW").textContent = WORK.length; $("#cP").textContent = seenP.size; $("#tP").textContent = ALBUMS.length; }
 counts();
 $("#menuList").innerHTML = FLOORS.map((F,k)=>`<button role="menuitem" data-k="${k}"><span class="n">${F.n}</span><span class="t">${F.name}</span><span class="s">${k===2||k===1||k===3?WORK.filter(w=>w.floor===k).map(w=>w.label).join(", "):F.sub}</span></button>`).join("");
 $("#menuList").querySelectorAll("button").forEach(b=>b.onclick=()=>{ closeMenu(); if(panelOpen) closePanel(); goFloor(+b.dataset.k); });
@@ -2650,6 +2693,7 @@ addEventListener("keydown", e=>{
 /* ============================ loop ============================ */
 let glanced = false, bubbleKey = "", heroHov0 = false, nextGest = 0, gestN = 0, prevCur = 0, runDir = 0, runFor = 0, byeDone = false, byeT = 0; const lookPt = new THREE.Vector3();
 let cur = 0, last = performance.now(), prevPos = null, speed = 0, yaw = 0, lastMove = performance.now(), idleStage = 0;
+let lastArrive = -2, wasOutside = false;
 let camLook = new THREE.Vector3(), snapCam = true, releasing = 0, curFloor = -1, activeSt = -1, stepAcc = 0, started = false, introT = 0, introDone = false, time = 0;
 const lookS = new THREE.Vector2();
 const desired = new THREE.Vector3(), desiredLook = new THREE.Vector3(), proj = new THREE.Vector3(), tmp = new THREE.Vector3();
@@ -2713,7 +2757,7 @@ function frame(now){
     if(VOICE_ON || heroHov){ targetYaw = Math.atan2(camera.position.x - pos.x, camera.position.z - pos.z); if(heroHov && !heroHov0) hero.nod = .6; }   // point at him, or talk to him: he faces you
     heroHov0 = !!heroHov;
     if(idleT > 1.4 && idleStage===0 && !panelOpen){ idleStage = 1;
-      bubble(s.end || s.type==="out" ? "" : s.type==="stairs" ? "My photographs, on the way down →" : dwellSt>=0 ? (seenW.has(WORK[dwellSt].id) && !WORK[dwellSt].contact ? AGAIN[(dwellSt + seenW.size) % AGAIN.length] : (LINES[WORK[dwellSt].id] || "Press the button to step inside")) : (s.k===0 ? "Hi, I'm Michel! Click me to chat, or scroll to explore." : "")); }
+      bubble(s.end || s.type==="out" ? "" : s.type==="stairs" ? "My photographs, on the way down →" : dwellSt>=0 ? (seenW.has(WORK[dwellSt].id) && !WORK[dwellSt].contact ? AGAIN[(dwellSt + seenW.size) % AGAIN.length] : (LINES[WORK[dwellSt].id] || "Press the button to step inside")) : (s.k===0 ? "Hi, I'm Michel! Click me to chat." : "")); }
     if(idleT > 7.5 && idleStage===1 && cur > 30){ idleStage = 3; bubble(""); }
   }
   let heroPos = pos, heroSpeed = moving ? speed : 0;
@@ -2756,6 +2800,7 @@ function frame(now){
     door.position.x = DOORX + 4.3*(s.end ? 1 : s.type==="out" ? smooth(.04, .3, P.t) : 0);
     doorLight.intensity = 22*smooth(.85, 1, tp);
     $("#footer").classList.toggle("on", !!((s.end || (s.type === "out" && P.t > .4)) && !panelOpen));   // from the moment he is through the door
+    if(outside && !wasOutside) sfx("swell", .6); wasOutside = outside;
     document.body.classList.toggle("outside", outside); }
   sun.target.position.set(pos.x*.6, pos.y + 1, -1); sun.position.copy(sun.target.position).addScaledVector(SUNDIR, 55);
 
@@ -2787,8 +2832,8 @@ function frame(now){
   if(s.type==="out" || s.end){
     const b = s.end ? 1 : smooth(0, .3, P.t);
     const pan = s.end ? Math.sin(time*.07)*smooth(0,.5,P.t) : 0;
-    desired.lerp(tmp.set(pos.x + .5, pos.y + 2.1, pos.z + 7.5*narrow), b);
-    desiredLook.lerp(tmp.set(pos.x - 4 + pan*16, pos.y + .2, pos.z - 60), b);
+    desired.lerp(tmp.set(pos.x + .5, pos.y + 2.35, pos.z + 7.5*narrow), b);
+    desiredLook.lerp(tmp.set(pos.x - 4 + pan*16, pos.y - 1.8, pos.z - 60), b);   // Michel sits higher in the frame, clear of the footer
     fovT = s.end ? 34 : lerp(28, 38, smooth(.35, .6, P.t)) - (38-34)*smooth(.75, 1, P.t);
   }
   if(tele){ tele.k = damp(tele.k, tele.on ? 1 : 0, 2.4, dt); fovT = lerp(fovT, fovT*.82, smooth(0, 1, tele.k));
@@ -2844,12 +2889,19 @@ function frame(now){
 
   // ---- state & UI ----
   if(introDone && s.k !== curFloor){ const was = curFloor; curFloor = s.k; const F = FLOORS[s.k];
-    { const fl = $("#hudFl"); fl.textContent = s.k===0||s.k===LAST ? F.name : `Level ${F.n} · ${F.name}`;
+    { const fl = $("#hudFl"); if(was !== -1 && fl.textContent){ const gh = fl.cloneNode(true); gh.removeAttribute("id"); gh.className = "fl flGhost"; gh.style.left = fl.offsetLeft + "px"; gh.style.top = fl.offsetTop + "px"; fl.parentNode.appendChild(gh); setTimeout(()=>gh.remove(), 600); }
+      fl.textContent = s.k===0||s.k===LAST ? F.name : `Level ${F.n} · ${F.name}`;
       if(was !== -1){ fl.classList.remove("roll"); $("#homeBtn").classList.remove("pulse"); void fl.offsetWidth; fl.classList.add("roll"); $("#homeBtn").classList.add("pulse"); } }
-    $("#prog").querySelectorAll("button").forEach(b=>b.classList.toggle("on", +b.dataset.k===s.k));
+    $("#prog").querySelectorAll("button").forEach(b=>{ const on = +b.dataset.k===s.k; b.classList.toggle("on", on); if(on && was !== -1){ b.classList.add("flash"); clearTimeout(b._ft); b._ft = setTimeout(()=>b.classList.remove("flash"), 1800); } });
     $("#menuList").querySelectorAll("button").forEach(b=>b.classList.toggle("on", +b.dataset.k===s.k));
   }
   activeSt = dwellSt;
+  { const pf = $("#progFill"); if(pf){ const v = TOTAL ? clamp(cur/(TOTAL - innerHeight*.9), 0, 1) : 0; if(Math.abs(v - (pf._v||0)) > .002){ pf._v = v; pf.style.transform = `scaleY(${v.toFixed(3)})`; } } }
+  // M1: a project screen "powers on" as Michel arrives at it
+  if(dwellSt !== lastArrive){ lastArrive = dwellSt; if(dwellSt >= 0){ const st = STATIONS[dwellSt]; st.power = 1; } }
+  STATIONS.forEach(st=>{ if(st.power > 0){ st.power = Math.max(0, st.power - dt*1.4); const e = st.power; st.powerK = Math.sin(Math.min(1, (1 - e)*1.6)*Math.PI)*e; } else st.powerK = 0; });
+  // M2: the stairwell headings lift into place as he passes them
+  STAIRHD.forEach(h=>{ const on = (s.type==="stairs" || s.type==="step") && s.k === h.k; h.t = damp(h.t, on ? 1 : 0, 3, dt); h.m.position.y = h.y0 - .12 + .12*h.t; h.m.material.opacity = .45 + .55*h.t; });
   if(!introDone || focus || panelOpen || tele){ hovered = null; rayDirty = true; }
   else if(rayDirty || camera.position.distanceToSquared(rayCam) > 1e-5){ rayDirty = false; rayCam.copy(camera.position); ray.setFromCamera(mouse, camera); const hit = ray.intersectObjects(pickables, false)[0]; hovered = hit ? hit.object : null; }
   { const c = hovered ? "pointer" : "default"; if(canvas.style.cursor !== c) canvas.style.cursor = c; }
@@ -2858,7 +2910,8 @@ function frame(now){
     const near = st.i === dwellSt, hov = hovered && hovered.userData.type==="work" && hovered.userData.i === st.i;
     if(near && !st._near) st.pulse = 1; st._near = near; st.pulse = Math.max(0, (st.pulse || 0) - dt/1.3);   // he arrives: the piece brightens once and its button breathes
     const bump = st.pulse > 0 ? Math.sin((1 - st.pulse)*Math.PI) : 0;
-    st.baseE = damp(st.baseE ?? .3, near||hov ? .5 : .3, 5, dt); st.mat.emissiveIntensity = st.baseE + bump*.28; st.fade.emissiveIntensity = st.mat.emissiveIntensity;
+    st.baseE = damp(st.baseE ?? .3, near||hov ? .5 : .3, 5, dt); st.mat.emissiveIntensity = st.baseE + bump*.28 + (st.powerK||0)*.5;
+    st.lift = damp(st.lift || 0, hov && !act ? 1 : 0, 6, dt); st.art.position.z = .16 + .06*st.lift; st.art2.position.z = .165 + .06*st.lift;   // the screen eases toward you on hover st.fade.emissiveIntensity = st.mat.emissiveIntensity;
     st.group.position.z = damp(st.group.position.z, WALLZ + (hov && !st.swing ? .12 : 0), 6, dt);
     if(st.swing){ const S = st.swing, B = st.btn.userData, tt = performance.now()/1000, h = Math.min(dt, 1/30);
       if(hov && !S.hov){ S.vx += .14; S.vz += (mouse.x > (S.mx||0) ? 1 : -1)*.12; }   // a little nudge as you touch it
