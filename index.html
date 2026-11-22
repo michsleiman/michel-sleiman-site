@@ -924,16 +924,18 @@ let CUR = root;
 function add(m){ CUR.add(m); return m; }
 function mesh(geo, mat, x, y, z, cast=true, recv=true){ const m = new THREE.Mesh(geo, mat); m.position.set(x,y,z); m.castShadow = cast; m.receiveShadow = recv; return add(m); }
 function box(w,h,d,mat,x,y,z,cast=true,recv=true){ return mesh(new THREE.BoxGeometry(w,h,d), mat, x,y,z,cast,recv); }
+const ROOFEXT = 1.8;
 function slab(w, x, y, topMat){ const t=.7; const m = new THREE.Mesh(new THREE.BoxGeometry(w, t, D+1.4), [M.poche, M.poche, topMat, M.ceiling, M.poche, M.poche]); m.position.set(x, y - t/2, -.2); m.castShadow = m.receiveShadow = true; return add(m); }
 
 for(let k=0;k<=LAST;k++){
   CUR = FG[k];
-  const top = k===0 ? paveMat(W - S, D + 1.4) : k===LAST ? new THREE.MeshStandardMaterial({map: ctex(terrazzoC, (W + 4)/4.8, (D + 1.4)/4.8), roughness:.3, envMapIntensity:1}) : M.oak;   // lobby: polished terrazzo
-  if(k<LAST){ const s = side(k); slab(W - S, -s*S/2, fy(k), top); }
+  const ext = k===0 ? ROOFEXT : 0;   // the roof runs out over the end wall, so there is no gap and no wall above it
+  const top = k===0 ? paveMat(W - S + ext, D + 1.4) : k===LAST ? new THREE.MeshStandardMaterial({map: ctex(terrazzoC, (W + 4)/4.8, (D + 1.4)/4.8), roughness:.3, envMapIntensity:1}) : M.oak;   // lobby: polished terrazzo
+  if(k<LAST){ const s = side(k); slab(W - S + ext, -s*S/2 - s*ext/2, fy(k), top); }
   else slab(W + 4, 0, fy(k), top);
 }
 CUR = FG[LAST];
-const sideH = fy(0) - fy(LAST) + 1.6;
+const sideH = fy(0) - fy(LAST) + .7 - .03;   // the end walls stop flush with the roof, so nothing pokes up past the roof edge
 for(const sx of [-1,1]){ const m = new THREE.Mesh(new THREE.BoxGeometry(1.4, sideH, D+1.4), [M.plaster, M.plaster, M.poche, M.poche, M.poche, M.plaster]); m.position.set(sx*(W/2+.7), fy(LAST) - .7 + sideH/2, -.2); m.castShadow = m.receiveShadow = true; add(m); }
 for(let k=1;k<=LAST;k++){
   CUR = FG[k];
@@ -949,10 +951,10 @@ for(let k=1;k<=LAST;k++){
   box(glassW, .12, 1.6, M.trav, gcx, y0 - .06, -D/2 - 1.3);
 }
 CUR = FG[0];
-box(W + 2.8, 1.05, .3, M.white, 0, fy(0) + .52, -D/2 - .75);
-box(.3, 1.05, D + 1.4, M.white, -W/2 - 1.25, fy(0) + .52, -.2);
-box(W + 2.95, .06, .42, M.alu, 0, fy(0) + 1.08, -D/2 - .75, false); box(.42, .06, D + 1.5, M.alu, -W/2 - 1.25, fy(0) + 1.08, -.2, false);   // metal copings
-box(W + 2.82, .035, .02, M.gap, 0, fy(0) + .18, -D/2 - .59, false);
+box(W + 3.2, 1.05, .3, M.white, -.2, fy(0) + .52, -D/2 - .75);
+box(.3, 1.05, D + 1.4, M.white, -W/2 - ROOFEXT + .15, fy(0) + .52, -.2);   // left parapet, now on the roof's own edge
+box(W + 3.35, .06, .42, M.alu, -.2, fy(0) + 1.08, -D/2 - .75, false); box(.42, .06, D + 1.5, M.alu, -W/2 - ROOFEXT + .15, fy(0) + 1.08, -.2, false);   // metal copings
+box(W + 3.22, .035, .02, M.gap, -.2, fy(0) + .18, -D/2 - .59, false);
 // pergola
 {
   const px0 = W/2 - S - 9.5, px1 = W/2 - S - .8, pz0 = -D/2 + .2, pz1 = -D/2 + 4.8, top = fy(0) + 3.4;
@@ -1071,17 +1073,17 @@ for(let k=1;k<=LAST;k++){ CUR = FG[k]; for(const z of [-1.5, 2.2]){ const m = ne
   // slab edges: a metal nosing on top and a fine shadow gap under each floor
   for(let k=0;k<=LAST;k++){
     CUR = FG[k];
-    const w = k<LAST ? W - S : W + 4, x = k<LAST ? -side(k)*S/2 : 0;
+    const ext = k===0 ? ROOFEXT : 0, w = k<LAST ? W - S + ext : W + 4, x = k<LAST ? -side(k)*S/2 - side(k)*ext/2 : 0;
     many(M.alu, [[x, fy(k) - .03, zF + .02, w + .02, .06, .06]], false);
   }
   // outer walls: a brise-soleil of vertical fins and floor eyebrows, which reads at any distance and throws real shadows
   CUR = FG[LAST];
-  const wy0 = fy(LAST) - .7, wy1 = fy(0) + .9, wh = wy1 - wy0, fins = [], bands = [], caps = [], seams = [];
+  const wy0 = fy(LAST) - .7, wy1 = fy(0) - .03, wh = wy1 - wy0, fins = [], bands = [], caps = [], seams = [];
   for(const sx of [-1,1]){
     const ox = sx*(W/2 + 1.4);
     for(let z = -6.5; z <= 6.21; z += .8) fins.push([ox + sx*.2, wy0 + wh/2 + .1, z, .4, wh - .2, .09]);
     for(let k=0;k<=LAST;k++) bands.push([ox + sx*.3, fy(k) - .35, -.2, .6, .14, D + 1.5]);
-    caps.push([sx*(W/2 + .7) + sx*.15, wy1 + .03, -.2, 1.75, .06, D + 1.55]);
+    caps.push([sx*(W/2 + .7) + sx*.15, wy1 - .04, -.2, 1.75, .06, D + 1.55]);
     for(let k=0;k<=LAST;k++) seams.push([sx*(W/2 + .7), fy(k) - .7, zF + .01, 1.4, .035, .02]);
   }
   many(M.white, fins); many(M.white, bands); many(M.alu, caps, false);
