@@ -549,6 +549,18 @@ body.dusk #prog button span,body.lobbyk #prog button span{color:#fff;text-shadow
  #sndBtn .t{display:none}#sndBtn{padding-left:12px;padding-right:12px}
 }
 @media(max-width:760px){#hint{display:none}}
+@media(max-width:1180px){.p-hero{margin-left:0;margin-right:0}}
+@media(max-width:760px){
+ .p-hero{margin-top:36px;border-radius:20px}
+ #homeBtn #menuList{position:absolute;left:-12px;right:auto;top:calc(100% + 16px);width:calc(100vw - 24px);max-width:none}
+ /* the ending on a phone: a compact footer so Michel and the skyline stay in view */
+ body #footer{grid-template-columns:1fr;gap:10px;padding:16px 18px;bottom:10px}
+ body #footer .brand{grid-column:auto}
+ #footer .fcol:nth-child(2),#footer .fcol:nth-child(3),#footer .brand p,#footer .brand small{display:none}
+ #footer .brand .fk{font-size:20px;margin-bottom:2px}
+ #footer .fcol:nth-child(4) .fk{display:none}
+ #footer .fcol:nth-child(4){display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px}
+}
 @media(min-width:761px) and (max-width:1100px) and (orientation:portrait){
  #intro{top:96px;bottom:auto}
 }
@@ -2990,7 +3002,7 @@ function frame(now){
     if(dwellSt>=0){ const st = STATIONS[dwellSt]; sx = st.x; sy = st.y; dz = st.w.big && s.k !== LAST ? 19 : 12.5; tIn = (s.holdIn ? 1 : smooth(0, .28, P.t)) * (s.holdOut ? 1 : 1 - smooth(.82, 1, P.t)); }
     else if(s.approach!=null){ const st = STATIONS[s.approach], u = s.leaving ? 1 - smooth(0, .6, P.t) : smooth(.55, 1, P.t); sx = lerp(pos.x, st.x, u); sy = st.y; dz = 12.5; tIn = s.leaving ? 1 : smooth(0, .25, P.t); }   // one steady distance all the way to the contact wall
     else { const a = STATIONS[s.between[0]], b = STATIONS[s.between[1]], u = smooth(0, 1, P.t); sx = lerp(a.x, b.x, u); sy = lerp(a.y, b.y, u); dz = lerp(a.w.big ? 19 : 12.5, b.w.big ? 19 : 12.5, u); tIn = 1; }   // walking between two pieces: stay in close
-    const off = clamp(pos.x - sx, -4, 4);   // frame the piece and Michel beside it
+    const off = clamp(pos.x - sx, -4, 4)*(narrow > 1 ? 1.9 : 1);   // frame the piece and Michel beside it (more so on a narrow screen)
     zoomK = tIn;
     desired.lerp(tmp.set(sx + off*.4, sy + 3.3, dz*narrow), tIn);
     desiredLook.lerp(tmp.set(sx + off*.22, sy + 2.75, WALLZ), tIn);
