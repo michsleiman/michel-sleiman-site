@@ -18,7 +18,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Michel Sleiman","jobTitle":"Senior Product Designer","url":"https://michel-sleiman-site.vercel.app/","email":"mailto:hello@michsleiman.com","address":{"@type":"PostalAddress","addressLocality":"Montréal","addressCountry":"CA"},"sameAs":["https://www.linkedin.com/in/sleimanmichel/","https://www.instagram.com/michsleiman/"]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 <script type="importmap">
 { "imports": {
   "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
@@ -27,7 +27,7 @@
 </script>
 <style>
 :root{--ink:#1d1d1f;--ink2:#6e6e73;--ink3:#a1a1a6;--bg:#f5f5f7;--line:rgba(0,0,0,.08);--glass:rgba(255,255,255,.62);--blue:#0071e3;
-  --serif:"Bodoni Moda",Didot,"Bodoni 72",serif;--body:"Bodoni Moda",Didot,"Bodoni 72",serif;
+  --serif:"Newsreader",Georgia,serif;--body:"Newsreader",Georgia,serif;
   --sans:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",system-ui,sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:#eceae6;color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
@@ -796,7 +796,7 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { FontLoader } from "three/addons/loaders/FontLoader.js";
 import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
-import { loadHero } from "./figure.js?v=sit1";
+import { loadHero } from "./figure.js?v=r9";
 
 /* ============================ CONTENT — all copy from michelsleiman.com ============================ */
 const DATA = {"albums": [{"id": "by-the-sea", "title": "By the Sea", "photos": [["by_the_sea_1.jpg", 800, 998], ["by_the_sea_2.jpg", 800, 998], ["by_the_sea_3.jpg", 800, 1000], ["by_the_sea_4.jpg", 800, 997], ["by_the_sea_5.jpg", 800, 997], ["by_the_sea_6.jpg", 800, 997], ["by_the_sea_7.jpg", 800, 1000], ["by_the_sea_8.jpg", 800, 1000], ["by_the_sea_9.jpg", 800, 1000], ["by_the_sea_10.jpg", 800, 1000]]}, {"id": "in-between", "title": "In Between", "photos": [["in_between_1.jpg", 800, 1000], ["in_between_2.jpg", 800, 998], ["in_between_3.jpg", 800, 1000], ["in_between_4.jpg", 800, 1000], ["in_between_5.jpg", 800, 1000]]}, {"id": "aya", "title": "Aya", "photos": [["aya_1.jpg", 800, 1000], ["aya_2.jpg", 800, 1000], ["aya_3.jpg", 800, 1000], ["aya_4.jpg", 800, 1000], ["aya_5.jpg", 800, 1000], ["aya_6.jpg", 800, 1000], ["aya_7.jpg", 800, 1000], ["aya_8.jpg", 800, 1000], ["aya_9.jpg", 800, 1000], ["aya_10.jpg", 800, 1000]]}, {"id": "projecting-emotions", "title": "Projecting Emotions", "photos": [["projecting_1.jpg", 800, 1000], ["projecting_2.jpg", 800, 1000], ["projecting_3.jpg", 800, 1000], ["projecting_4.jpg", 800, 1000], ["projecting_5.jpg", 800, 1000], ["projecting_6.jpg", 800, 1000], ["projecting_7.jpg", 800, 1000], ["projecting_8.jpg", 800, 1000], ["projecting_9.jpg", 800, 1000], ["projecting_10.jpg", 800, 1000]]}, {"id": "light-dancing", "title": "Light Dancing", "photos": [["light_1.jpg", 800, 1000], ["light_2.jpg", 800, 1000], ["light_9.jpg", 800, 1000], ["light_10.jpg", 800, 1000], ["light_5.jpg", 800, 1000], ["light_7.jpg", 800, 1000], ["light_8.jpg", 800, 1000], ["light_6.jpg", 800, 999], ["light_4.jpg", 800, 1000], ["light_3.jpg", 800, 1000]]}, {"id": "people", "title": "People", "photos": [["people_8.jpg", 800, 998], ["people_7.jpg", 800, 998], ["people_5.jpg", 800, 1000], ["people_4.jpg", 800, 1000], ["people_6.jpg", 800, 1000], ["people_27.jpg", 800, 1000], ["people_25.jpg", 800, 1000], ["people_26.jpg", 800, 1000], ["people_23.jpg", 800, 1035], ["people_30.jpg", 774, 1000], ["people_3.jpg", 800, 1422], ["people_2.jpg", 800, 1422], ["people_11.jpg", 800, 1000], ["people_12.jpg", 800, 1000], ["people_16.jpg", 800, 1000], ["people_15.jpg", 800, 1000], ["people_10.jpg", 800, 1009], ["people_31.jpg", 794, 1000], ["people_19.jpg", 800, 1200], ["people_20.jpg", 800, 1200], ["people_1.jpg", 800, 998], ["people_21.jpg", 800, 1000], ["people_17.jpg", 800, 1000], ["people_18.jpg", 800, 1000]]}, {"id": "landscapes", "title": "Landscapes", "photos": [["landscapes_1.jpg", 800, 998], ["landscapes_3.jpg", 800, 1000], ["landscapes_2.jpg", 800, 1000], ["landscapes_6.jpg", 800, 998], ["landscapes_4.jpg", 800, 1000], ["landscapes_5.jpg", 800, 1000], ["landscapes_8.jpg", 800, 998], ["landscapes_7.jpg", 800, 997], ["landscapes_14.jpg", 800, 1000], ["landscapes_11.jpg", 800, 1000], ["landscapes_10.jpg", 800, 1000], ["landscapes_13.jpg", 800, 1000], ["landscapes_9.jpg", 800, 1000], ["landscapes_16.jpg", 800, 1000], ["landscapes_17.jpg", 800, 1000], ["landscapes_15.jpg", 800, 1000], ["landscapes_18.jpg", 800, 1000], ["landscapes_12.jpg", 800, 1000]]}, {"id": "naviglio-grande", "title": "Naviglio Grande", "photos": [["naviglio_grande_5.jpg", 800, 1000], ["naviglio_grande_1.jpg", 800, 1000], ["naviglio_grande_2.jpg", 800, 1000], ["naviglio_grande_3.jpg", 800, 1000], ["naviglio_grande_4.jpg", 800, 1000], ["naviglio_grande_6.jpg", 800, 1001], ["naviglio_grande_7.jpg", 800, 1000], ["naviglio_grande_8.jpg", 800, 1000], ["naviglio_grande_9.jpg", 800, 1000], ["naviglio_grande_10.jpg", 800, 1000]]}, {"id": "black-white", "title": "Black & White", "photos": [["black_white_5.jpg", 800, 1000], ["black_white_1.jpg", 800, 600], ["black_white_2.jpg", 800, 600], ["black_white_3.jpg", 800, 1000], ["black_white_4.jpg", 800, 1000], ["black_white_6.jpg", 800, 1000], ["black_white_7.jpg", 800, 1000], ["black_white_8.jpg", 800, 1000], ["black_white_9.jpg", 800, 1000], ["black_white_10.jpg", 800, 1000], ["black_white_11.jpg", 800, 1000], ["black_white_13.jpg", 800, 1000]]}, {"id": "where-did-you-go", "title": "Where Did You Go", "photos": [["wdyg_3.jpg", 800, 1000], ["wdyg_1.jpg", 800, 1000], ["wdyg_2.jpg", 800, 1000], ["wdyg_4.jpg", 800, 1000], ["wdyg_5.jpg", 800, 1000], ["wdyg_6.jpg", 800, 1000], ["wdyg_7.jpg", 800, 1000], ["wdyg_8.jpg", 800, 1000], ["IMG_1654-1.jpg", 444, 555]]}], "projects": {"about": {"cover": ["michel-portrait-social.jpg", 1240, 1550]}, "spectra": {"cover": ["spectra-screen-full-scaled.webp", 2000, 1109], "gallery": [["spectra-screen-full-scaled.webp", 2000, 1109], ["spectra-logo.webp", 800, 217]]}, "armani": {"cover": ["cover_armani.jpg", 1600, 1050], "gallery": [["three_Screens.webp", 2000, 654], ["armani_map_old.jpg", 1240, 990], ["armani_map_new.jpg", 1240, 990], ["map_details-1.jpg", 1240, 936], ["armani_room_1.jpg", 1240, 698], ["armani_room_2.jpg", 1240, 698], ["armani_room_3.jpg", 1240, 698], ["armani_room_4.jpg", 1240, 698], ["armani_room_5.jpg", 1240, 698], ["armani_room_6.jpg", 1240, 698], ["armani_start_screen.webp", 1294, 857], ["armani_video_screen.webp", 1294, 857], ["armani_map_screen.webp", 1294, 857], ["armani_room_screen.webp", 1294, 857], ["armani_panel_screen.webp", 1294, 857]]}, "moncler": {"cover": ["cover_moncler.jpg", 1600, 1050], "gallery": [["before_after.webp", 1240, 1549], ["fullscreen_page.webp", 1000, 1156], ["side_padding.webp", 1442, 824], ["top_down_padding.webp", 1442, 823], ["all_sides_padding.webp", 1442, 824], ["moncler_euqual_padding.webp", 2000, 1186], ["before_info_adjust.webp", 1524, 904], ["after_info_adjust.webp", 1524, 904], ["long_Section.webp", 1100, 1535], ["header_black_2.webp", 1460, 1784], ["product_image_before.webp", 641, 1213], ["product_image_after.webp", 640, 1146]]}, "shaa": {"cover": ["cover_shaa.jpg", 1600, 1050], "gallery": [["shaa_two_screens.jpg", 1600, 1860], ["split_Screen_mobile.jpg", 852, 1645], ["survey_poll_shaa.jpg", 852, 1645], ["live_translation_shaa.jpg", 852, 1645], ["login_two.jpg", 1240, 620], ["full_stream_two.jpg", 1240, 620], ["split_stream_two.jpg", 1240, 620]]}, "marangoni": {"cover": ["cover_marangoni.jpg", 1600, 1050], "gallery": [["screens_marangoni.webp", 2000, 622], ["tree_updated.webp", 1500, 2000], ["marangoni_languages.webp", 2000, 532], ["start_desktop.webp", 1601, 988], ["video_intro_desktop.webp", 1100, 679], ["menu_desktop.webp", 1100, 679], ["future_1_desktop.webp", 1238, 763], ["future_2_desktop.webp", 1100, 679], ["future_3_desktop.webp", 1238, 763], ["future_4_desktop.webp", 1238, 763]]}, "realtor": {"cover": ["realtor-cover.jpg", 1600, 1050], "gallery": [["components-header-scaled.webp", 2000, 941], ["step-1-seeking-answers.webp", 1240, 665], ["step-2-out-and-in.webp", 1240, 665], ["step-3-baby-steps.webp", 1240, 665], ["step-4-design-approach.webp", 1240, 665], ["step-5-buyin.webp", 1240, 665], ["step-6-building-scaled.webp", 2000, 1073], ["color-tokens-1-scaled.webp", 2000, 802], ["dimensions-2-scaled.webp", 2000, 802], ["grid-layout-scaled.webp", 2000, 802], ["Typography-1-scaled.webp", 2000, 802], ["Border-strokes-scaled.webp", 2000, 802], ["effects-scaled.webp", 2000, 802], ["componenets-light-v2.webp", 2000, 1274], ["componenets-dark-v2.webp", 2000, 1274], ["old-map-1.webp", 1440, 888], ["new-map-1.webp", 1440, 888]], "components": [["Banner.webp", 1142, 598], ["Breadcrumbs.webp", 1142, 598], ["Carousel.webp", 1142, 598], ["Clusters-and-pins.webp", 1142, 598], ["Dialog.webp", 1142, 598], ["Dropdown.webp", 1142, 598], ["Empty-state.webp", 1142, 598], ["Link.webp", 1142, 598], ["Navigation-header.webp", 1142, 598], ["Pagination.webp", 1142, 598], ["Password.webp", 1142, 598], ["Placeholder.webp", 1142, 598], ["Popover.webp", 1142, 598], ["Progress.webp", 1142, 598], ["Search.webp", 1142, 598], ["Segmented-control.webp", 1142, 598], ["Select-field.webp", 1142, 598], ["Selection-controls.webp", 1142, 598], ["Sheet.webp", 1142, 598], ["Slider.webp", 1142, 598], ["Snackbar.webp", 1142, 598], ["System-banner.webp", 1142, 598], ["Tags.webp", 1142, 598], ["Text-area.webp", 1142, 598], ["Toast.webp", 1142, 598], ["Tooltip.webp", 1142, 598], ["Tree-view.webp", 1142, 598], ["badges.webp", 1142, 598], ["button-groups.webp", 1142, 598], ["buttons-2.webp", 1142, 598]]}}, "logos": [["airfrance.webp", 1000, 563], ["armani_casa.webp", 261, 141], ["Beko.webp", 1000, 576], ["clarins.webp", 1000, 208], ["cotril.webp", 450, 87], ["davines.webp", 261, 141], ["finish.webp", 702, 320], ["garnier.webp", 261, 141], ["IED.webp", 1600, 662], ["istituto_marangoni.webp", 261, 141], ["miamo.webp", 1000, 320], ["michelin.webp", 1837, 951], ["naba.webp", 261, 141], ["sephora.webp", 261, 141]]};
@@ -1145,7 +1145,7 @@ function plaqueTex(k){
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 16;
   return whenFont(()=>{ x.clearRect(0,0,w,h); x.textBaseline = "alphabetic"; const ls = v=>{ if("letterSpacing" in x) x.letterSpacing = v; };
     const numF = `200 210px Inter, Arial, sans-serif`; x.font = numF; ls("-8px"); const nw = x.measureText(F.n).width; ls("0px");
-    const gap = 54; let fs = 230; const nameF = ()=>`400 ${fs}px "Bodoni Moda", Didot, Georgia, serif`; x.font = nameF();
+    const gap = 54; let fs = 230; const nameF = ()=>`400 ${fs}px "Newsreader", Georgia, serif`; x.font = nameF();
     while(nw + gap*2 + x.measureText(F.name).width > w - 100 && fs > 90){ fs -= 6; x.font = nameF(); }
     const total = nw + gap*2 + x.measureText(F.name).width, x0 = (w - total)/2, base = 330;
     x.fillStyle = "#2c2d30"; x.font = numF; ls("-8px"); x.fillText(F.n, x0, base); ls("0px");
@@ -1458,7 +1458,12 @@ const CITY = { night:[], cross:null, beacon:null, bridgeLights:null, wheelLights
     const X = 74, deckY = GY + 10, z0 = -230, z1 = -8;           // runs along z, perpendicular to the shore
     const deck = add2(new THREE.Mesh(new THREE.BoxGeometry(6, 1.2, z1 - z0), steel)); deck.position.set(X, deckY, (z0+z1)/2);
     // approach ramps down to the island and into the city
-    const ramp = add2(new THREE.Mesh(new THREE.BoxGeometry(6, 1.2, 30), steel)); ramp.position.set(X, (deckY + GY)/2 + .3, z1 + 14.5); ramp.rotation.x = Math.atan2(deckY - GY, 30);
+    const approach = (zs, dir, L)=>{   // a long viaduct easing down from the deck to street level, like the Jacques Cartier's approaches
+      const h = deckY - GY, ang = Math.atan2(h, L), len = Math.hypot(h, L);
+      const r = add2(new THREE.Mesh(new THREE.BoxGeometry(6, 1.0, len), steel)); r.position.set(X, GY + h/2 + .4, zs + dir*L/2); r.rotation.x = dir*ang;
+      for(let i = 1; i < 6; i++){ const t = i/6, zz = zs + dir*L*t, yy = GY + h*(1 - t); const pc = add2(new THREE.Mesh(new THREE.BoxGeometry(4.2, yy - GY, 1.6), stone)); pc.position.set(X, GY + (yy - GY)/2, zz); }
+      const st = add2(new THREE.Mesh(new THREE.BoxGeometry(6, .3, 24), stone)); st.position.set(X, GY + .15, zs + dir*(L + 12)); };   // the road carries on into the city
+    approach(z1, 1, 46); approach(z0, -1, 60);
     for(let z = z0 + 10; z <= z1 - 4; z += 18){ const onLand = z > -22 || z < -190; const base = onLand ? GY : WY;
       const p = add2(new THREE.Mesh(new THREE.BoxGeometry(5, deckY - base, 2.2), stone)); p.position.set(X, base + (deckY - base)/2, z); }
     // cantilever truss over the shipping channel
@@ -1615,19 +1620,19 @@ function cardTex(kind, title, foot, {w=1200,h=760,bg="#f5f5f7",big=170,accent="#
   x.fillStyle = bg; x.fillRect(0,0,w,h);
   const g = x.createRadialGradient(w*.85,h*.1,0,w*.85,h*.1,w*.9); g.addColorStop(0,"rgba(255,255,255,.9)"); g.addColorStop(1,"rgba(255,255,255,0)"); x.fillStyle=g; x.fillRect(0,0,w,h);
   x.fillStyle = "#6e6e73"; x.font = `500 ${Math.round(h*.034)}px Inter, Helvetica, Arial`; if("letterSpacing" in x) x.letterSpacing = "8px"; x.fillText(kind.toUpperCase(), w*.08, h*.17); if("letterSpacing" in x) x.letterSpacing = "0px";
-  const B = Math.round(big*.72); x.fillStyle = "#1d1d1f"; x.font = `400 ${B}px "Bodoni Moda", Didot, "Bodoni 72", Georgia, serif`;
+  const B = Math.round(big*.72); x.fillStyle = "#1d1d1f"; x.font = `400 ${B}px "Newsreader", Georgia, serif`;
   const words = title.split(" "); let line="", out=[]; for(const wd of words){ const t=line?line+" "+wd:wd; if(x.measureText(t).width > w*.84 && line){ out.push(line); line=wd; } else line=t; } out.push(line);
   const y0 = h*.56 - (out.length-1)*B*.55; out.forEach((l,i)=>x.fillText(l, w*.08, y0 + i*B*1.1));
-  x.fillStyle = "#6e6e73"; x.font = `italic 400 ${Math.round(h*.045)}px "Bodoni Moda", Didot, serif`; x.fillText(foot||"", w*.08, h*.88);
+  x.fillStyle = "#6e6e73"; x.font = `italic 400 ${Math.round(h*.045)}px "Newsreader", serif`; x.fillText(foot||"", w*.08, h*.88);
   }, tt);
 }
-function whenFont(draw, t){ draw(); if(document.fonts && document.fonts.load) Promise.all([document.fonts.load('600 92px Inter'), document.fonts.load('400 72px Inter'), document.fonts.load('300 100px Inter'), document.fonts.load('200 100px Inter'), document.fonts.load('500 44px Inter'), document.fonts.load('400 100px "Bodoni Moda"'), document.fonts.load('italic 400 60px "Cormorant Garamond"'), document.fonts.load('italic 500 60px "Cormorant Garamond"')]).then(()=>{ draw(); t.needsUpdate = true; }).catch(()=>{}); return t; }
+function whenFont(draw, t){ draw(); if(document.fonts && document.fonts.load) Promise.all([document.fonts.load('600 92px Inter'), document.fonts.load('400 72px Inter'), document.fonts.load('300 100px Inter'), document.fonts.load('200 100px Inter'), document.fonts.load('500 44px Inter'), document.fonts.load('400 100px "Newsreader"'), document.fonts.load('italic 400 60px "Newsreader"'), document.fonts.load('italic 500 60px "Newsreader"')]).then(()=>{ draw(); t.needsUpdate = true; }).catch(()=>{}); return t; }
 function titleTex(title){
   const w = 2048, h = 230, c = document.createElement("canvas"); c.width=w; c.height=h; const x=c.getContext("2d");
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
   return whenFont(()=>{ x.clearRect(0,0,w,h); x.textAlign = "center"; x.textBaseline = "alphabetic"; x.fillStyle = "#1d1d1f";
-    let fs = 112; x.font = `400 ${fs}px "Bodoni Moda", Didot, "Bodoni 72", Georgia, serif`;
-    while(x.measureText(title).width > w*.9 && fs > 50){ fs -= 4; x.font = `400 ${fs}px "Bodoni Moda", Didot, "Bodoni 72", Georgia, serif`; }
+    let fs = 112; x.font = `400 ${fs}px "Newsreader", Georgia, serif`;
+    while(x.measureText(title).width > w*.9 && fs > 50){ fs -= 4; x.font = `400 ${fs}px "Newsreader", Georgia, serif`; }
     x.fillText(title, w/2, 150);
     x.fillStyle = "#1d1d1f"; x.fillRect(w/2 - 36, 196, 72, 3); }, t);
 }
@@ -1792,7 +1797,7 @@ function galleryTex(k, titles){
   const w = 1024, h = 220, c = document.createElement("canvas"); c.width = w; c.height = h; const x = c.getContext("2d");
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
   return whenFont(()=>{ x.clearRect(0,0,w,h); x.textBaseline = "alphabetic";
-    x.fillStyle = "#1d1d1f"; x.font = `400 92px "Bodoni Moda", Didot, Georgia, serif`; x.fillText("Photographs", 0, 92);
+    x.fillStyle = "#1d1d1f"; x.font = `400 92px "Newsreader", Georgia, serif`; x.fillText("Photographs", 0, 92);
     x.fillRect(2, 122, 64, 3);
     x.fillStyle = "#7a7670"; x.font = `400 34px Inter, Arial, sans-serif`; if("letterSpacing" in x) x.letterSpacing = "-.3px"; x.fillText(titles.join("  ·  "), 2, 182); if("letterSpacing" in x) x.letterSpacing = "0px"; }, t);
 }
@@ -2119,8 +2124,9 @@ function buildName(font){
   const GYs = fy(LAST) - .72, cx = 45, zf = -222, mh = 18;   // a grain-mill block to the right of the wheel
   const mill = new THREE.Mesh(new THREE.BoxGeometry(1,1,1).translate(0,.5,0), facade(new THREE.MeshStandardMaterial({color:0xe4ded3, roughness:.85, emissive:0xffffff, emissiveIntensity:0}), { bay: 2.2, fl: 3.4, tint: .7, lit: .72, base: .6 }));
   mill.scale.set(20, mh, 14); mill.position.set(cx, GYs, zf - 7); scene.add(mill); CITY.night.push([mill.material, 1.2]);
-  const size = 2.0, res = font.data.resolution, text = "MICHEL SLEIMAN";
-  SIGN.steady = new THREE.MeshStandardMaterial({color:0xf1ece4, roughness:.45, emissive:0xffd9a6, emissiveIntensity:0});
+  const res = font.data.resolution, text = "MICHEL SLEIMAN";
+  let size = 2.0; { let a0 = 0; [...text].forEach(ch=>{ a0 += ch === " " ? size*.5 : font.data.glyphs[ch].ha*size/res + size*.06; }); size *= Math.min(1, 16.5/a0); }   // the letters and their frame stay inside the mill's 20 m roof
+  SIGN.steady = new THREE.MeshStandardMaterial({color:0xe9c9a6, roughness:.5, emissive:0xff8a3d, emissiveIntensity:0});
   SIGN.flick = SIGN.steady.clone();
   const items = []; let adv = 0;
   [...text].forEach((ch, i)=>{ if(ch === " "){ adv += size*.5; return; }
@@ -2129,7 +2135,7 @@ function buildName(font){
   const total = adv, top = GYs + mh + 2;
   items.forEach(it=>{ const m = new THREE.Mesh(it.g, it.flick ? SIGN.flick : SIGN.steady); m.position.set(cx - total/2 + it.x, top, zf - .6); m.castShadow = true; scene.add(m); });
   // the steel lattice the letters stand on
-  const bar = new THREE.BoxGeometry(1,1,1), list = [], fh = 2, x0 = cx - total/2 - .8, x1 = cx + total/2 + .8, bays = Math.round((x1 - x0)/2.2);
+  const bar = new THREE.BoxGeometry(1,1,1), list = [], fh = 2, x0 = cx - total/2 - .4, x1 = cx + total/2 + .4, bays = Math.round((x1 - x0)/2.2);
   for(let i=0;i<=bays;i++){ const x = lerp(x0, x1, i/bays); for(const z of [zf - .9, zf - 2.0]) list.push([x, GYs + mh + fh/2, z, .13, fh, .13, 0]);
     if(i < bays){ const xm = lerp(x0, x1, (i+.5)/bays), L = Math.hypot((x1-x0)/bays, fh); list.push([xm, GYs + mh + fh/2, zf - .9, L, .12, .12, Math.atan2(fh, (x1-x0)/bays)*(i%2 ? 1 : -1)]); } }
   for(const z of [zf - .9, zf - 2.0]) for(const y of [GYs + mh + .1, GYs + mh + fh/2, GYs + mh + fh]) list.push([(x0+x1)/2, y, z, x1 - x0, .1, .1, 0]);
@@ -2142,7 +2148,7 @@ function signUpdate(dt, N){
   if(!SIGN.steady) return;
   SIGN.hold -= dt; if(SIGN.hold < 0){ const r = Math.random(); SIGN.f = r < .12 ? .05 : r < .3 ? .55 : 1; SIGN.hold = SIGN.f < 1 ? .04 + Math.random()*.12 : .4 + Math.random()*2.6; }
   const on = smooth(.25, .7, N), buzz = .94 + Math.random()*.06;
-  SIGN.steady.emissiveIntensity = 2.4*on*buzz; SIGN.flick.emissiveIntensity = 2.4*on*SIGN.f;
+  SIGN.steady.emissiveIntensity = (.25 + 1.1*on)*buzz; SIGN.flick.emissiveIntensity = (.25 + 1.1*on)*SIGN.f;
 }
 
 /* ============================ the waterfront terrace (the footer scene) ============================ */
@@ -2790,12 +2796,12 @@ function showAbout(i){
 }
 function showContact(i){
   showPanel("Contact", `
-    <div class="p-eye rv">Lobby · Contact</div>
+    <div class="p-eye rv">Contact</div>
     <h2 class="p-title rv">Hi there, let's grab a coffee!</h2>
     <p class="p-tag rv">Have an exciting product idea but unsure how to bring it to life? Let's turn it into reality.</p>
     <dl class="p-meta rv"><div><dt>Email</dt><dd>hello@michsleiman.com</dd></div><div><dt>Address</dt><dd>Montreal, Canada</dd></div></dl>
-    <div class="rv"><a class="p-link" href="mailto:hello@michsleiman.com">Reach out</a> <a class="p-link ghost" href="https://www.linkedin.com/in/sleimanmichel/" target="_blank" rel="noopener">LinkedIn ›</a> <a class="p-link ghost" href="https://www.instagram.com/michsleiman/" target="_blank" rel="noopener">Instagram ›</a></div>
-    <div class="sec rv" style="background:#f5f5f7;border-radius:28px;padding:48px"><p class="p-quote">You explored ${WORK.filter(w=>seenW.has(w.id)).length} of ${WORK.length} rooms <span>and ${seenP.size} of ${ALBUMS.length} photo series on the way down. Thanks for walking through.</span></p></div>`, "#0071e3", {type:"work", i});
+    <div class="rv" style="margin-top:-8px"><a class="p-link" style="margin-top:0" href="mailto:hello@michsleiman.com">Reach out</a> <a class="p-link ghost" href="https://www.linkedin.com/in/sleimanmichel/" target="_blank" rel="noopener">LinkedIn ›</a> <a class="p-link ghost" href="https://www.instagram.com/michsleiman/" target="_blank" rel="noopener">Instagram ›</a></div>
+    <div class="sec rv" style="background:#f5f5f7;border-radius:28px;padding:40px 48px;margin-top:56px"><p class="p-quote">You explored ${WORK.filter(w=>isProj(w) && seenW.has(w.id)).length} of ${WORK.filter(isProj).length} projects <span>and ${seenP.size} of ${ALBUMS.length} photo series on the way down. Thanks for walking through.</span></p></div>`, "#0071e3", {type:"work", i});
 }
 function showAlbum(ai){
   const A = ALBUMS[ai]; setHash(A.id);
@@ -2807,10 +2813,11 @@ function showAlbum(ai){
 }
 function bumpEl(e){ e.classList.remove("bump"); void e.offsetWidth; e.classList.add("bump"); }
 let lastCounts = null;
-function counts(){ const nw = WORK.filter(w=>seenW.has(w.id)).length, np = seenP.size;
+const isProj = w=>!w.about && !w.contact;
+function counts(){ const nw = WORK.filter(w=>isProj(w) && seenW.has(w.id)).length, np = seenP.size;
   if(lastCounts){ if(nw > lastCounts[0]) bumpEl($("#cW")); if(np > lastCounts[1]) bumpEl($("#cP")); } lastCounts = [nw, np];
   document.body.classList.toggle("found", nw + np > 0);
-  $("#cW").textContent = WORK.filter(w=>seenW.has(w.id)).length; $("#tW").textContent = WORK.length; $("#cP").textContent = seenP.size; $("#tP").textContent = ALBUMS.length; }
+  $("#cW").textContent = WORK.filter(w=>isProj(w) && seenW.has(w.id)).length; $("#tW").textContent = WORK.filter(isProj).length; $("#cP").textContent = seenP.size; $("#tP").textContent = ALBUMS.length; }
 counts();
 $("#menuList").innerHTML = FLOORS.map((F,k)=>`<button role="menuitem" data-k="${k}"><span class="n">${F.n}</span><span class="t">${F.name}</span><span class="s">${k===2||k===1||k===3?WORK.filter(w=>w.floor===k).map(w=>w.label).join(", "):F.sub}</span></button>`).join("");
 $("#menuList").insertAdjacentHTML("beforeend", `<button role="menuitem" class="allw" data-all="1"><span class="n">↗</span><span class="t">View all work</span><span class="s">Every project on one page</span></button>`);
@@ -2914,7 +2921,7 @@ function frame(now){
   if(act){ const r = actStep(dt, pos, now); heroPos = r.p; heroSpeed = r.sp; if(r.yawT != null) targetYaw = r.yawT; }
   // linger on a floor and Michel wanders to the nearest bench and sits facing the work; scroll and he gets up
   { const idleNow = (now - lastMove)/1000;
-    if(!rest && introDone && !moving && !act && !panelOpen && !focus && !tele && !VOICE_ON && !s.end && s.type !== "out" && idleNow > 14){
+    if(!rest && introDone && !moving && !act && !panelOpen && !focus && !tele && !VOICE_ON && !s.end && s.type !== "out" && idleNow > 60){
       const b = BENCHES.filter(b=>b.k === s.k).sort((a,c)=>Math.abs(a.x - pos.x) - Math.abs(c.x - pos.x))[0]; if(b){ rest = { b, phase: 0, p: heroAt.clone(), sit: 0, t: 0 }; bubble(""); } }
     if(rest){ const R2 = rest, B = R2.b, seat = new THREE.Vector3(clamp(pos.x, B.x - 1.2, B.x + 1.2), pos.y, B.z);
       if(R2.phase === 0){ const d = seat.clone().sub(R2.p); d.y = 0; const L = d.length(); if(L > .05){ R2.p.addScaledVector(d, Math.min(1, 1.3*dt/L)); heroSpeed = 1.3; targetYaw = Math.atan2(d.x, d.z); } else { R2.phase = 1; } }
@@ -3075,7 +3082,7 @@ function frame(now){
     const near = st.i === dwellSt, hov = hovered && hovered.userData.type==="work" && hovered.userData.i === st.i;
     if(near && !st._near) st.pulse = 1; st._near = near; st.pulse = Math.max(0, (st.pulse || 0) - dt/1.3);   // he arrives: the piece brightens once and its button breathes
     const bump = st.pulse > 0 ? Math.sin((1 - st.pulse)*Math.PI) : 0;
-    st.baseE = damp(st.baseE ?? .3, near||hov ? .5 : .3, 5, dt); st.mat.emissiveIntensity = st.baseE + bump*.28 + (st.powerK||0)*.5;
+    st.baseE = damp(st.baseE ?? .3, near||hov ? .5 : .3, 5, dt); st.mat.emissiveIntensity = st.baseE + bump*.28;
     st.lift = damp(st.lift || 0, hov && !act ? 1 : 0, 6, dt); if(st.az0 == null){ st.az0 = st.art.position.z; st.az1 = st.art2.position.z; } if(!st.w.about){ st.art.position.z = st.az0 + .06*st.lift; st.art2.position.z = st.az1 + .06*st.lift; }   // the screen eases toward you on hover st.fade.emissiveIntensity = st.mat.emissiveIntensity;
     st.group.position.z = damp(st.group.position.z, WALLZ + (hov && !st.swing ? .12 : 0), 6, dt);
     if(st.swing){ const S = st.swing, B = st.btn.userData, tt = performance.now()/1000, h = Math.min(dt, 1/30);
