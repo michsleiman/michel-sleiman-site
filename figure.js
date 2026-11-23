@@ -305,6 +305,7 @@ export class VinylRig {
     this.legs[0].rotation.x = s*amp; this.legs[1].rotation.x = -s*amp;
     this.hips.position.y = this.hipBase + Math.abs(c)*A.bob*walk*(1 + run) + idle*Math.sin(t*1.8)*.004;
     this.hips.rotation.z = s*A.waddle*walk;
+    const st = this.sit || 0; if(st > 0){ this.legs[0].rotation.x = lerp(this.legs[0].rotation.x, -1.5, st); this.legs[1].rotation.x = lerp(this.legs[1].rotation.x, -1.5, st); }   // seated: thighs forward
     this.spine.rotation.x = run*.16 + walk*.03; this.spine.rotation.y = -s*.12*walk;
     this.spine.scale.y = 1 + idle*Math.sin(t*1.8)*.006;
     this.wave = Math.max(0, this.wave - dt); const we = 2.4 - this.wave, wv = this.wave > 0 ? smooth(0, .4, we)*smooth(0, .5, this.wave) : 0;

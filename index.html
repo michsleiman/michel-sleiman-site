@@ -5,6 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Michel Sleiman — Product Designer</title>
 <meta name="description" content="Designing products people love, and systems teams trust. Product design and strategy by Michel Sleiman, Montréal.">
+<link rel="canonical" href="https://michel-sleiman-site.vercel.app/">
+<meta name="theme-color" content="#f5f2ec">
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon-32.png" sizes="32x32"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Michel Sleiman">
+<meta property="og:title" content="Michel Sleiman — Senior Product Designer">
+<meta property="og:description" content="Walk through my portfolio: a 3D building of product design, design systems and AI work, from the rooftop down to the lobby.">
+<meta property="og:url" content="https://michel-sleiman-site.vercel.app/"><meta property="og:image" content="https://michel-sleiman-site.vercel.app/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Michel's vinyl figure on the rooftop of his 3D portfolio, overlooking Montréal">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Michel Sleiman — Senior Product Designer">
+<meta name="twitter:description" content="Walk through my portfolio: a 3D building of product design, design systems and AI work."><meta name="twitter:image" content="https://michel-sleiman-site.vercel.app/og.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Michel Sleiman","jobTitle":"Senior Product Designer","url":"https://michel-sleiman-site.vercel.app/","email":"mailto:hello@michsleiman.com","address":{"@type":"PostalAddress","addressLocality":"Montréal","addressCountry":"CA"},"sameAs":["https://www.linkedin.com/in/sleimanmichel/","https://www.instagram.com/michsleiman/"]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
@@ -496,6 +507,47 @@ body.dusk #prog button.on,body.lobbyk #prog button.on{background:#fff}
 body.dusk #prog .track,body.lobbyk #prog .track{background:rgba(255,255,255,.35)}
 body.dusk #prog .track b,body.lobbyk #prog .track b{background:#fff}
 body.dusk #prog button span,body.lobbyk #prog button span{color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.55)}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* all work */
+#panel.idx #pPrev,#panel.idx #pNext{display:none}
+#menuList .allw{border-top:1px solid var(--line);border-radius:0 0 14px 14px;margin-top:4px}
+.ix .p-tag{max-width:34ch}
+.ix-floor{margin-top:72px}
+.ix-h{display:flex;align-items:baseline;gap:12px;font:600 22px var(--sans);letter-spacing:-.02em;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.ix-h span{font:600 12px var(--sans);letter-spacing:.1em;color:var(--ink3)}
+.ix-h small{margin-left:auto;font:500 13px var(--sans);color:var(--ink3);letter-spacing:0}
+.ix-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;margin-top:28px}
+.ix-card{position:relative;display:block;color:inherit;text-decoration:none}
+.ix-im{aspect-ratio:16/10;border-radius:16px;overflow:hidden;background:#f5f5f7}
+.ix-im img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.ix-im.txt{display:grid;place-items:center;background:#ece8e1}.ix-im.txt span{font:400 30px/1.15 var(--serif);text-align:center;padding:0 12%;color:var(--ink)}
+.ix-card:hover .ix-im img{transform:scale(1.04)}
+.ix-tx{position:relative;margin-top:14px;padding-right:28px}.ix-tx b{display:block;font:600 18px var(--sans);letter-spacing:-.02em}.ix-tx span{display:block;margin-top:5px;font:400 15px/1.5 var(--sans);color:var(--ink2)}
+.ix-go{position:absolute;right:2px;top:-2px;font-style:normal;font:500 20px var(--sans);color:var(--ink3);transition:transform .3s, color .3s}
+.ix-card:hover .ix-go{transform:translateX(4px);color:var(--ink)}
+@media(max-width:760px){.ix-grid{grid-template-columns:1fr}.ix-h small{display:none}.ix-floor{margin-top:48px}}
+/* phones: title sits up under the nav so it never crosses Michel; menu spans the screen */
+@media(max-width:760px){
+ #intro{top:84px;bottom:auto;left:24px;right:24px}
+ #intro h1{font-size:clamp(34px,9.6vw,44px)}
+ #intro h1 sup{display:none}
+ #intro h1 span i{gap:0}
+ #intro .trust{margin-left:0;margin-top:18px;padding-top:12px}
+ #intro .names li{font-size:17px}
+ #intro .inr::before{inset:-40px -40px -30px -40px}
+ #menuList{position:fixed;left:12px;right:12px;top:64px;width:auto;max-width:none}
+ #hudBR{right:12px}
+ #sndBtn .t{display:none}#sndBtn{padding-left:12px;padding-right:12px}
+}
+@media(max-width:760px){#hint{display:none}}
+@media(min-width:761px) and (max-width:1100px) and (orientation:portrait){
+ #intro{top:96px;bottom:auto}
+}
+@media(min-width:761px) and (max-width:1100px){
+ #intro{bottom:9vh}
+ #intro h1{font-size:clamp(40px,6vw,60px)}
+}
 /* ---- polish pass ---- */
 #topfade{position:fixed;left:0;right:0;top:0;height:110px;z-index:15;pointer-events:none;background:linear-gradient(rgba(246,244,240,.62),rgba(246,244,240,0));transition:opacity 1s, background 1.2s}
 body.outside #topfade{background:linear-gradient(rgba(24,18,28,.34),rgba(24,18,28,0))}
@@ -697,7 +749,23 @@ body.outside #hudBR,body.outside #prog{opacity:0;pointer-events:none}
   </div>
 </div>
 
-<nav class="ui fade" id="hudTL" aria-label="Main"><div class="pill" id="homeBtn"><span class="nm">Michel Sleiman</span><span class="sep"></span><span class="flwrap"><span class="fl" id="hudFl">Who I am</span></span></div><div class="navm" id="navm"><button class="pill" id="menuBtn" aria-haspopup="true" aria-expanded="false" aria-controls="menuList">Floors<svg class="chev" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="menuList" role="menu"></div></div><button class="pill" id="aboutBtn">About</button><a class="pill" id="hireBtn" href="#contact">Get in touch</a></nav>
+<main class="sr-only" id="textVersion">
+  <h1>Michel Sleiman, Senior Product Designer</h1>
+  <p>An experienced product designer with 30+ projects for top-tier brands, including Armani, Moncler and Sephora. Designing products people love, and systems teams trust. Based in Montréal, Canada.</p>
+  <h2>Work</h2>
+  <ul>
+    <li><h3>Spectra</h3><p>AI tool: a color engine designed for how humans see color, fully designed, built and deployed with AI.</p></li>
+    <li><h3>AI design transformation</h3><p>How AI is changing the way design gets made, one process end to end.</p></li>
+    <li><h3>Armani/Casa</h3><p>Bringing Armani/Casa's Milan Design Week exhibition at Palazzo Orsini to a global audience.</p></li>
+    <li><h3>Moncler</h3><p>A redesign proposal for Moncler's product page, from friction to confidence.</p></li>
+    <li><h3>SHAA Live</h3><p>Turning live streams into interactive, shoppable experiences.</p></li>
+    <li><h3>Istituto Marangoni</h3><p>A virtual journey for aspiring creatives, translated into ten languages.</p></li>
+    <li><h3>Realtor.ca design system</h3><p>The first unified, accessible, multi-platform design system for desktop, mobile web, iOS and Android: 40+ component sets, 1,600+ variations, 60% faster feature development.</p></li>
+  </ul>
+  <h2>Contact</h2>
+  <p><a href="mailto:hello@michsleiman.com">hello@michsleiman.com</a> · <a href="https://www.linkedin.com/in/sleimanmichel/">LinkedIn</a> · <a href="https://www.instagram.com/michsleiman/">Instagram</a></p>
+</main>
+<nav class="ui fade" id="hudTL" aria-label="Main"><div class="pill" id="homeBtn"><span class="nm">Michel Sleiman</span><span class="sep"></span><span class="flwrap"><span class="fl" id="hudFl">Who I am</span></span></div><div class="navm" id="navm"><button class="pill" id="menuBtn" aria-haspopup="true" aria-expanded="false" aria-controls="menuList">Floors<svg class="chev" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="menuList" role="menu"></div></div><button class="pill" id="workBtn">All work</button><button class="pill" id="aboutBtn">About</button><a class="pill" id="hireBtn" href="#contact">Get in touch</a></nav>
 <div class="ui fade" id="hudTR"><div class="pill count">Work <b id="cW">0</b>/<span id="tW"></span>&nbsp;&nbsp;Photographs <b id="cP">0</b>/<span id="tP"></span></div></div>
 
 <div class="ui fade" id="hudBR"><button class="pill" id="sndBtn" type="button" aria-pressed="false"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="t">Sound off</span></button></div>
@@ -713,7 +781,7 @@ body.outside #hudBR,body.outside #prog{opacity:0;pointer-events:none}
   <div class="fcol brand"><div class="fk">Michel Sleiman</div><p>Designing products people love, and systems teams trust.</p><small>© Michel Sleiman · Design | Strategy</small></div>
   <div class="fcol"><div class="fk">Floors</div><a href="#" data-floor="0">Who I am</a><a href="#" data-floor="1">AI Lab</a><a href="#" data-floor="2">Studio</a><a href="#" data-floor="3">Systems</a></div>
   <div class="fcol"><div class="fk">About</div><p>An experienced product designer with 30+ projects for top-tier brands.</p><a href="#" id="fAbout">More about me ›</a></div>
-  <div class="fcol"><div class="fk">Contact</div><a href="mailto:hello@michsleiman.com">hello@michsleiman.com</a><span>+1 438 376 1826</span><span>Montréal, Canada</span><span class="soc"><a href="https://www.linkedin.com/in/sleimanmichel/" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.instagram.com/michsleiman/" target="_blank" rel="noopener">Instagram</a></span></div>
+  <div class="fcol"><div class="fk">Contact</div><a href="mailto:hello@michsleiman.com">hello@michsleiman.com</a><span>Montréal, Canada</span><span class="soc"><a href="https://www.linkedin.com/in/sleimanmichel/" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.instagram.com/michsleiman/" target="_blank" rel="noopener">Instagram</a></span></div>
 </footer>
 <div id="lightbox"><img id="lbImg" alt=""></div>
 
@@ -728,12 +796,12 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { FontLoader } from "three/addons/loaders/FontLoader.js";
 import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
-import { loadHero } from "./figure.js?v=smooth1";
+import { loadHero } from "./figure.js?v=sit1";
 
 /* ============================ CONTENT — all copy from michelsleiman.com ============================ */
 const DATA = {"albums": [{"id": "by-the-sea", "title": "By the Sea", "photos": [["by_the_sea_1.jpg", 800, 998], ["by_the_sea_2.jpg", 800, 998], ["by_the_sea_3.jpg", 800, 1000], ["by_the_sea_4.jpg", 800, 997], ["by_the_sea_5.jpg", 800, 997], ["by_the_sea_6.jpg", 800, 997], ["by_the_sea_7.jpg", 800, 1000], ["by_the_sea_8.jpg", 800, 1000], ["by_the_sea_9.jpg", 800, 1000], ["by_the_sea_10.jpg", 800, 1000]]}, {"id": "in-between", "title": "In Between", "photos": [["in_between_1.jpg", 800, 1000], ["in_between_2.jpg", 800, 998], ["in_between_3.jpg", 800, 1000], ["in_between_4.jpg", 800, 1000], ["in_between_5.jpg", 800, 1000]]}, {"id": "aya", "title": "Aya", "photos": [["aya_1.jpg", 800, 1000], ["aya_2.jpg", 800, 1000], ["aya_3.jpg", 800, 1000], ["aya_4.jpg", 800, 1000], ["aya_5.jpg", 800, 1000], ["aya_6.jpg", 800, 1000], ["aya_7.jpg", 800, 1000], ["aya_8.jpg", 800, 1000], ["aya_9.jpg", 800, 1000], ["aya_10.jpg", 800, 1000]]}, {"id": "projecting-emotions", "title": "Projecting Emotions", "photos": [["projecting_1.jpg", 800, 1000], ["projecting_2.jpg", 800, 1000], ["projecting_3.jpg", 800, 1000], ["projecting_4.jpg", 800, 1000], ["projecting_5.jpg", 800, 1000], ["projecting_6.jpg", 800, 1000], ["projecting_7.jpg", 800, 1000], ["projecting_8.jpg", 800, 1000], ["projecting_9.jpg", 800, 1000], ["projecting_10.jpg", 800, 1000]]}, {"id": "light-dancing", "title": "Light Dancing", "photos": [["light_1.jpg", 800, 1000], ["light_2.jpg", 800, 1000], ["light_9.jpg", 800, 1000], ["light_10.jpg", 800, 1000], ["light_5.jpg", 800, 1000], ["light_7.jpg", 800, 1000], ["light_8.jpg", 800, 1000], ["light_6.jpg", 800, 999], ["light_4.jpg", 800, 1000], ["light_3.jpg", 800, 1000]]}, {"id": "people", "title": "People", "photos": [["people_8.jpg", 800, 998], ["people_7.jpg", 800, 998], ["people_5.jpg", 800, 1000], ["people_4.jpg", 800, 1000], ["people_6.jpg", 800, 1000], ["people_27.jpg", 800, 1000], ["people_25.jpg", 800, 1000], ["people_26.jpg", 800, 1000], ["people_23.jpg", 800, 1035], ["people_30.jpg", 774, 1000], ["people_3.jpg", 800, 1422], ["people_2.jpg", 800, 1422], ["people_11.jpg", 800, 1000], ["people_12.jpg", 800, 1000], ["people_16.jpg", 800, 1000], ["people_15.jpg", 800, 1000], ["people_10.jpg", 800, 1009], ["people_31.jpg", 794, 1000], ["people_19.jpg", 800, 1200], ["people_20.jpg", 800, 1200], ["people_1.jpg", 800, 998], ["people_21.jpg", 800, 1000], ["people_17.jpg", 800, 1000], ["people_18.jpg", 800, 1000]]}, {"id": "landscapes", "title": "Landscapes", "photos": [["landscapes_1.jpg", 800, 998], ["landscapes_3.jpg", 800, 1000], ["landscapes_2.jpg", 800, 1000], ["landscapes_6.jpg", 800, 998], ["landscapes_4.jpg", 800, 1000], ["landscapes_5.jpg", 800, 1000], ["landscapes_8.jpg", 800, 998], ["landscapes_7.jpg", 800, 997], ["landscapes_14.jpg", 800, 1000], ["landscapes_11.jpg", 800, 1000], ["landscapes_10.jpg", 800, 1000], ["landscapes_13.jpg", 800, 1000], ["landscapes_9.jpg", 800, 1000], ["landscapes_16.jpg", 800, 1000], ["landscapes_17.jpg", 800, 1000], ["landscapes_15.jpg", 800, 1000], ["landscapes_18.jpg", 800, 1000], ["landscapes_12.jpg", 800, 1000]]}, {"id": "naviglio-grande", "title": "Naviglio Grande", "photos": [["naviglio_grande_5.jpg", 800, 1000], ["naviglio_grande_1.jpg", 800, 1000], ["naviglio_grande_2.jpg", 800, 1000], ["naviglio_grande_3.jpg", 800, 1000], ["naviglio_grande_4.jpg", 800, 1000], ["naviglio_grande_6.jpg", 800, 1001], ["naviglio_grande_7.jpg", 800, 1000], ["naviglio_grande_8.jpg", 800, 1000], ["naviglio_grande_9.jpg", 800, 1000], ["naviglio_grande_10.jpg", 800, 1000]]}, {"id": "black-white", "title": "Black & White", "photos": [["black_white_5.jpg", 800, 1000], ["black_white_1.jpg", 800, 600], ["black_white_2.jpg", 800, 600], ["black_white_3.jpg", 800, 1000], ["black_white_4.jpg", 800, 1000], ["black_white_6.jpg", 800, 1000], ["black_white_7.jpg", 800, 1000], ["black_white_8.jpg", 800, 1000], ["black_white_9.jpg", 800, 1000], ["black_white_10.jpg", 800, 1000], ["black_white_11.jpg", 800, 1000], ["black_white_13.jpg", 800, 1000]]}, {"id": "where-did-you-go", "title": "Where Did You Go", "photos": [["wdyg_3.jpg", 800, 1000], ["wdyg_1.jpg", 800, 1000], ["wdyg_2.jpg", 800, 1000], ["wdyg_4.jpg", 800, 1000], ["wdyg_5.jpg", 800, 1000], ["wdyg_6.jpg", 800, 1000], ["wdyg_7.jpg", 800, 1000], ["wdyg_8.jpg", 800, 1000], ["IMG_1654-1.jpg", 444, 555]]}], "projects": {"about": {"cover": ["michel-portrait-social.jpg", 1240, 1550]}, "spectra": {"cover": ["spectra-screen-full-scaled.webp", 2000, 1109], "gallery": [["spectra-screen-full-scaled.webp", 2000, 1109], ["spectra-logo.webp", 800, 217]]}, "armani": {"cover": ["cover_armani.jpg", 1600, 1050], "gallery": [["three_Screens.webp", 2000, 654], ["armani_map_old.jpg", 1240, 990], ["armani_map_new.jpg", 1240, 990], ["map_details-1.jpg", 1240, 936], ["armani_room_1.jpg", 1240, 698], ["armani_room_2.jpg", 1240, 698], ["armani_room_3.jpg", 1240, 698], ["armani_room_4.jpg", 1240, 698], ["armani_room_5.jpg", 1240, 698], ["armani_room_6.jpg", 1240, 698], ["armani_start_screen.webp", 1294, 857], ["armani_video_screen.webp", 1294, 857], ["armani_map_screen.webp", 1294, 857], ["armani_room_screen.webp", 1294, 857], ["armani_panel_screen.webp", 1294, 857]]}, "moncler": {"cover": ["cover_moncler.jpg", 1600, 1050], "gallery": [["before_after.webp", 1240, 1549], ["fullscreen_page.webp", 1000, 1156], ["side_padding.webp", 1442, 824], ["top_down_padding.webp", 1442, 823], ["all_sides_padding.webp", 1442, 824], ["moncler_euqual_padding.webp", 2000, 1186], ["before_info_adjust.webp", 1524, 904], ["after_info_adjust.webp", 1524, 904], ["long_Section.webp", 1100, 1535], ["header_black_2.webp", 1460, 1784], ["product_image_before.webp", 641, 1213], ["product_image_after.webp", 640, 1146]]}, "shaa": {"cover": ["cover_shaa.jpg", 1600, 1050], "gallery": [["shaa_two_screens.jpg", 1600, 1860], ["split_Screen_mobile.jpg", 852, 1645], ["survey_poll_shaa.jpg", 852, 1645], ["live_translation_shaa.jpg", 852, 1645], ["login_two.jpg", 1240, 620], ["full_stream_two.jpg", 1240, 620], ["split_stream_two.jpg", 1240, 620]]}, "marangoni": {"cover": ["cover_marangoni.jpg", 1600, 1050], "gallery": [["screens_marangoni.webp", 2000, 622], ["tree_updated.webp", 1500, 2000], ["marangoni_languages.webp", 2000, 532], ["start_desktop.webp", 1601, 988], ["video_intro_desktop.webp", 1100, 679], ["menu_desktop.webp", 1100, 679], ["future_1_desktop.webp", 1238, 763], ["future_2_desktop.webp", 1100, 679], ["future_3_desktop.webp", 1238, 763], ["future_4_desktop.webp", 1238, 763]]}, "realtor": {"cover": ["realtor-cover.jpg", 1600, 1050], "gallery": [["components-header-scaled.webp", 2000, 941], ["step-1-seeking-answers.webp", 1240, 665], ["step-2-out-and-in.webp", 1240, 665], ["step-3-baby-steps.webp", 1240, 665], ["step-4-design-approach.webp", 1240, 665], ["step-5-buyin.webp", 1240, 665], ["step-6-building-scaled.webp", 2000, 1073], ["color-tokens-1-scaled.webp", 2000, 802], ["dimensions-2-scaled.webp", 2000, 802], ["grid-layout-scaled.webp", 2000, 802], ["Typography-1-scaled.webp", 2000, 802], ["Border-strokes-scaled.webp", 2000, 802], ["effects-scaled.webp", 2000, 802], ["componenets-light-v2.webp", 2000, 1274], ["componenets-dark-v2.webp", 2000, 1274], ["old-map-1.webp", 1440, 888], ["new-map-1.webp", 1440, 888]], "components": [["Banner.webp", 1142, 598], ["Breadcrumbs.webp", 1142, 598], ["Carousel.webp", 1142, 598], ["Clusters-and-pins.webp", 1142, 598], ["Dialog.webp", 1142, 598], ["Dropdown.webp", 1142, 598], ["Empty-state.webp", 1142, 598], ["Link.webp", 1142, 598], ["Navigation-header.webp", 1142, 598], ["Pagination.webp", 1142, 598], ["Password.webp", 1142, 598], ["Placeholder.webp", 1142, 598], ["Popover.webp", 1142, 598], ["Progress.webp", 1142, 598], ["Search.webp", 1142, 598], ["Segmented-control.webp", 1142, 598], ["Select-field.webp", 1142, 598], ["Selection-controls.webp", 1142, 598], ["Sheet.webp", 1142, 598], ["Slider.webp", 1142, 598], ["Snackbar.webp", 1142, 598], ["System-banner.webp", 1142, 598], ["Tags.webp", 1142, 598], ["Text-area.webp", 1142, 598], ["Toast.webp", 1142, 598], ["Tooltip.webp", 1142, 598], ["Tree-view.webp", 1142, 598], ["badges.webp", 1142, 598], ["button-groups.webp", 1142, 598], ["buttons-2.webp", 1142, 598]]}}, "logos": [["airfrance.webp", 1000, 563], ["armani_casa.webp", 261, 141], ["Beko.webp", 1000, 576], ["clarins.webp", 1000, 208], ["cotril.webp", 450, 87], ["davines.webp", 261, 141], ["finish.webp", 702, 320], ["garnier.webp", 261, 141], ["IED.webp", 1600, 662], ["istituto_marangoni.webp", 261, 141], ["miamo.webp", 1000, 320], ["michelin.webp", 1837, 951], ["naba.webp", 261, 141], ["sephora.webp", 261, 141]]};
 const SITE = "https://michelsleiman.com";
-const STAIRHD = [];
+const STAIRHD = [], BENCHES = [];   // benches Michel can sit on: {k, x, z, top}
 const LOGOTRIM = {"airfrance.webp":["logo-trim/airfrance.webp",997,94],"armani_casa.webp":["logo-trim/armani_casa.webp",260,37],"Beko.webp":["logo-trim/Beko.webp",993,570],"clarins.webp":["logo-trim/clarins.webp",986,192],"cotril.webp":["logo-trim/cotril.webp",450,87],"davines.webp":["logo-trim/davines.webp",258,75],"finish.webp":["logo-trim/finish.webp",627,320],"garnier.webp":["logo-trim/garnier.webp",261,31],"IED.webp":["logo-trim/IED.webp",1319,464],"istituto_marangoni.webp":["logo-trim/istituto_marangoni.webp",261,55],"miamo.webp":["logo-trim/miamo.webp",1000,320],"michelin.webp":["logo-trim/michelin.webp",1837,809],"naba.webp":["logo-trim/naba.webp",261,81],"sephora.webp":["logo-trim/sephora.webp",261,41]};   // logos cropped to their ink, so each one fills its spot on the wall
 const P = DATA.projects, ALBUMS = DATA.albums;
 const FLOORS = [
@@ -1784,7 +1852,7 @@ CUR = FG[LAST];
   for(const dx of [-.3,.3]) mesh(new THREE.CylinderGeometry(.06,.05,.1,16), M.white, cx + .8 + dx, y + 1.16, -D/2 + 2.3);
   mesh(new THREE.CylinderGeometry(.9,.75,.9,40), M.conc, DOORX + 5.4, y + .45, -D/2 + 2.4);
   addTree(DOORX + 5.4, y + .9, -D/2 + 2.4, 1.15);
-  box(3.6, .42, .9, M.walnut, stationX(LAST, .2), y + .21, 2.2);
+  box(3.6, .42, .9, M.walnut, stationX(LAST, .2), y + .21, 2.2); BENCHES.push({k:LAST, x:stationX(LAST, .2), z:2.2, top:.42});
   // client logos engraved on a travertine wall
   const lx = stationX(LAST, .22), lw = 9, lh = 3.4;
   box(lw, lh + .6, .3, M.trav, lx, y + (lh+.6)/2, -D/2 + .4);
@@ -1796,10 +1864,10 @@ CUR = FG[LAST];
     m.position.set(lx - lw/2 + mg + (col + .5)*cellW, top - (row + .5)*cellH, -D/2 + .56); add(m); });
 }
 CUR = FG[2];
-box(5.4, .08, 1.1, M.walnut, stationX(2,.5), fy(2) + .44, 3.4);
+box(5.4, .08, 1.1, M.walnut, stationX(2,.5), fy(2) + .44, 3.4); BENCHES.push({k:2, x:stationX(2,.5), z:3.4, top:.48});
 for(const dx of [-2.4, 2.4]) box(.08, .4, .9, M.alu, stationX(2,.5) + dx, fy(2) + .2, 3.4);
-CUR = FG[3]; box(3.4, .42, .9, M.walnut, stationX(3,.86), fy(3) + .21, 2.2); planter(stationX(3,.1), fy(3), -D/2 + 1.0, 1.6, .9);
-CUR = FG[1]; box(3.4, .42, .9, M.walnut, stationX(1,.5), fy(1) + .21, 2.4); planter(stationX(1,.94), fy(1), -D/2 + 1.0, 1.6, .9);
+CUR = FG[3]; box(3.4, .42, .9, M.walnut, stationX(3,.86), fy(3) + .21, 2.2); BENCHES.push({k:3, x:stationX(3,.86), z:2.2, top:.42}); planter(stationX(3,.1), fy(3), -D/2 + 1.0, 1.6, .9);
+CUR = FG[1]; box(3.4, .42, .9, M.walnut, stationX(1,.5), fy(1) + .21, 2.4); BENCHES.push({k:1, x:stationX(1,.5), z:2.4, top:.42}); planter(stationX(1,.94), fy(1), -D/2 + 1.0, 1.6, .9);
 CUR = root;
 
 /* ============================ the rooftop: a real working roof, with life on it ============================ */
@@ -2121,6 +2189,7 @@ const FW = (()=>{
 /* ============================ character: a stylized Michel ============================ */
 // Michel, the vinyl figure (figure.js + models/vinyl-figure.glb); joints and animation come from character.json (tune them in character-lab.html)
 const hero = await loadHero(); FG[0].add(hero.object);
+let _hipH = 0; const hipH = ()=>{ if(!_hipH && hero.hips){ hero.object.updateMatrixWorld(true); const v = new THREE.Vector3(); hero.hips.getWorldPosition(v); _hipH = (v.y - hero.object.getWorldPosition(new THREE.Vector3()).y) || .5; } return _hipH || .5; };   // standing hip height, so he sits right on the bench
 // an invisible capsule around Michel so you can click him to talk
 const heroHB = new THREE.Box3().setFromObject(hero.object), HERO_H = heroHB.max.y - heroHB.min.y, HERO_R = Math.max(heroHB.max.x - heroHB.min.x, heroHB.max.z - heroHB.min.z)*.5;
 const heroHit = new THREE.Mesh(new THREE.CylinderGeometry(HERO_R, HERO_R, HERO_H, 12), new THREE.MeshBasicMaterial({ visible: false })); heroHit.userData = { type: "hero" }; root.add(heroHit); pickables.push(heroHit);
@@ -2499,7 +2568,7 @@ function openAlbum(ai, ph){
       flyTo(new THREE.Vector3(c.x, c.y, c.z + 4.4), c, ()=>showAlbum(ai)); } else showAlbum(ai);
 }
 function showPanel(title, html, accent, ctx){
-  panelCtx = ctx; $("#pTtl").textContent = title;
+  panelCtx = ctx; $("#pTtl").textContent = title; $("#panel").classList.toggle("idx", !!(ctx && ctx.type === "index"));
   $("#panel").style.setProperty("--pa", accent); $("#pIn").innerHTML = html; $("#panel").scrollTop = 0;
   if(!panelOpen){ sfx("click", .6); $("#panel").classList.add("open"); panelOpen = true; panelAt = performance.now(); document.body.style.overflow = "hidden"; sfx("chime"); }
   const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }), {root:$("#panel"), threshold:.08});
@@ -2530,7 +2599,7 @@ function closeFlip(){
 function closePanel(){ document.getElementById("flip")?.remove(); document.getElementById("flipBack")?.remove(); closeFlip(); setHash(""); $("#panel").classList.remove("open"); $("#veil").classList.remove("on"); panelOpen = false; document.body.style.overflow = ""; focus = null; releasing = 1.2; lastMove = performance.now(); sfx("air"); }
 $("#pClose").onclick = closePanel;
 $("#pPrev").onclick = ()=>stepPanel(-1); $("#pNext").onclick = ()=>stepPanel(1);
-function stepPanel(d){
+function stepPanel(d){ if(panelCtx && panelCtx.type === "index") return;
   if(!panelCtx) return;
   if(panelCtx.type==="album"){ const n=(panelCtx.ai+d+ALBUMS.length)%ALBUMS.length; seenP.add(ALBUMS[n].id); save(); counts(); showAlbum(n); }
   else { const list = WORK.map((w,i)=>i); const n = (panelCtx.i + d + list.length) % list.length; const s = STATIONS[n]; seenW.add(s.w.id); save(); s.el.classList.add("seen"); counts(); showWork(s.w); }
@@ -2716,7 +2785,7 @@ function showAbout(i){
     <div class="sec"><h3 class="rv">Languages</h3><div class="chips rv">${LANGS.map(l=>`<span>${l}</span>`).join("")}</div></div>
     <div class="sec"><h3 class="rv">Proficiency</h3><div class="chips rv">${TOOLS.map(l=>`<span>${l}</span>`).join("")}</div></div>
     <div class="sec"><h3 class="rv">Brands</h3><div class="logos rv">${DATA.logos.map(l=>`<div><img src="${imgSrc(l[0])}" onerror="this.onerror=null;this.src='tex/${l[0]}'" alt=""></div>`).join("")}</div></div>
-    <div class="sec rv"><p class="p-quote">Hi there, let's grab a coffee! <span class="lines"><span>hello@michsleiman.com</span><span>+1 438 376 1826</span><span>Montreal, Canada</span></span></p>
+    <div class="sec rv"><p class="p-quote">Hi there, let's grab a coffee! <span class="lines"><span>hello@michsleiman.com</span><span>Montreal, Canada</span></span></p>
     <a class="p-link" href="mailto:hello@michsleiman.com">Reach out</a> <a class="p-link ghost" data-go="spectra" href="#">Start the tour ›</a></div>`, "#bf4800", {type:"work", i});
 }
 function showContact(i){
@@ -2724,7 +2793,7 @@ function showContact(i){
     <div class="p-eye rv">Lobby · Contact</div>
     <h2 class="p-title rv">Hi there, let's grab a coffee!</h2>
     <p class="p-tag rv">Have an exciting product idea but unsure how to bring it to life? Let's turn it into reality.</p>
-    <dl class="p-meta rv"><div><dt>Email</dt><dd>hello@michsleiman.com</dd></div><div><dt>Phone</dt><dd>+1 438 376 1826</dd></div><div><dt>Address</dt><dd>Montreal, Canada</dd></div></dl>
+    <dl class="p-meta rv"><div><dt>Email</dt><dd>hello@michsleiman.com</dd></div><div><dt>Address</dt><dd>Montreal, Canada</dd></div></dl>
     <div class="rv"><a class="p-link" href="mailto:hello@michsleiman.com">Reach out</a> <a class="p-link ghost" href="https://www.linkedin.com/in/sleimanmichel/" target="_blank" rel="noopener">LinkedIn ›</a> <a class="p-link ghost" href="https://www.instagram.com/michsleiman/" target="_blank" rel="noopener">Instagram ›</a></div>
     <div class="sec rv" style="background:#f5f5f7;border-radius:28px;padding:48px"><p class="p-quote">You explored ${WORK.filter(w=>seenW.has(w.id)).length} of ${WORK.length} rooms <span>and ${seenP.size} of ${ALBUMS.length} photo series on the way down. Thanks for walking through.</span></p></div>`, "#0071e3", {type:"work", i});
 }
@@ -2744,7 +2813,18 @@ function counts(){ const nw = WORK.filter(w=>seenW.has(w.id)).length, np = seenP
   $("#cW").textContent = WORK.filter(w=>seenW.has(w.id)).length; $("#tW").textContent = WORK.length; $("#cP").textContent = seenP.size; $("#tP").textContent = ALBUMS.length; }
 counts();
 $("#menuList").innerHTML = FLOORS.map((F,k)=>`<button role="menuitem" data-k="${k}"><span class="n">${F.n}</span><span class="t">${F.name}</span><span class="s">${k===2||k===1||k===3?WORK.filter(w=>w.floor===k).map(w=>w.label).join(", "):F.sub}</span></button>`).join("");
-$("#menuList").querySelectorAll("button").forEach(b=>b.onclick=()=>{ closeMenu(); if(panelOpen) closePanel(); goFloor(+b.dataset.k); });
+$("#menuList").insertAdjacentHTML("beforeend", `<button role="menuitem" class="allw" data-all="1"><span class="n">↗</span><span class="t">View all work</span><span class="s">Every project on one page</span></button>`);
+$("#menuList").querySelectorAll("button").forEach(b=>b.onclick=()=>{ closeMenu(); if(b.dataset.all){ openIndex(); return; } if(panelOpen) closePanel(); goFloor(+b.dataset.k); });
+$("#workBtn").onclick = ()=>openIndex();
+// all the work on one page: for anyone who'd rather not take the stairs
+function openIndex(){
+  const groups = [1,2,3].map(k=>({ F: FLOORS[k], items: WORK.map((w,i)=>({w,i})).filter(o=>o.w.floor===k && !o.w.about && !o.w.contact) }));
+  const n = groups.reduce((a,g)=>a + g.items.length, 0);
+  const card = ({w,i})=>`<a class="ix-card rv" href="#${w.id}" data-i="${i}"><div class="ix-im${w.cover ? "" : " txt"}">${w.cover ? `<img src="${imgSrc(w.cover[0])}" onerror="this.onerror=null;this.src='tex/${w.cover[0]}'" alt="" loading="lazy">` : `<span>${w.label}</span>`}</div><div class="ix-tx"><b>${w.label}</b><span>${w.desc || ""}</span><i class="ix-go" aria-hidden="true">›</i></div></a>`;
+  showPanel("All work", `<div class="ix"><div class="p-eye rv">Index</div><h2 class="p-title rv">All work</h2><p class="p-tag rv">${n} projects across three floors. Pick one, or take the long way down.</p>
+    ${groups.map(g=>`<section class="ix-floor"><div class="ix-h rv"><span>${g.F.n}</span>${g.F.name}<small>${g.F.sub}</small></div><div class="ix-grid">${g.items.map(card).join("")}</div></section>`).join("")}</div>`, "#1d1d1f", { type: "index" });
+  $("#pIn").querySelectorAll(".ix-card").forEach(a=>a.onclick = e=>{ e.preventDefault(); openWork(+a.dataset.i, true); $("#panel").scrollTop = 0; });
+}
 function closeMenu(){ $("#navm").classList.remove("open"); $("#menuBtn").setAttribute("aria-expanded","false"); }
 $("#menuBtn").onclick = e=>{ e.stopPropagation(); const o = !$("#navm").classList.contains("open"); $("#navm").classList.toggle("open", o); $("#menuBtn").setAttribute("aria-expanded", String(o)); if(o) sfx && sfx("air"); };
 addEventListener("pointerdown", e=>{ if(!e.target.closest("#navm")) closeMenu(); });
@@ -2761,6 +2841,7 @@ addEventListener("keydown", e=>{
 
 /* ============================ loop ============================ */
 let glanced = false, bubbleKey = "", heroHov0 = false, nextGest = 0, gestN = 0, prevCur = 0, runDir = 0, runFor = 0, byeDone = false, byeT = 0; const lookPt = new THREE.Vector3();
+let rest = null;
 let cur = 0, last = performance.now(), prevPos = null, speed = 0, yaw = 0, lastMove = performance.now(), idleStage = 0;
 let lastArrive = -2, wasOutside = false;
 let camLook = new THREE.Vector3(), snapCam = true, releasing = 0, curFloor = -1, activeSt = -1, stepAcc = 0, started = false, introT = 0, introDone = false, time = 0;
@@ -2831,6 +2912,17 @@ function frame(now){
   }
   let heroPos = pos, heroSpeed = moving ? speed : 0;
   if(act){ const r = actStep(dt, pos, now); heroPos = r.p; heroSpeed = r.sp; if(r.yawT != null) targetYaw = r.yawT; }
+  // linger on a floor and Michel wanders to the nearest bench and sits facing the work; scroll and he gets up
+  { const idleNow = (now - lastMove)/1000;
+    if(!rest && introDone && !moving && !act && !panelOpen && !focus && !tele && !VOICE_ON && !s.end && s.type !== "out" && idleNow > 14){
+      const b = BENCHES.filter(b=>b.k === s.k).sort((a,c)=>Math.abs(a.x - pos.x) - Math.abs(c.x - pos.x))[0]; if(b){ rest = { b, phase: 0, p: heroAt.clone(), sit: 0, t: 0 }; bubble(""); } }
+    if(rest){ const R2 = rest, B = R2.b, seat = new THREE.Vector3(clamp(pos.x, B.x - 1.2, B.x + 1.2), pos.y, B.z);
+      if(R2.phase === 0){ const d = seat.clone().sub(R2.p); d.y = 0; const L = d.length(); if(L > .05){ R2.p.addScaledVector(d, Math.min(1, 1.3*dt/L)); heroSpeed = 1.3; targetYaw = Math.atan2(d.x, d.z); } else { R2.phase = 1; } }
+      if(R2.phase === 1){ targetYaw = Math.PI; R2.sit = Math.min(1, R2.sit + dt*1.4); }
+      if(moving || panelOpen || act || VOICE_ON){ R2.phase = 2; }
+      if(R2.phase === 2){ R2.sit = Math.max(0, R2.sit - dt*2.6); if(R2.sit === 0){ const d = pos.clone().sub(R2.p); d.y = 0; const L = d.length(); if(L > .08){ R2.p.addScaledVector(d, Math.min(1, 4*dt/L)); heroSpeed = 3; targetYaw = Math.atan2(d.x, d.z); } else rest = null; } }
+      if(rest){ const k = smooth(0, 1, R2.sit); heroPos = R2.p.clone(); heroPos.y = pos.y - k*Math.max(0, hipH() - B.top - .02); hero.sit = k; }
+      else hero.sit = 0; } }
   heroAt.copy(heroPos); heroHit.position.set(heroAt.x, heroAt.y + HERO_H/2, heroAt.z);
   if(!introDone) targetYaw = 0;
   let dy = targetYaw - yaw; while(dy>Math.PI) dy -= Math.PI*2; while(dy<-Math.PI) dy += Math.PI*2;
@@ -2887,6 +2979,7 @@ function frame(now){
     desired.lerp(tmp.set(sx + off*.4, sy + 3.1, dz*narrow), tIn);
     desiredLook.lerp(tmp.set(sx + off*.22, sy + 2.4, WALLZ), tIn);
   }
+  if(rest){ const dx = rest.p.x - pos.x; desired.x += dx*.7; desiredLook.x += dx*.8; desired.y += .4; }   // keep Michel in frame while he goes to sit
   if(s.k===0){
     const k0 = 1 - smooth(0, 1, cur/(innerHeight*1.4));
     desired.lerp(tmp.set(pos.x + 9, fy(0) + 4.6, 31*narrow), k0); desiredLook.lerp(tmp.set(pos.x + 10, fy(0) + 3.8, -30), k0);
