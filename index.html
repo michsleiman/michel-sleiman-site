@@ -82,7 +82,14 @@ body.titled .ui.fade{opacity:1}
 .navm{position:relative}
 #menuBtn .chev{transition:transform .3s}
 #menuBtn .stairs{transform:rotate(180deg)}
-.navm.open #menuBtn{background:rgba(255,255,255,.92)}
+.navm.open #menuBtn{color:var(--ink)}
+#hudTL .nm,#menuBtn.flbtn{all:unset;cursor:pointer;font:inherit;display:inline-flex;align-items:center;gap:7px}
+#hudTL .nm{font-weight:600;color:var(--ink)}
+#menuBtn.flbtn{color:var(--ink2);transition:color .25s}#menuBtn.flbtn:hover{color:var(--ink)}
+#menuBtn.flbtn:focus-visible,#hudTL .nm:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:6px}
+#homeBtn:hover{background:var(--glass)}
+#homeBtn .navm{display:inline-flex}
+#homeBtn #menuList{left:-14px;top:calc(100% + 18px)}
 .navm.open #menuBtn .chev{transform:rotate(180deg)}
 #menuList{position:absolute;top:calc(100% + 8px);left:0;width:340px;max-width:calc(100vw - 48px);padding:6px;border-radius:20px;background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(24px);-webkit-backdrop-filter:saturate(180%) blur(24px);border:1px solid rgba(255,255,255,.8);box-shadow:0 18px 50px rgba(0,0,0,.12);opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top left;pointer-events:none;transition:opacity .25s, transform .3s cubic-bezier(.2,.8,.2,1)}
 .navm.open #menuList{opacity:1;transform:none;pointer-events:auto}
@@ -556,7 +563,7 @@ body.outside #topfade{background:linear-gradient(rgba(24,18,28,.34),rgba(24,18,2
 body.found #hudTR .count{opacity:1;transform:none}
 #hudTR b{display:inline-block}#hudTR b.bump{animation:cntBump .7s cubic-bezier(.2,1.6,.4,1)}
 @keyframes cntBump{0%{transform:translateY(60%);opacity:0}60%{transform:translateY(-12%);opacity:1}100%{transform:none}}
-#homeBtn{position:relative;overflow:hidden}
+#homeBtn{position:relative}
 .flGhost{position:absolute;left:0;top:0;pointer-events:none;animation:flOutUp .45s cubic-bezier(.65,0,.35,1) forwards}.flGhost.dn{animation-name:flOutDn}
 @keyframes flOutUp{to{transform:translateY(-110%)}}@keyframes flOutDn{to{transform:translateY(110%)}}
 #prog{gap:14px}
@@ -727,7 +734,7 @@ body.outside #hudBR,body.outside #prog{opacity:0;pointer-events:none}
 #lightbox.on{opacity:1;pointer-events:auto}
 #lightbox img{max-width:90vw;max-height:88vh;border-radius:6px;box-shadow:0 30px 80px rgba(0,0,0,.15)}
 
-@media(max-width:760px){#bubble{white-space:normal;width:max-content;max-width:min(260px,70vw);text-align:center}.about-top,.split{grid-template-columns:1fr}.p-gal{columns:1}.p-gal.photos{columns:2}.tl div{grid-template-columns:1fr}.tl .c{text-align:left}.logos{grid-template-columns:repeat(3,1fr)}#prog{display:none}#hudTR .count{display:none}#hudTL .sep,#hudFl{display:none}#hudTL{left:12px;gap:6px}#hudTL .pill{padding-left:12px;padding-right:12px}#hireBtn{position:fixed;left:12px;bottom:22px}#intro{left:6vw;right:6vw}}
+@media(max-width:760px){#bubble{white-space:normal;width:max-content;max-width:min(260px,70vw);text-align:center}.about-top,.split{grid-template-columns:1fr}.p-gal{columns:1}.p-gal.photos{columns:2}.tl div{grid-template-columns:1fr}.tl .c{text-align:left}.logos{grid-template-columns:repeat(3,1fr)}#prog{display:none}#hudTR .count{display:none}#hudTL .sep,#hudTL .nm{display:none}#hudTL{left:12px;gap:6px}#hudTL .pill{padding-left:12px;padding-right:12px}#hireBtn{position:fixed;left:12px;bottom:22px}#intro{left:6vw;right:6vw}}
 </style>
 </head>
 <body>
@@ -767,7 +774,7 @@ body.outside #hudBR,body.outside #prog{opacity:0;pointer-events:none}
   <h2>Contact</h2>
   <p><a href="mailto:hello@michsleiman.com">hello@michsleiman.com</a> · <a href="https://www.linkedin.com/in/sleimanmichel/">LinkedIn</a> · <a href="https://www.instagram.com/michsleiman/">Instagram</a></p>
 </main>
-<nav class="ui fade" id="hudTL" aria-label="Main"><div class="pill" id="homeBtn"><span class="nm">Michel Sleiman</span><span class="sep"></span><span class="flwrap"><span class="fl" id="hudFl">Who I am</span></span></div><div class="navm" id="navm"><button class="pill" id="menuBtn" aria-haspopup="true" aria-expanded="false" aria-controls="menuList">Floors<svg class="chev" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="menuList" role="menu"></div></div><button class="pill" id="workBtn">All work</button><button class="pill" id="aboutBtn">About</button><a class="pill" id="hireBtn" href="#contact">Get in touch</a></nav>
+<nav class="ui fade" id="hudTL" aria-label="Main"><div class="pill" id="homeBtn"><button class="nm" id="nameBtn" type="button" aria-label="Back to the rooftop">Michel Sleiman</button><span class="sep"></span><div class="navm" id="navm"><button class="flbtn" id="menuBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="menuList" aria-label="Choose a floor"><span class="flwrap"><span class="fl" id="hudFl">Who I am</span></span><svg class="chev" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="menuList" role="menu"></div></div></div><button class="pill" id="workBtn">Work</button><button class="pill" id="aboutBtn">About</button><a class="pill" id="hireBtn" href="#contact">Get in touch</a></nav>
 <div class="ui fade" id="hudTR"><div class="pill count">Work <b id="cW">0</b>/<span id="tW"></span>&nbsp;&nbsp;Photographs <b id="cP">0</b>/<span id="tP"></span></div></div>
 
 <div class="ui fade" id="hudBR"><button class="pill" id="sndBtn" type="button" aria-pressed="false"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="t">Sound off</span></button></div>
@@ -2821,7 +2828,6 @@ function counts(){ const nw = WORK.filter(w=>isProj(w) && seenW.has(w.id)).lengt
   $("#cW").textContent = WORK.filter(w=>isProj(w) && seenW.has(w.id)).length; $("#tW").textContent = WORK.filter(isProj).length; $("#cP").textContent = seenP.size; $("#tP").textContent = ALBUMS.length; }
 counts();
 $("#menuList").innerHTML = FLOORS.map((F,k)=>`<button role="menuitem" data-k="${k}"><span class="n">${F.n}</span><span class="t">${F.name}</span><span class="s">${k===2||k===1||k===3?WORK.filter(w=>w.floor===k).map(w=>w.label).join(", "):F.sub}</span></button>`).join("");
-$("#menuList").insertAdjacentHTML("beforeend", `<button role="menuitem" class="allw" data-all="1"><span class="n">↗</span><span class="t">View all work</span><span class="s">Every project on one page</span></button>`);
 $("#menuList").querySelectorAll("button").forEach(b=>b.onclick=()=>{ closeMenu(); if(b.dataset.all){ openIndex(); return; } if(panelOpen) closePanel(); goFloor(+b.dataset.k); });
 $("#workBtn").onclick = ()=>openIndex();
 // all the work on one page: for anyone who'd rather not take the stairs
@@ -2838,7 +2844,7 @@ $("#menuBtn").onclick = e=>{ e.stopPropagation(); const o = !$("#navm").classLis
 addEventListener("pointerdown", e=>{ if(!e.target.closest("#navm")) closeMenu(); });
 $("#aboutBtn").onclick = ()=>openWork(0, true);
 $("#hireBtn").onclick = e=>{ e.preventDefault(); openWork(WORK.findIndex(w=>w.contact), true); };
-$("#homeBtn").onclick = ()=>goFloor(0);
+$("#nameBtn").onclick = ()=>{ closeMenu(); if(panelOpen) closePanel(); goFloor(0); };
 document.querySelectorAll("#footer [data-floor]").forEach(a=>a.onclick=e=>{ e.preventDefault(); goFloor(+a.dataset.floor); });
 $("#fAbout").onclick = e=>{ e.preventDefault(); openWork(0, true); };
 addEventListener("keydown", e=>{
