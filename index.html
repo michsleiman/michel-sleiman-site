@@ -2126,7 +2126,7 @@ function buildName(font){
   mill.scale.set(20, mh, 14); mill.position.set(cx, GYs, zf - 7); scene.add(mill); CITY.night.push([mill.material, 1.2]);
   const res = font.data.resolution, text = "MICHEL SLEIMAN";
   let size = 2.0; { let a0 = 0; [...text].forEach(ch=>{ a0 += ch === " " ? size*.5 : font.data.glyphs[ch].ha*size/res + size*.06; }); size *= Math.min(1, 16.5/a0); }   // the letters and their frame stay inside the mill's 20 m roof
-  SIGN.steady = new THREE.MeshStandardMaterial({color:0xe9c9a6, roughness:.5, emissive:0xff8a3d, emissiveIntensity:0});
+  SIGN.steady = new THREE.MeshStandardMaterial({color:0xc8551f, roughness:.45, emissive:0xff7a2e, emissiveIntensity:0});
   SIGN.flick = SIGN.steady.clone();
   const items = []; let adv = 0;
   [...text].forEach((ch, i)=>{ if(ch === " "){ adv += size*.5; return; }
@@ -2140,7 +2140,7 @@ function buildName(font){
     if(i < bays){ const xm = lerp(x0, x1, (i+.5)/bays), L = Math.hypot((x1-x0)/bays, fh); list.push([xm, GYs + mh + fh/2, zf - .9, L, .12, .12, Math.atan2(fh, (x1-x0)/bays)*(i%2 ? 1 : -1)]); } }
   for(const z of [zf - .9, zf - 2.0]) for(const y of [GYs + mh + .1, GYs + mh + fh/2, GYs + mh + fh]) list.push([(x0+x1)/2, y, z, x1 - x0, .1, .1, 0]);
   for(let i=0;i<=bays;i+=2){ const x = lerp(x0, x1, i/bays); list.push([x, GYs + mh + fh, zf - 1.75, .12, .12, 1.8, 0]); }
-  const steel = new THREE.MeshStandardMaterial({color:0x4a4644, roughness:.6, metalness:.5});
+  const steel = new THREE.MeshStandardMaterial({color:0xf3f2ee, roughness:.42, metalness:.25, envMapIntensity:.9});   // same white steel as the wheel
   const im = new THREE.InstancedMesh(bar, steel, list.length), m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler();
   list.forEach((b,i)=>{ e.set(0, 0, b[6]); q.setFromEuler(e); m4.compose(new THREE.Vector3(b[0], b[1], b[2]), q, new THREE.Vector3(b[3], b[4], b[5])); im.setMatrixAt(i, m4); }); scene.add(im);
 }
@@ -2148,7 +2148,7 @@ function signUpdate(dt, N){
   if(!SIGN.steady) return;
   SIGN.hold -= dt; if(SIGN.hold < 0){ const r = Math.random(); SIGN.f = r < .12 ? .05 : r < .3 ? .55 : 1; SIGN.hold = SIGN.f < 1 ? .04 + Math.random()*.12 : .4 + Math.random()*2.6; }
   const on = smooth(.25, .7, N), buzz = .94 + Math.random()*.06;
-  SIGN.steady.emissiveIntensity = (.25 + 1.1*on)*buzz; SIGN.flick.emissiveIntensity = (.25 + 1.1*on)*SIGN.f;
+  SIGN.steady.emissiveIntensity = (.35 + 1.3*on)*buzz; SIGN.flick.emissiveIntensity = (.35 + 1.3*on)*SIGN.f;
 }
 
 /* ============================ the waterfront terrace (the footer scene) ============================ */
