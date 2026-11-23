@@ -922,7 +922,7 @@ function T(f, critical=true){
   const ready = ()=>{ t.image = img; t.needsUpdate = true; done(); };
   img.onload = ()=>{ if(img.decode) img.decode().then(ready, ready); else ready(); }; img.onerror = ()=>done();
   img.src = `tex/${f}`;
-  t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = Math.min(8, maxAniso);
+  t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = maxAniso;
   return texCache[f] = t;
 }
 
@@ -1715,11 +1715,13 @@ const IMG_Y = 2.6;
 WORK.forEach((w,i)=>{
   const k = w.floor, x = stationX(k, w.t), y = fy(k);
   CUR = FG[k];
-  let iw = w.wide ? 5.4 : 4.1, ih = w.wide ? 3.0 : 2.56;
-  if(w.about){ iw = 2.36; ih = 3.0; }
-  if(w.big){ iw = 5.6; ih = 3.68; }
-  const ww = w.big ? 17 : Math.max(iw + 1.4, 4.6), wh = w.big ? 5.9 : (ih > 2.8 ? 5.3 : 5.0);
-  const IY = w.big ? 3.15 : 2.95;
+  // the hero image fills the card: an even margin left, right and on top; the line of text and the button sit below it
+  const M0 = .3, G = .3, BTN = .41, TXT = .48;   // equal gaps: top, image, line of text, button, bottom
+  let ww = w.wide ? 6.8 : 5.5, iw = ww - 2*M0, ih = iw/(w.wide ? 1.8 : 1.6);
+  if(w.big){ ww = 17; iw = 6.4; ih = 4.2; }
+  if(w.about){ iw = 2.36; ih = 3.0; ww = Math.max(iw + 1.4, 4.6); }
+  const wh = w.about ? 5.3 : G + BTN + G + TXT + G + ih + M0;
+  const IY = w.about ? 2.95 : .06 + G + BTN + G + TXT + G + ih/2;
   const g = new THREE.Group(); g.position.set(x, y, WALLZ); add(g);
   const wall = new THREE.Mesh(new THREE.BoxGeometry(ww, wh, .24), w.contact ? M.trav : M.plaster); wall.position.y = wh/2 + .06; wall.castShadow = wall.receiveShadow = true; g.add(wall);
   const plinth = new THREE.Mesh(new THREE.BoxGeometry(ww - .2, .06, .2), M.alu); plinth.position.y = .03; g.add(plinth);
@@ -1751,17 +1753,14 @@ WORK.forEach((w,i)=>{
   }
   // gallery wall text: name above, the project's line below, always visible
   {
-    const tw = Math.min(ww - .6, 4.6), th = tw * (230/2048);
-    const title = new THREE.Mesh(new THREE.PlaneGeometry(tw, th), new THREE.MeshBasicMaterial({map:titleTex(w.contact ? "Get in touch" : w.label), transparent:true, toneMapped:false}));
-    title.position.set(0, IY + ih/2 + .1 + th/2, .125); g.add(title);
     const dw = Math.min(ww - .6, 4.8), dh = dw * (400/2048);
     const desc = new THREE.Mesh(new THREE.PlaneGeometry(dw, dh), new THREE.MeshBasicMaterial({map:paraTex(w.desc), transparent:true, toneMapped:false}));
-    desc.position.set(0, IY - ih/2 - .2 - dh/2, .125); g.add(desc);   // a little more air under the image
+    desc.position.set(0, w.about ? IY - ih/2 - .06 - dh/2 : IY - ih/2 - G - dh/2 + .02, .125); g.add(desc);   // a little more air under the image
   }
   // the Explore button is part of the showcase, at hand height so Michel can press it
   let btn;
   {
-    const bw = 1.1, bh = .34, by = w.big ? .4 : .42;
+    const bw = 1.1, bh = .34, by = w.about ? .42 : .06 + G + BTN/2;
     btn = new THREE.Group(); btn.position.set(0, by, .12); g.add(btn);
     const bezel = new THREE.Mesh(pillGeo(bw + .07, bh + .07, .025, .006), M.alu); btn.add(bezel);
     const capMat = new THREE.MeshStandardMaterial({ color: 0x1d1d1f, roughness: .3, metalness: 0, emissive: 0x1d1d1f, emissiveIntensity: .05 });
@@ -2854,7 +2853,7 @@ let rest = null;
 let cur = 0, last = performance.now(), prevPos = null, speed = 0, yaw = 0, lastMove = performance.now(), idleStage = 0;
 let lastArrive = -2, wasOutside = false;
 let camLook = new THREE.Vector3(), snapCam = true, releasing = 0, curFloor = -1, activeSt = -1, stepAcc = 0, started = false, introT = 0, introDone = false, time = 0;
-const lookS = new THREE.Vector2();
+const lookS = new THREE.Vector2(); let zoomK = 0;
 const desired = new THREE.Vector3(), desiredLook = new THREE.Vector3(), proj = new THREE.Vector3(), tmp = new THREE.Vector3();
 const INTRO = reduce ? .01 : 4.6;
 var VOICE_ON = false;   // while the voice agent talks, the bubble is his voice and nothing else writes to it
@@ -2979,14 +2978,16 @@ function frame(now){
   lookS.x = damp(lookS.x, look.x, 2.5, dt); lookS.y = damp(lookS.y, look.y, 2.5, dt);
   desired.set(pos.x*.5, pos.y + 4.3, 26*narrow); desiredLook.set(pos.x*.58, pos.y + 2.0, -2);
   if(s.type==="stairs" || s.type==="step"){ const sd = side(s.k); desired.set(clamp(pos.x - sd*1.2, -W/2+7, W/2-7), pos.y + 3.2, 27*narrow); desiredLook.set(clamp(pos.x - sd*1.0, -W/2+6, W/2-6), pos.y + 1.6, -4); }
+  zoomK = 0;
   if(dwellSt>=0 || s.between || s.approach!=null){
     let sx, sy, dz, tIn;
-    if(dwellSt>=0){ const st = STATIONS[dwellSt]; sx = st.x; sy = st.y; dz = st.w.big && s.k !== LAST ? 24 : 17.5; tIn = (s.holdIn ? 1 : smooth(0, .28, P.t)) * (s.holdOut ? 1 : 1 - smooth(.82, 1, P.t)); }
-    else if(s.approach!=null){ const st = STATIONS[s.approach], u = smooth(.55, 1, P.t); sx = lerp(pos.x, st.x, u); sy = st.y; dz = 17.5; tIn = smooth(0, .25, P.t); }   // one steady distance all the way to the contact wall
-    else { const a = STATIONS[s.between[0]], b = STATIONS[s.between[1]], u = smooth(0, 1, P.t); sx = lerp(a.x, b.x, u); sy = lerp(a.y, b.y, u); dz = lerp(a.w.big ? 24 : 17.5, b.w.big ? 24 : 17.5, u); tIn = 1; }   // walking between two pieces: stay in close
+    if(dwellSt>=0){ const st = STATIONS[dwellSt]; sx = st.x; sy = st.y; dz = st.w.big && s.k !== LAST ? 19 : 12.5; tIn = (s.holdIn ? 1 : smooth(0, .28, P.t)) * (s.holdOut ? 1 : 1 - smooth(.82, 1, P.t)); }
+    else if(s.approach!=null){ const st = STATIONS[s.approach], u = smooth(.55, 1, P.t); sx = lerp(pos.x, st.x, u); sy = st.y; dz = 12.5; tIn = smooth(0, .25, P.t); }   // one steady distance all the way to the contact wall
+    else { const a = STATIONS[s.between[0]], b = STATIONS[s.between[1]], u = smooth(0, 1, P.t); sx = lerp(a.x, b.x, u); sy = lerp(a.y, b.y, u); dz = lerp(a.w.big ? 19 : 12.5, b.w.big ? 19 : 12.5, u); tIn = 1; }   // walking between two pieces: stay in close
     const off = clamp(pos.x - sx, -4, 4);   // frame the piece and Michel beside it
-    desired.lerp(tmp.set(sx + off*.4, sy + 3.1, dz*narrow), tIn);
-    desiredLook.lerp(tmp.set(sx + off*.22, sy + 2.4, WALLZ), tIn);
+    zoomK = tIn;
+    desired.lerp(tmp.set(sx + off*.4, sy + 3.3, dz*narrow), tIn);
+    desiredLook.lerp(tmp.set(sx + off*.22, sy + 2.75, WALLZ), tIn);
   }
   if(rest){ const dx = rest.p.x - pos.x; desired.x += dx*.7; desiredLook.x += dx*.8; desired.y += .4; }   // keep Michel in frame while he goes to sit
   if(s.k===0){
@@ -3037,7 +3038,7 @@ function frame(now){
     desiredLook.lerp(tmp.set(x*.35, y + 1.6, -4), w);
     if(t >= 1){ trip = null; hero.object.scale.set(1,1,1); hero.object.visible = true; }
   }
-  desired.x += lookS.x*1.6; desired.y += lookS.y*.9; desiredLook.x += lookS.x*3.2; desiredLook.y += lookS.y*1.6;
+  { const pk = 1 - .82*zoomK; desired.x += lookS.x*1.6*pk; desired.y += lookS.y*.9*pk*(1 - .5*zoomK); desiredLook.x += lookS.x*3.2*pk; desiredLook.y += lookS.y*1.6*pk*(1 - .5*zoomK); }   // in close, the cursor only nudges the view
   desired.x += Math.sin(time*.3)*.15; desired.y += Math.sin(time*.41)*.08;
   if(tele && tele.base){ camera.position.copy(tele.base.p); camLook.copy(tele.base.l); }   // the telescope blend sits on top of the normal camera, never feeds back into it
   if(focus){
@@ -3084,7 +3085,7 @@ function frame(now){
     const near = st.i === dwellSt, hov = hovered && hovered.userData.type==="work" && hovered.userData.i === st.i;
     if(near && !st._near) st.pulse = 1; st._near = near; st.pulse = Math.max(0, (st.pulse || 0) - dt/1.3);   // he arrives: the piece brightens once and its button breathes
     const bump = st.pulse > 0 ? Math.sin((1 - st.pulse)*Math.PI) : 0;
-    st.baseE = damp(st.baseE ?? .3, near||hov ? .5 : .3, 5, dt); st.mat.emissiveIntensity = st.baseE + bump*.28;
+    st.baseE = damp(st.baseE ?? .3, hov ? .38 : .3, 5, dt); st.mat.emissiveIntensity = st.baseE;   // no glow on arrival; only a faint lift under the cursor
     st.lift = damp(st.lift || 0, hov && !act ? 1 : 0, 6, dt); if(st.az0 == null){ st.az0 = st.art.position.z; st.az1 = st.art2.position.z; } if(!st.w.about){ st.art.position.z = st.az0 + .06*st.lift; st.art2.position.z = st.az1 + .06*st.lift; }   // the screen eases toward you on hover st.fade.emissiveIntensity = st.mat.emissiveIntensity;
     st.group.position.z = damp(st.group.position.z, WALLZ + (hov && !st.swing ? .12 : 0), 6, dt);
     if(st.swing){ const S = st.swing, B = st.btn.userData, tt = performance.now()/1000, h = Math.min(dt, 1/30);
