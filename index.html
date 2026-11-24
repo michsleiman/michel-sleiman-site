@@ -21,10 +21,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 <script type="importmap">
 { "imports": {
-  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  "three": "./vendor/three/build/three.module.min.js",
+  "three/addons/": "./vendor/three/examples/jsm/",
+  "three/examples/jsm/": "./vendor/three/examples/jsm/",
+  "postprocessing": "./vendor/pp-stub.js"
 } }
 </script>
+<link rel="modulepreload" href="./vendor/three/build/three.module.min.js">
+<link rel="modulepreload" href="./vendor/N8AO.js">
+<link rel="modulepreload" href="./vendor/three/examples/jsm/loaders/GLTFLoader.js">
+<link rel="modulepreload" href="./vendor/three/examples/jsm/postprocessing/EffectComposer.js">
+<link rel="modulepreload" href="./figure.js?v=r9">
 <style>
 :root{--ink:#1d1d1f;--ink2:#6e6e73;--ink3:#a1a1a6;--bg:#f5f5f7;--line:rgba(0,0,0,.08);--glass:rgba(255,255,255,.62);--blue:#0071e3;
   --serif:"Newsreader",Georgia,serif;--body:"Newsreader",Georgia,serif;
@@ -568,6 +575,33 @@ body.dusk #prog button span,body.lobbyk #prog button span{color:#fff;text-shadow
  #intro{bottom:9vh}
  #intro h1{font-size:clamp(40px,6vw,60px)}
 }
+
+/* ---- case-study motion, Realtor.ca as the testing ground: quiet rises, springy details, more air ---- */
+#pIn:has(.cs-rail){--out:cubic-bezier(.23,1,.32,1);--spring:linear(0, .0347 4.17%, .1214 8.33%, .2378 12.5%, .3668 16.67%, .4961 20.83%, .617 25%, .7244 29.17%, .8156 33.33%, .8897 37.5%, .9474 41.67%, .9902 45.83%, 1.0199 50%, 1.0389 54.17%, 1.0493 58.33%, 1.0532 62.5%, 1.0523 66.67%, 1.0483 70.83%, 1.0425 75%, 1.0357 79.17%, 1.0287 83.33%, 1.0221 87.5%, 1.0162 91.67%, 1.0111 95.83%, 1)}
+#pIn:has(.cs-rail) .rv{transform:translateY(24px);transition:opacity .8s var(--out), transform 1s var(--out)}
+#pIn:has(.cs-rail) .rv.in{transform:none}
+#pIn:has(.cs-rail) .cs-ch{padding-top:clamp(120px,14vw,184px)}
+#pIn:has(.cs-rail) .cs-ch h3{letter-spacing:-.035em;max-width:16ch}
+#pIn:has(.cs-rail) .cs-ch .sub{font-size:20px;line-height:1.55;max-width:46ch;margin-top:22px}
+#pIn:has(.cs-rail) .cs-ch>*+*{margin-top:clamp(56px,6vw,80px)}
+#pIn:has(.cs-rail) .cs-ch>.rv:first-child{margin-top:0}
+/* images settle into place as they arrive */
+#pIn:has(.cs-rail) .rv .bf img,#pIn:has(.cs-rail) .rv .scr,#pIn:has(.cs-rail) .rv .pf img{transform:scale(1.035);transition:transform 1.6s var(--out)}
+#pIn:has(.cs-rail) .rv.in .bf img,#pIn:has(.cs-rail) .rv.in .scr,#pIn:has(.cs-rail) .rv.in .pf img{transform:none}
+/* small pieces pop in on a spring, one after another */
+#pIn:has(.cs-rail) .cs-wh .chips span,#pIn:has(.cs-rail) .cs-io .aud td span,#pIn:has(.cs-rail) .cs-ins em{opacity:0;transform:scale(.82);transition:opacity .4s var(--out) var(--d,0s), transform .7s var(--spring) var(--d,0s)}
+#pIn:has(.cs-rail) .rv.in .cs-wh .chips span,#pIn:has(.cs-rail) .cs-wh.in .chips span,#pIn:has(.cs-rail) .rv.in .aud td span,#pIn:has(.cs-rail) .rv.in .cs-ins em,#pIn:has(.cs-rail) .rv.in em{opacity:1;transform:none}
+/* bars draw from the left */
+#pIn:has(.cs-rail) .cs-road .rw span{transform:scaleX(0);transform-origin:left;transition:transform .9s var(--spring) var(--d,0s)}
+#pIn:has(.cs-rail) .cs-road.in .rw span{transform:none}
+#pIn:has(.cs-rail) .st .pane.on .sp i{animation:wjGrow .9s var(--spring) both;animation-delay:var(--d,0s);transform-origin:left}
+@keyframes wjGrow{from{transform:scaleX(0)}to{transform:none}}
+/* cards answer the cursor: a short lift on a spring */
+#pIn:has(.cs-rail) :is(.cs-prin>div,.cs-ins .g>div,.cs-met>div,.cs-lessons>div,.cs-obj>div,.cs-use .g>div){transition:transform .6s var(--spring), box-shadow .6s var(--out), opacity .8s var(--out)}
+#pIn:has(.cs-rail) :is(.cs-ins .g>div,.cs-use .g>div,.cs-obj>div):hover{transform:translateY(-4px);box-shadow:0 18px 40px -18px rgba(0,0,0,.18)}
+#pIn:has(.cs-rail) .cs-rail a{transition:background .45s var(--out), color .45s var(--out), transform .5s var(--spring)}
+#pIn:has(.cs-rail) .cs-rail a:active{transform:scale(.96)}
+@media (prefers-reduced-motion:reduce){#pIn:has(.cs-rail) *{transition:none!important;animation:none!important;transform:none!important}#pIn:has(.cs-rail) .rv,#pIn:has(.cs-rail) .cs-wh .chips span,#pIn:has(.cs-rail) .aud td span{opacity:1!important}}
 /* ---- polish pass ---- */
 #topfade{position:fixed;left:0;right:0;top:0;height:110px;z-index:15;pointer-events:none;background:linear-gradient(rgba(246,244,240,.62),rgba(246,244,240,0));transition:opacity 1s, background 1.2s}
 body.outside #topfade{background:linear-gradient(rgba(24,18,28,.34),rgba(24,18,28,0))}
@@ -811,8 +845,11 @@ import * as THREE from "three";
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { GTAOPass } from "three/addons/postprocessing/GTAOPass.js";
+import { N8AOPass } from "./vendor/N8AO.js";
 import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
 import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
+import { FullScreenQuad } from "three/addons/postprocessing/Pass.js";
+import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { FontLoader } from "three/addons/loaders/FontLoader.js";
 import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
@@ -898,6 +935,12 @@ const canvas = $("#gl");
 const renderer = new THREE.WebGLRenderer({canvas, antialias:false, powerPreference:"high-performance"});   // edges are smoothed in the composer's multisampled target; MSAA on the canvas itself only cost bandwidth
 const bigScreen = innerWidth*innerHeight > 1.3e6;   // e.g. a full-screen laptop window: fewer extra pixels, same crispness to the eye
 let DPR = Math.min(devicePixelRatio, small ? 1.25 : bigScreen ? 1.3 : 1.5);
+// device tier from the GPU name: 2 = discrete / Apple silicon, 1 = integrated laptop or phone GPU, 0 = software rendering
+const GPU = (()=>{ try{ const gl = renderer.getContext(), e = gl.getExtension("WEBGL_debug_renderer_info"); return String(e ? gl.getParameter(e.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER)); }catch(_){ return ""; } })();
+const TIER = (q=>q!==null && q!=="" ? +q : null)(new URLSearchParams(location.search).get("q")) ?? (
+  /swiftshader|llvmpipe|software|basic render|microsoft basic/i.test(GPU) ? 0
+  : /apple|nvidia|geforce|rtx|gtx|quadro|radeon (rx|pro)|arc\b/i.test(GPU) ? 2
+  : /intel|uhd|iris|hd graphics|mali|adreno|powervr|radeon\(tm\)|vega/i.test(GPU) || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4 ? 1 : 2);
 renderer.setPixelRatio(DPR);
 renderer.setSize(innerWidth, innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -1378,7 +1421,7 @@ const CITY = { night:[], cross:null, beacon:null, bridgeLights:null, wheelLights
     const c = add2(new THREE.Mesh(new THREE.ConeGeometry(2.4, 3.4, 4), model)); c.rotation.y = Math.PI/4; c.position.set(x, GY + 19.7, z); }
   // La Grande Roue de Montréal: a white double rim on tension spokes, a hub carried by A-frame legs,
   // 42 enclosed cabins that stay level as the wheel turns, a boarding pavilion at its foot, and lights after dark
-  { const x = 22, z = -190, r = 12.5, hubY = GY + r + 3.2, depth = .9, NG = 42;
+  { const x = 22, z = -190, r = 12.5, hubY = GY + r + 6,   /* the lowest cabin clears the pavilion roof */ depth = .9, NG = 42;
     const white = new THREE.MeshStandardMaterial({color:0xf3f2ee, roughness:.42, metalness:.25, envMapIntensity:.9});
     const cable = new THREE.MeshStandardMaterial({color:0xd9dcdf, roughness:.5, metalness:.4});
     const W = CITY.wheel = { x, z, r, hubY, NG, rot: new THREE.Group(), a: 0 };
@@ -1402,7 +1445,7 @@ const CITY = { night:[], cross:null, beacon:null, bridgeLights:null, wheelLights
     // A-frame legs (front and back), a cross beam at the hub, and the pavilion at the base
     const legs = []; const hubP = zz => new THREE.Vector3(x, hubY, z + zz);
     for(const zz of [-2.4, 2.4]) for(const sx of [-1, 1]) legs.push([new THREE.Vector3(x + sx*7.2, GY + 2.6, z + zz*1.9), hubP(zz), .38]);
-    for(const sx of [-1, 1]) legs.push([new THREE.Vector3(x + sx*4.6, GY + 9, z - 4.4), new THREE.Vector3(x + sx*4.6, GY + 9, z + 4.4), .16]);
+    for(const sx of [-1, 1]) legs.push([new THREE.Vector3(x + sx*3.4, GY + 11, z - 3.6), new THREE.Vector3(x + sx*3.4, GY + 11, z + 3.6), .16]);
     legs.push([hubP(-2.4), hubP(2.4), .3]);
     const legIm = strut(legs, white, scene); legIm.castShadow = false;
     const glassM = new THREE.MeshStandardMaterial({color:0xa9c2d4, roughness:.15, metalness:.3, envMapIntensity:1.3});
@@ -1854,7 +1897,7 @@ HANG.forEach((prints, k)=>{
   box(2.9, .06, .62, M.walnut, X0, y0 + .44, -3.7); for(const dx of [-1.3, 1.3]) box(.06, .41, .52, M.alu, X0 + dx, y0 + .205, -3.7, false);
 
   const sp = new THREE.SpotLight(0xffe2b8, 10, 12, .85, .8, 1.4);
-  sp.position.set(X0, fy(k) - .9, -D/2 + 3.8); sp.target.position.set(X0, y0 + 3, -D/2 - .2); add(sp); add(sp.target);
+  sp.position.set(X0, fy(k) - .9, -D/2 + 3.8); sp.target.position.set(X0, y0 + 3, -D/2 - .2); scene.add(sp); scene.add(sp.target);   // at scene root: light count stays constant as floors hide, so no shader recompiles
 });
 CUR = root;
 
@@ -2136,7 +2179,7 @@ function closeTele(){ if(!tele || !tele.on || tele.leaving) return; const t = te
 
 /* ---------- my name, in red letters on a steel frame above an Old Port mill, lit at night like Farine Five Roses ---------- */
 new FontLoader().load("assets/helvetiker_bold.typeface.json", font=>buildName(font), undefined, ()=>{
-  new FontLoader().load("https://cdn.jsdelivr.net/npm/three@0.160.0/examples/fonts/helvetiker_bold.typeface.json", f=>buildName(f));
+  new FontLoader().load("./vendor/three/examples/fonts/helvetiker_bold.typeface.json", f=>buildName(f));
 });
 const SIGN = { steady: null, flick: null, f: 1, hold: 0 };
 function buildName(font){
@@ -2374,12 +2417,33 @@ function goStation(id){ const st = STATIONS.find(s=>s.w.id===id); const s = SEG.
 
 /* ============================ post ============================ */
 const composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(innerWidth*DPR, innerHeight*DPR, { type:THREE.HalfFloatType, samples: small ? 2 : 4 }));
-composer.addPass(new RenderPass(scene, camera));
-const gtao = new GTAOPass(scene, camera, innerWidth, innerHeight);
-gtao.updateGtaoMaterial({ radius:.9, distanceExponent:1.4, thickness:1.2, scale:1.1, samples:8 });
-gtao.updatePdMaterial({ lumaPhi:10, depthPhi:2, normalPhi:3, radius:6, rings:2, samples:10 });
-gtao.blendIntensity = .9; gtao.enabled = !small;
-composer.addPass(gtao);
+// ambient occlusion: N8AO reconstructs normals from depth, so the scene is drawn once (GTAO drew it twice)
+const USE_GTAO = new URLSearchParams(location.search).get("ao") === "gtao";
+let gtao;
+if(USE_GTAO){
+  composer.addPass(new RenderPass(scene, camera));
+  gtao = new GTAOPass(scene, camera, innerWidth, innerHeight);
+  gtao.updateGtaoMaterial({ radius:.9, distanceExponent:1.4, thickness:1.2, scale:1.1, samples:8 });
+  gtao.updatePdMaterial({ lumaPhi:10, depthPhi:2, normalPhi:3, radius:6, rings:2, samples:10 });
+  gtao.blendIntensity = .9; gtao.enabled = !small;
+  composer.addPass(gtao);
+} else {
+  const n8 = new N8AOPass(scene, camera, innerWidth, innerHeight);
+  Object.assign(n8.configuration, { aoRadius: 1.6, distanceFalloff: 1.0, intensity: 2.2, color: new THREE.Color(0x2a2622), halfRes: true, depthAwareUpsampling: true, gammaCorrection: false, screenSpaceRadius: false });
+  n8.setQualityMode("Medium");
+  n8.beautyRenderTarget.samples = small ? 2 : 4;   // MSAA where the scene is actually drawn
+  [composer.renderTarget1, composer.renderTarget2].forEach(r=>{ r.samples = 0; r.dispose(); });   // the rest of the chain is full-screen passes: no MSAA needed
+  composer.addPass(n8);
+  // AO off = draw the scene once into the multisampled target and copy it on: none of the AO passes run
+  const cq = new FullScreenQuad(new THREE.ShaderMaterial({ uniforms:{ t:{value:null} }, depthTest:false, depthWrite:false,
+    vertexShader:`varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0., 1.); }`,
+    fragmentShader:`uniform sampler2D t; varying vec2 vUv; void main(){ gl_FragColor = texture2D(t, vUv); }` }));
+  const n8render = n8.render.bind(n8); let aoOn = true;
+  n8.render = (r, w, rd, dt, m)=>{ if(aoOn) return n8render(r, w, rd, dt, m);
+    r.setRenderTarget(n8.beautyRenderTarget); r.render(scene, camera);
+    cq.material.uniforms.t.value = n8.beautyRenderTarget.texture; r.setRenderTarget(n8.renderToScreen ? null : w); cq.render(r); };
+  gtao = { get enabled(){ return aoOn; }, set enabled(v){ aoOn = !!v; }, setSize(w, h){ n8.setSize(w, h); }, pass: n8 };
+}
 composer.addPass(new OutputPass());
 const grade = new ShaderPass({
   uniforms:{ tDiffuse:{value:null}, uT:{value:0}, uFlash:{value:0}, uWarm:{value:0} },
@@ -2735,6 +2799,20 @@ function nextHTML(w){
 }
 function bindCase(){
   const P = $("#panel"), I = $("#pIn");
+  // case-study motion (Realtor.ca first): stagger siblings, count numbers up, draw bars in sequence
+  if(I.querySelector(".cs-rail")){
+    I.querySelectorAll(".cs-met, .cs-prin, .cs-ins .g, .cs-lessons, .cs-obj, .cs-use .g, .cs-io, .cs-sum .p-stats").forEach(g=>[...g.children].forEach((c,j)=>{ c.style.transitionDelay = (j*.08) + "s"; }));
+    I.querySelectorAll(".cs-wh .chips").forEach(g=>[...g.children].forEach((c,j)=>c.style.setProperty("--d", (.15 + j*.04) + "s")));
+    I.querySelectorAll(".cs-io .aud tbody tr").forEach((tr,r)=>[...tr.querySelectorAll("td span")].forEach((c,j)=>c.style.setProperty("--d", (.2 + r*.06 + j*.03) + "s")));
+    I.querySelectorAll(".cs-road .rw span").forEach((c,j)=>c.style.setProperty("--d", (.1 + j*.035) + "s"));
+    I.querySelectorAll(".st .sp div i").forEach((c,j)=>c.style.setProperty("--d", (j*.03) + "s"));
+    const count = b=>{ const m = b.textContent.match(/^([^\d]*)([\d,.]+)(.*)$/); if(!m || b._done) return; b._done = true; const to = parseFloat(m[2].replace(/,/g,"")), dec = (m[2].split(".")[1]||"").length, comma = m[2].includes(","), t0 = performance.now(), dur = 1400;
+      const fmt = v=>{ let x = v.toFixed(dec); if(comma) x = Number(x).toLocaleString("en-US"); return m[1] + x + m[3]; };
+      const tick = now=>{ const u = Math.min(1, (now - t0)/dur), e = 1 - Math.pow(1 - u, 4); b.textContent = fmt(to*e); if(u < 1) requestAnimationFrame(tick); else b.textContent = fmt(to); }; b.textContent = fmt(0); requestAnimationFrame(tick); };
+    const nio = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ count(e.target); nio.unobserve(e.target); } }), { root: P, threshold: .6 });
+    I.querySelectorAll(".cs-met b, .cs-sum .p-stats b, .cs-io .aud .ft b").forEach(b=>nio.observe(b));
+  }
+
   // chapter bar: jump to a chapter, and light the one you're reading
   const links = [...I.querySelectorAll(".cs-rail a")];
   links.forEach(a=>a.onclick = e=>{ e.preventDefault(); const t = I.querySelector("#ch-" + a.dataset.to); if(t) P.scrollTo({ top: t.offsetTop - 40, behavior: "smooth" }); });
@@ -2869,6 +2947,7 @@ addEventListener("keydown", e=>{
 let glanced = false, bubbleKey = "", heroHov0 = false, nextGest = 0, gestN = 0, prevCur = 0, runDir = 0, runFor = 0, byeDone = false, byeT = 0; const lookPt = new THREE.Vector3();
 let rest = null;
 let cur = 0, last = performance.now(), prevPos = null, speed = 0, yaw = 0, lastMove = performance.now(), idleStage = 0;
+const STALL = new URLSearchParams(location.search).has("perf") ? Object.assign([], { pg: 0, tx: 0, gm: 0 }) : null; window.__stall = STALL;   // ?perf: log every hitch with what changed in that frame
 let lastArrive = -2, wasOutside = false;
 let camLook = new THREE.Vector3(), snapCam = true, releasing = 0, curFloor = -1, activeSt = -1, stepAcc = 0, started = false, introT = 0, introDone = false, time = 0;
 const lookS = new THREE.Vector2(); let zoomK = 0;
@@ -2901,11 +2980,15 @@ function cycle(st, dt, active){
   }
 }
 const hintEl = $("#hint");
+const SHU = { n: 0, p: new THREE.Vector3() };
 function frame(now){
   if(panelOpen && (!focus || focus.done) && now - panelAt > 900){ last = now; requestAnimationFrame(frame); return; }   // the page covers the scene: skip rendering
   const _pf0 = PROF ? performance.now() : 0;
-  const dt = Math.min(.05, (now - last)/1000) * FAST; last = now; time += dt;
-  perf(dt, (now - last)/1000);
+  if(STALL){ const gap = now - last, I = renderer.info, pg = I.programs ? I.programs.length : 0, tx = I.memory.textures, gm = I.memory.geometries;
+    if(gap > 90 && !document.hidden) STALL.push({ t: Math.round(now), gap: Math.round(gap), intro: introDone ? 1 : +(introT/INTRO).toFixed(2), seg: posAt(cur).seg.type + posAt(cur).seg.k, newProg: pg - STALL.pg, newTex: tx - STALL.tx, newGeo: gm - STALL.gm });
+    STALL.pg = pg; STALL.tx = tx; STALL.gm = gm; }
+  const rawGap = (now - last)/1000, dt = Math.min(.05, rawGap) * FAST; last = now; time += dt;
+  perf(dt, rawGap);
   if(started) introT = Math.min(INTRO, introT + dt);
   const ip = introT / INTRO;
   if(!introDone && ip >= 1){ introDone = true; document.body.classList.add("titled"); lastMove = now - 900; }
@@ -3137,23 +3220,53 @@ function frame(now){
   { const ii = $("#intro .inr"); if(ii && cur < innerHeight*.3){ ii.style.setProperty("--px", (-lookS.x*7).toFixed(1)+"px"); ii.style.setProperty("--py", (lookS.y*5).toFixed(1)+"px"); } }
   grade.uniforms.uT.value = time; grade.uniforms.uFlash.value = damp(grade.uniforms.uFlash.value, 0, 4.5, dt);
   const _pf1 = PROF ? performance.now() : 0; if(PROF){ renderer.info.autoReset = false; renderer.info.reset(); }
+  // shadows: redrawn every frame while anything that frames them moves (walking, the sun); at rest, every other frame is plenty for the idle motion
+  if(started){ const SM = renderer.shadowMap; SM.autoUpdate = false; SHU.n++;
+    if(SHU.p.distanceToSquared(sun.position) > 1e-6 || SHU.n % 2 === 0 || !sun.shadow.map){ SM.needsUpdate = true; SHU.p.copy(sun.position); } }
   composer.render(dt);
   if(PROF){ renderer.getContext().finish(); const _pf2 = performance.now(); PROF.js += _pf1 - _pf0; PROF.gpu += _pf2 - _pf1; PROF.n++; if(PROF.log) PROF.log.push([Math.round(cur), +(_pf1 - _pf0).toFixed(1), +(_pf2 - _pf1).toFixed(1), renderer.info.programs.length, renderer.info.memory.textures]); PROF.calls += renderer.info.render.calls; PROF.tris += renderer.info.render.triangles; }
   if(focus && focus.track) focus.track();
   requestAnimationFrame(frame);
 }
-// adaptive quality: drop the most expensive passes if the device struggles
-let perfT = 0, perfN = 0, perfSum = 0, perfLevel = 0, perfBad = 0;
-function perf(dt, raw){
-  if(!started || !introDone || FAST > 1 || perfLevel >= 2) return;
-  if(document.hidden || raw > .09 || (document.hasFocus && !document.hasFocus())){ perfT = perfN = perfSum = 0; perfBad = 0; return; }   // background or throttled tabs say nothing about this machine
-  perfT += dt; perfN++; perfSum += dt;
-  if(perfT > 4){ const avg = perfSum/perfN; perfT = perfN = perfSum = 0;
-    perfBad = avg > (perfLevel ? .036 : .026) ? perfBad + 1 : 0;   // only drop quality after two slow stretches in a row
-    if(perfBad >= 2){ perfBad = 0; perfLevel++; if(perfLevel===1){ gtao.enabled = false; } else { DPR = 1; [composer.renderTarget1, composer.renderTarget2].forEach(r=>{ r.samples = Math.min(r.samples, 2); r.dispose(); }); renderer.setPixelRatio(1); composer.setPixelRatio && composer.setPixelRatio(1); sun.shadow.mapSize.set(1024,1024); sun.shadow.map?.dispose(); sun.shadow.map = null; } } }
+// adaptive quality. Each level is a little cheaper than the one before; the device starts at a level that suits its GPU,
+// steps down within a second or two if frames are missed, and steps back up only after a long smooth stretch.
+const DPR0 = DPR, SH0 = sun.shadow.mapSize.x;
+const QL = [
+  { dpr: DPR0,                      ao: true,  sh: SH0 },
+  { dpr: Math.max(1, DPR0*.85),     ao: true,  sh: SH0 },
+  { dpr: Math.max(1, DPR0*.85),     ao: false, sh: SH0 },
+  { dpr: 1,                         ao: false, sh: SH0 },
+  { dpr: Math.min(1, DPR0)*.85,     ao: false, sh: 1024 },
+  { dpr: Math.min(1, DPR0)*.7,      ao: false, sh: 1024 },
+];
+let qLevel = -1, qBest = 0;
+function setQuality(n){
+  n = Math.max(0, Math.min(QL.length - 1, n)); if(n === qLevel) return; qLevel = n;
+  const L = QL[n]; gtao.enabled = L.ao;
+  if(Math.abs(renderer.getPixelRatio() - L.dpr) > .01){ DPR = L.dpr; renderer.setPixelRatio(DPR); composer.setPixelRatio(DPR); gtao.setSize(innerWidth, innerHeight);
+    scene.traverse(o=>{ const u = o.material && o.material.uniforms; if(u && u.uPR) u.uPR.value = DPR; }); }
+  if(sun.shadow.mapSize.x !== L.sh){ sun.shadow.mapSize.set(L.sh, L.sh); sun.shadow.map?.dispose(); sun.shadow.map = null; }
 }
+setQuality(TIER >= 2 ? 0 : TIER === 1 ? (small ? 2 : 3) : 4);
+const QS = { vs: 20.5, win: [], t: 0, bad: 0, good: 0, upAt: -1e9, wait: 0 };
+function perf(dt, raw){
+  if(!started || FAST > 1 || QFIX) return;
+  const now = performance.now();
+  if(document.hidden || raw > 1){ QS.win.length = 0; QS.t = 0; return; }   // background or throttled tabs say nothing about this machine
+  QS.win.push(raw*1000); QS.t += raw;
+  if(QS.t < 1) return;
+  const w = QS.win.slice().sort((a,b)=>a-b); QS.win.length = 0; QS.t = 0;
+  if(QS.wait > 0){ QS.wait--; return; }   // the second after a change reallocates targets: don't judge it
+  QS.vs = Math.max(6.5, Math.min(QS.vs, w[Math.floor(w.length*.1)]));   // the display's frame interval: the quickest frames we've seen (never assumed slower than 50 Hz)
+  const slowAt = Math.max(18.5, QS.vs*1.15);   // below ~55 fps, whatever the display
+  const slow = w.filter(x=>x > slowAt).length / w.length;
+  if(slow > .2){ QS.good = 0; if(++QS.bad >= (now - QS.upAt < 8000 ? 1 : 2) || slow > .5){ QS.bad = 0;
+      if(now - QS.upAt < 8000) qBest = Math.max(qBest, qLevel + 1);   // a step up didn't hold: don't try that level again
+      if(qLevel < QL.length - 1){ setQuality(qLevel + 1); QS.wait = 1; } } }
+  else { QS.bad = 0; if(slow < .03 && ++QS.good >= 10 && qLevel > qBest){ QS.good = 0; setQuality(qLevel - 1); QS.upAt = now; QS.wait = 1; } }
+}
+const QFIX = new URLSearchParams(location.search).has("q");   // ?q=0|1|2 pins a tier for testing
 
-/* ============================ boot ============================ */
 function onResize(){
   renderer.setSize(innerWidth, innerHeight); composer.setSize(innerWidth, innerHeight); gtao.setSize(innerWidth, innerHeight);
   camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
@@ -3180,18 +3293,83 @@ buildPath();
 history.scrollRestoration = "manual"; scrollTo(0,0);
 requestAnimationFrame(frame);
 let warmed = false, warming = false;
+// static walls, floors and furniture sharing a material become one mesh per floor: far fewer draw calls (and shadow draws)
+const MERGED = [], SHADOW_ONLY_M = new THREE.MeshBasicMaterial({ colorWrite:false });
+sun.shadow.camera.layers.enable(1);   // layer 1 = shadow-only stand-ins: the shadow sees them, the camera never draws them
+function mergeStatic(){
+  const uses = new Map(); scene.traverse(o=>{ if(o.geometry) uses.set(o.geometry, (uses.get(o.geometry) || 0) + 1); });
+  const _c = new THREE.Vector3();
+  [...FG.map(g=>[g, 0]), [root, 7], [scene, 7]].forEach(([g, band])=>{   // root and scene pieces are split into height bands so off-screen ones are still culled
+    const groups = new Map(), shadowOnly = [];
+    g.children.forEach(o=>{
+      // multi-material boxes (floor slabs) cost one shadow draw per face material: a single-material stand-in casts their shadow instead
+      if(o.isMesh && Array.isArray(o.material) && o.castShadow && o.visible && !o.children.length && !Object.keys(o.userData).length && o.geometry.attributes.position){
+        o.updateMatrix(); const c = new THREE.BufferGeometry(); c.setAttribute("position", o.geometry.attributes.position.clone()); if(o.geometry.index) c.setIndex(o.geometry.index.clone()); c.applyMatrix4(o.matrix);
+        shadowOnly.push(c); MERGED.push(o); o.castShadow = false; return; }
+      if(!o.isMesh || o.isInstancedMesh || o.isSkinnedMesh || Array.isArray(o.material) || o.children.length || !o.visible || o.material.transparent || Object.keys(o.userData).length || o.morphTargetInfluences) return;
+      const a = o.geometry.attributes; if(!a.position || !a.normal) return;
+      if(!o.geometry.boundingSphere) o.geometry.computeBoundingSphere(); o.updateMatrixWorld(); _c.copy(o.geometry.boundingSphere.center).applyMatrix4(o.matrixWorld);
+      if(band && o.geometry.boundingSphere.radius*o.matrixWorld.getMaxScaleOnAxis() > band*2) return;   // big pieces (sky, ground) stay as they are
+      const key = [o.material.uuid, o.castShadow, o.receiveShadow, Object.keys(a).sort().join("+"), !!o.geometry.index, o.renderOrder, band ? Math.floor(_c.y/band) : 0].join("|");
+      (groups.get(key) || groups.set(key, []).get(key)).push(o);
+    });
+    if(shadowOnly.length){ const sg = mergeGeometries(shadowOnly, false); shadowOnly.forEach(c=>c.dispose());
+      if(sg){ const sm = new THREE.Mesh(sg, SHADOW_ONLY_M); sm.castShadow = true; sm.receiveShadow = false; sm.layers.set(1); g.add(sm); } }
+    groups.forEach(list=>{
+      if(list.length < 2) return;
+      const geos = list.map(o=>{ o.updateMatrix(); const c = o.geometry.clone(); c.applyMatrix4(o.matrix); return c; });
+      const merged = mergeGeometries(geos, false); geos.forEach(c=>c.dispose()); if(!merged) return;
+      const m = new THREE.Mesh(merged, list[0].material); m.castShadow = list[0].castShadow; m.receiveShadow = list[0].receiveShadow; m.renderOrder = list[0].renderOrder;
+      g.add(m);
+      list.forEach(o=>{ g.remove(o); MERGED.push(o); if(uses.get(o.geometry) === 1) o.geometry.dispose(); });
+    });
+  });
+}
 async function warm(){
   warming = true;
   try{
+    if(!MERGED.length && !location.search.includes("nomerge")) mergeStatic();
+    { const p0 = timeOfDay.p ?? 0; for(let k=0;k<=SKYSTEPS;k++){ timeOfDay(k/SKYSTEPS); await new Promise(r=>setTimeout(r, 0)); } timeOfDay.lastSky = null; timeOfDay(p0); }   // first: every sky reflection the day will need (the shaders depend on it, so this must come before compiling) the day will need, ready before you scroll
     const hid = []; scene.traverse(o=>{ if(!o.visible){ hid.push(o); o.visible = true; } });   // hidden floors and props still need their shaders ready
+    // compile against an off-screen float target, exactly like the post-processing chain renders (the screen uses different
+    // tone-mapping/colour defines, so compiling for it left most real shaders to compile during the intro)
+    const rtW = new THREE.WebGLRenderTarget(32, 32, { type: THREE.HalfFloatType }), fc = [];
+    scene.traverse(o=>{ if((o.isMesh || o.isPoints || o.isLine || o.isSprite) && o.frustumCulled){ fc.push(o); o.frustumCulled = false; } });
+    renderer.setRenderTarget(rtW);
     if(renderer.compileAsync) await renderer.compileAsync(scene, camera); else renderer.compile(scene, camera);
+    hid.forEach(o=>o.visible = true); FG.forEach(g=>{ g.visible = true; });   // the frame loop re-hides the floors while we waited
+    renderer.setRenderTarget(rtW); renderer.render(scene, camera);   // one tiny draw of everything: uploads every mesh and builds the shadow shaders
+    renderer.setRenderTarget(null); fc.forEach(o=>o.frustumCulled = true); rtW.dispose();
     const keys = ["map", "emissiveMap", "normalMap", "roughnessMap", "metalnessMap", "alphaMap", "aoMap", "bumpMap"], done = new Set();
     scene.traverse(o=>{ const ms = o.material ? (Array.isArray(o.material) ? o.material : [o.material]) : []; ms.forEach(m=>keys.forEach(k=>{ const t = m && m[k]; if(t && t.image && !done.has(t)){ done.add(t); renderer.initTexture(t); } })); });
     hid.forEach(o=>o.visible = false);
-    { const p0 = timeOfDay.p ?? 0; for(let k=0;k<=SKYSTEPS;k++){ timeOfDay(k/SKYSTEPS); await new Promise(r=>setTimeout(r, 0)); } timeOfDay.lastSky = null; timeOfDay(p0); }   // every reflection the day will need, ready before you scroll
     composer.render(0);   // and the post-processing passes once
+    { const a = gtao.enabled; gtao.enabled = !a; composer.render(0); gtao.enabled = a; }   // and the other AO path, so a quality change never compiles
   }catch(e){ console.warn("warm-up", e); }
   warmed = true;
+}
+// a short benchmark behind the loader (about a second at most): draw real frames at the starting quality and move
+// up or down until a frame takes comfortably less than a 60 Hz budget
+let calibrated = QFIX || FAST > 1, calibrating = false;
+async function calibrate(){
+  calibrating = true; const T0 = performance.now(), gl = renderer.getContext(), tried = new Map();
+  try{
+    const px = new Uint8Array(4), sync = ()=>{ renderer.setRenderTarget(null); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); };   // reading a pixel waits for the GPU to really finish (finish() alone often doesn't)
+    const timeLevel = ()=>{ const t = []; composer.render(0); sync();   // the first draw after a change pays for allocations: not counted
+      for(let i=0;i<6;i++){ const a = performance.now(); composer.render(0); sync(); t.push(performance.now() - a); if(performance.now() - T0 > 1100) break; }
+      t.sort((a,b)=>a-b); return t[Math.floor(t.length/2)]; };
+    for(let step=0; step<4 && performance.now() - T0 < 1100; step++){
+      const ms = timeLevel(); tried.set(qLevel, ms);
+      if(ms > 11 && qLevel < QL.length - 1) setQuality(qLevel + 1);
+      else if(ms < 5.5 && qLevel > 0 && !tried.has(qLevel - 1)) setQuality(qLevel - 1);
+      else break;
+      await new Promise(r=>setTimeout(r, 0));
+    }
+    if(!tried.has(qLevel)){ const ms = timeLevel(); tried.set(qLevel, ms); if(ms > 11) setQuality(qLevel + 1); }   // ran out of time on an untested level: keep it only if it holds
+    qBest = Math.max(0, qLevel - 1);   // the live controller may still try one level better later
+    if(window.__ms) __ms.cal = { ms: Object.fromEntries(tried), level: qLevel, took: Math.round(performance.now() - T0) };
+  }catch(e){ console.warn("calibrate", e); }
+  calibrated = true;
 }
 const t0 = performance.now();
 (function tick(){
@@ -3199,6 +3377,7 @@ const t0 = performance.now();
   $("#ldB").style.width = (shown*100)+"%";
   if(shown >= 1 || performance.now()-t0 > 12000){
     if(!warmed && performance.now()-t0 < 16000){ if(!warming) warm(); requestAnimationFrame(tick); return; }   // nothing compiles or uploads mid-scroll
+    if(!calibrated){ if(!calibrating) calibrate(); requestAnimationFrame(tick); return; }   // time real frames behind the loader, so the first scroll is already at the right quality
     $("#loader").classList.add("done"); started = true; return; }
   requestAnimationFrame(tick);
 })();
@@ -3244,8 +3423,11 @@ const t0 = performance.now();
   addEventListener("pagehide", () => { if(VOICE_ON) try{ vapi.stop(); }catch(e){} });
 }
 if(window.__ms){ __ms.prints = ()=>[...PRINTS.age].filter(a=>a<6).length; __ms.feathers = ()=>FEATH.length; __ms.burst = ()=>featherBurst(heroAt.clone().add(new THREE.Vector3(0,.3,0))); __ms.st = i=>({ pulse: STATIONS[i].pulse, e: STATIONS[i].mat.emissiveIntensity }); __ms.gest = (n,d)=>hero.gesture(n,d); __ms.hs = ()=>({ g: hero.gest, a0: hero.arms[0].sh.rotation.toArray().slice(0,3).map(v=>+v.toFixed(2)), rig: !!hero.isRig, free: !!hero.armGeos }); __ms.talk = on=>{ hero.talking = on; hero.talkLv = on ? .6 : 0; }; }
+if(window.__ms){ const snap = o=>[...o.position.toArray(), ...o.quaternion.toArray(), ...o.scale.toArray(), o.visible, o.parent ? 1 : 0].map(v=>typeof v==="number"?v.toFixed(4):v).join(); __ms.mcheck = (save)=>{ if(save){ MERGED.forEach(o=>o.userData.__s = snap(o)); return MERGED.length; } return MERGED.filter(o=>snap(o)!==o.userData.__s).map(o=>[o.material.name||o.material.type, o.geometry.type, o.position.toArray().map(v=>+v.toFixed(1))]); }; }
 if(window.__ms){ __ms.prof = async (ms=3000)=>{ PROF = { js:0, gpu:0, n:0, calls:0, tris:0 }; await new Promise(r=>setTimeout(r, ms)); const P = PROF; PROF = null; renderer.info.autoReset = true;
-  return { frames: P.n, jsMs: +(P.js/P.n).toFixed(2), renderMs: +(P.gpu/P.n).toFixed(2), calls: Math.round(P.calls/P.n), tris: Math.round(P.tris/P.n), dpr: renderer.getPixelRatio(), size: [innerWidth, innerHeight], gtao: gtao.enabled, samples: composer.renderTarget1.samples, shadow: sun.shadow.mapSize.x, perfLevel }; };
+  return { frames: P.n, jsMs: +(P.js/P.n).toFixed(2), renderMs: +(P.gpu/P.n).toFixed(2), calls: Math.round(P.calls/P.n), tris: Math.round(P.tris/P.n), dpr: renderer.getPixelRatio(), size: [innerWidth, innerHeight], gtao: gtao.enabled, samples: composer.renderTarget1.samples, shadow: sun.shadow.mapSize.x, qLevel }; };
+  __ms.o = ()=>({ scene, renderer, composer, gtao, sun, CITY, ROOF, STATIONS, PHOTOS, SIGN, FG, root });
+  __ms.q = (n)=>{ if(n !== undefined) setQuality(n); return { GPU, TIER, qLevel, qBest, QS: { n: QS.win.length, t: +QS.t.toFixed(2), bad: QS.bad, good: QS.good, wait: QS.wait }, dpr: renderer.getPixelRatio(), ao: gtao.enabled }; };
   __ms.set = (k, v)=>{ if(k==="gtao") gtao.enabled = v; if(k==="dpr"){ renderer.setPixelRatio(v); composer.setPixelRatio(v); gtao.setSize(innerWidth, innerHeight); } if(k==="samples"){ [composer.renderTarget1, composer.renderTarget2].forEach(r=>{ r.samples = v; r.dispose(); }); } if(k==="shadow"){ sun.shadow.mapSize.set(v, v); sun.shadow.map?.dispose(); sun.shadow.map = null; } if(k==="shadows") renderer.shadowMap.enabled = v; return k+"="+v; }; }
 if(window.__ms){ __ms.walk = async (to, ms)=>{ PROF = { js:0, gpu:0, n:0, calls:0, tris:0, log: [] }; const y0 = scrollY, t0 = performance.now();
   while(performance.now() - t0 < ms){ scrollTo(0, y0 + (to - y0)*(performance.now() - t0)/ms); await new Promise(r=>requestAnimationFrame(r)); }
