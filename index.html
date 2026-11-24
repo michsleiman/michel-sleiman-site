@@ -114,6 +114,7 @@ body.titled .ui.fade{opacity:1}
 #hudTR{right:24px;top:20px;display:flex;gap:8px}
 #hudTR .count{cursor:default;gap:14px;color:var(--ink2)}
 #hudTR b{color:var(--ink);font-weight:600}
+#hudTR .count{gap:20px}#hudTR .grp{display:inline-flex;align-items:baseline;white-space:nowrap}#hudTR .grp b{margin-left:7px}#hudTR .grp i{font-style:normal;margin:0 2px;color:var(--ink3)}
 @media(min-width:761px) and (max-width:1100px){#hudTR .ph{display:none}}   /* tablets: the work count only, so it never runs into the nav */
 #hudBR{right:24px;bottom:22px}
 .dots{display:inline-flex;gap:3px;align-items:flex-end;height:11px}
@@ -822,7 +823,7 @@ body.outside #hudBR,body.outside #prog{opacity:0;pointer-events:none}
   <p><a href="mailto:hello@michsleiman.com">hello@michsleiman.com</a> · <a href="https://www.linkedin.com/in/sleimanmichel/">LinkedIn</a> · <a href="https://www.instagram.com/michsleiman/">Instagram</a></p>
 </main>
 <nav class="ui fade" id="hudTL" aria-label="Main"><div class="pill" id="homeBtn"><button class="nm" id="nameBtn" type="button" aria-label="Back to the rooftop">Michel Sleiman</button><span class="sep"></span><div class="navm" id="navm"><button class="flbtn" id="menuBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="menuList" aria-label="Choose a floor"><span class="flwrap"><span class="fl" id="hudFl">Who I am</span></span><svg class="chev" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="menuList" role="menu"></div></div></div><button class="pill" id="workBtn">Work</button><button class="pill" id="aboutBtn">About</button><a class="pill" id="hireBtn" href="#contact">Get in touch</a></nav>
-<div class="ui fade" id="hudTR"><div class="pill count">Work <b id="cW">0</b>/<span id="tW"></span><span class="ph">&nbsp;&nbsp;Photographs <b id="cP">0</b>/<span id="tP"></span></span></div></div>
+<div class="ui fade" id="hudTR"><div class="pill count"><span class="grp">Work <b id="cW">0</b><i>/</i><span id="tW"></span></span><span class="grp ph">Photography <b id="cP">0</b><i>/</i><span id="tP"></span></span></div></div>
 
 <div class="ui fade" id="hudBR"><button class="pill" id="sndBtn" type="button" aria-pressed="false"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="t">Sound off</span></button></div>
 <div id="topfade" aria-hidden="true"></div>
