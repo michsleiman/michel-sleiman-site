@@ -3018,7 +3018,7 @@ function frame(now){
     if(VOICE_ON || heroHov){ targetYaw = Math.atan2(camera.position.x - pos.x, camera.position.z - pos.z); if(heroHov && !heroHov0) hero.nod = .6; }   // point at him, or talk to him: he faces you
     heroHov0 = !!heroHov;
     if(idleT > 1.4 && idleStage===0 && !panelOpen){ idleStage = 1;
-      bubble(s.end || s.type==="out" ? "" : s.type==="stairs" ? "My photographs, on the way down →" : dwellSt>=0 ? (seenW.has(WORK[dwellSt].id) && !WORK[dwellSt].contact ? AGAIN[(dwellSt + seenW.size) % AGAIN.length] : (LINES[WORK[dwellSt].id] || "Press the button to step inside")) : (s.k===0 ? "Hi, I'm Michel! Click me to chat." : "")); }
+      bubble(s.end || s.type==="out" ? "" : s.type==="stairs" ? "My photographs, on the way down →" : dwellSt>=0 ? (seenW.has(WORK[dwellSt].id) && !WORK[dwellSt].contact ? AGAIN[(dwellSt + seenW.size) % AGAIN.length] : (LINES[WORK[dwellSt].id] || "Press the button to step inside")) : (s.k===0 ? "Hi, I'm Michel! Poke me to chat." : "")); }
     if(idleT > 7.5 && idleStage===1 && cur > 30){ idleStage = 3; bubble(""); }
   }
   let heroPos = pos, heroSpeed = moving ? speed : 0;
