@@ -914,7 +914,8 @@ const CAREER = [
   ["October 2018 – January 2019","Junior Brand Strategy","Borsalino","Milano, Italy"]
 ];
 const LANGS = ["English","Arabic","French","Italian"];
-const TOOLS = ["Figma","Adobe XD","Sketch","WordPress","Photoshop","Illustrator","InDesign","Lightroom","Lumion","AutoCAD","SketchUp","HTML/CSS"];
+const PRACTICE = ["Product strategy","Design systems","UX research & usability testing","Interaction & motion design","Prototyping","Accessibility (WCAG)","AI-assisted design workflows","Design leadership & mentoring"];
+const TOOLS = ["Figma","Claude","UserTesting","Jira","Notion","Adobe Suite","HTML/CSS"];
 const ALB_CORES = [[0,1,2],[3,4,5],[6,7],[8,9]];   // which albums hang in the stairwell below floor k
 
 /* ============================ helpers ============================ */
@@ -2889,7 +2890,8 @@ function showAbout(i){
     <div class="split rv"><div><b>Worktime</b><span>Designing products people love, and systems teams trust.</span></div><div><b>Playtime</b><span>Photography is my medium for capturing the moods, emotions, and feelings we often struggle to put into words.</span></div></div>
     <div class="sec"><h3 class="rv">Work experience</h3><div class="tl">${CAREER.map(([d,r,c,l])=>`<div class="rv"><span class="d">${d}</span><span class="r">${r}<small>${c}</small></span><span class="c">${l}</span></div>`).join("")}</div></div>
     <div class="sec"><h3 class="rv">Languages</h3><div class="chips rv">${LANGS.map(l=>`<span>${l}</span>`).join("")}</div></div>
-    <div class="sec"><h3 class="rv">Proficiency</h3><div class="chips rv">${TOOLS.map(l=>`<span>${l}</span>`).join("")}</div></div>
+    <div class="sec"><h3 class="rv">Practice</h3><div class="chips rv">${PRACTICE.map(l=>`<span>${l}</span>`).join("")}</div></div>
+    <div class="sec"><h3 class="rv">Tools</h3><div class="chips rv">${TOOLS.map(l=>`<span>${l}</span>`).join("")}</div></div>
     <div class="sec"><h3 class="rv">Brands</h3><div class="logos rv">${DATA.logos.map(l=>`<div><img src="${imgSrc(l[0])}" onerror="this.onerror=null;this.src='tex/${l[0]}'" alt=""></div>`).join("")}</div></div>
     <div class="sec rv"><p class="p-quote">Hi there, let's grab a coffee! <span class="lines"><span>hello@michsleiman.com</span><span>Montreal, Canada</span></span></p>
     <a class="p-link" href="mailto:hello@michsleiman.com">Reach out</a> <a class="p-link ghost" data-go="spectra" href="#">Start the tour ›</a></div>`, "#bf4800", {type:"work", i});
