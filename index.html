@@ -1703,15 +1703,15 @@ function titleTex(title){
 }
 function paraTex(text){
   // the line under each piece: Inter, balanced lines (no lonely last word), a calm measure and generous leading
-  const w = 2048, h = 400, c = document.createElement("canvas"); c.width=w; c.height=h; const x=c.getContext("2d");
-  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
-  return whenFont(()=>{ x.clearRect(0,0,w,h); x.textAlign = "center"; x.textBaseline = "top"; x.fillStyle = "#3d3d40";
-    const fs = 72, lh = fs*1.52;
-    x.font = `400 ${fs}px Inter, "Helvetica Neue", Arial, sans-serif`; if("letterSpacing" in x) x.letterSpacing = "-1.2px";
+  const w = 3072, h = 600, c = document.createElement("canvas"); c.width=w; c.height=h; const x=c.getContext("2d");   // 1.5x: the strokes stay solid when the card is seen small
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = maxAniso;
+  return whenFont(()=>{ x.clearRect(0,0,w,h); x.textAlign = "center"; x.textBaseline = "top"; x.fillStyle = "#2f2f32";
+    const fs = 108, lh = fs*1.52;
+    x.font = `450 ${fs}px Inter, "Helvetica Neue", Arial, sans-serif`; if("letterSpacing" in x) x.letterSpacing = "-1.8px";
     const wrap = maxW => { const out = []; let line = ""; for(const wd of text.split(" ")){ const tt = line ? line + " " + wd : wd; if(x.measureText(tt).width > maxW && line){ out.push(line); line = wd; } else line = tt; } out.push(line); return out; };
     const maxW = w*.74; let lines = wrap(maxW);
     if(lines.length > 1){ let lo = maxW*.4, hi = maxW; for(let i=0;i<18;i++){ const mid = (lo+hi)/2; if(wrap(mid).length > lines.length) lo = mid; else hi = mid; } lines = wrap(hi); }   // balance the lines
-    lines.forEach((l,i)=>x.fillText(l, w/2, 10 + i*lh));
+    lines.forEach((l,i)=>x.fillText(l, w/2, 15 + i*lh));
     if("letterSpacing" in x) x.letterSpacing = "0px"; }, t);
 }
 
@@ -1720,10 +1720,10 @@ function pillGeo(w, h, d, bev = .012){
   const g = new THREE.ExtrudeGeometry(sh, { depth: d - bev*2, bevelEnabled: true, bevelThickness: bev, bevelSize: bev, bevelSegments: 3, curveSegments: 24 }); g.translate(0, 0, bev); return g;
 }
 function btnTex(text){
-  const w = 512, h = 150, c = document.createElement("canvas"); c.width=w; c.height=h; const x=c.getContext("2d");
-  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
+  const w = 768, h = 225, c = document.createElement("canvas"); c.width=w; c.height=h; const x=c.getContext("2d");
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = maxAniso;
   return whenFont(()=>{ x.clearRect(0,0,w,h); x.fillStyle = "#fff"; x.textAlign = "center"; x.textBaseline = "middle";
-    x.font = `600 ${Math.round(h*.5)}px Inter, Helvetica, Arial`; x.fillText(text + "  ›", w/2, h/2 + 4); }, t);
+    x.font = `600 ${Math.round(h*.5)}px Inter, Helvetica, Arial`; x.fillText(text + "  ›", w/2, h/2 + 6); }, t);
 }
 function labelTex(text, w=1024, h=128){
   const c = document.createElement("canvas"); c.width=w; c.height=h; const x=c.getContext("2d");
@@ -1754,12 +1754,12 @@ function strap(g, A, B, mat){
   m.position.copy(A).add(B).multiplyScalar(.5); m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), d.normalize()); m.castShadow = true; g.add(m); return m;
 }
 function buildBadge(g, ww, wh, i){
-  const bw = 2.36 + 1.0, bh = wh + .25, top = .1 + bh, hh = .5;
+  const bw = 2.36 + 1.0, top = .1 + wh + .25, base = .45, bh = top - base, hh = .5;   // the top stays on the lanyard; the card ends just under the button
   const cardM = new THREE.MeshStandardMaterial({ color: 0xfbfaf7, roughness: .42, envMapIntensity: .6 });
   const rr = .14, sh = new THREE.Shape(), X = bw/2, Y = bh/2;
   sh.moveTo(-X + rr, -Y); sh.lineTo(X - rr, -Y); sh.quadraticCurveTo(X, -Y, X, -Y + rr); sh.lineTo(X, Y - rr); sh.quadraticCurveTo(X, Y, X - rr, Y); sh.lineTo(-X + rr, Y); sh.quadraticCurveTo(-X, Y, -X, Y - rr); sh.lineTo(-X, -Y + rr); sh.quadraticCurveTo(-X, -Y, -X + rr, -Y);
   const cg = new THREE.ExtrudeGeometry(sh, { depth: .036, bevelEnabled: true, bevelThickness: .006, bevelSize: .006, bevelSegments: 2, curveSegments: 10 }); cg.translate(0, 0, -.024);
-  const card = new THREE.Mesh(cg, cardM); card.position.set(0, .1 + bh/2, .09); card.castShadow = card.receiveShadow = true; g.add(card); card.userData = {type:"work", i}; pickables.push(card);
+  const card = new THREE.Mesh(cg, cardM); card.position.set(0, base + bh/2, .09); card.castShadow = card.receiveShadow = true; g.add(card); card.userData = {type:"work", i}; pickables.push(card);
   const head = new THREE.Mesh(new THREE.PlaneGeometry(bw, hh), new THREE.MeshBasicMaterial({ map: badgeHeadTex(bw, hh), transparent: true, toneMapped: false }));
   head.position.set(0, top - hh/2, .116); g.add(head);
   // steel clip and ring at the slot, then the two lanyard straps up and over the cord
@@ -1784,7 +1784,7 @@ WORK.forEach((w,i)=>{
   if(w.big){ ww = 17; iw = 5.5; ih = 3.44; }   // keeps the whole wall under the ceiling
   if(w.about){ iw = 2.36; ih = 3.0; ww = Math.max(iw + 1.4, 4.6); }
   const wh = w.about ? 5.3 : G + BTN + G + TXT + G + ih + M0;
-  const IY = w.about ? 2.95 : .06 + G + BTN + G + TXT + G + ih/2;
+  const IY = w.about ? 3.35 : .06 + G + BTN + G + TXT + G + ih/2;
   const g = new THREE.Group(); g.position.set(x, y, WALLZ); add(g);
   const wall = new THREE.Mesh(new THREE.BoxGeometry(ww, wh, .24), w.contact ? M.trav : M.plaster); wall.position.y = wh/2 + .06; wall.castShadow = wall.receiveShadow = true; g.add(wall);
   const plinth = new THREE.Mesh(new THREE.BoxGeometry(ww - .2, .06, .2), M.alu); plinth.position.y = .03; g.add(plinth);
@@ -1818,12 +1818,12 @@ WORK.forEach((w,i)=>{
   {
     const dw = Math.min(ww - .6, 4.8), dh = dw * (400/2048);
     const desc = new THREE.Mesh(new THREE.PlaneGeometry(dw, dh), new THREE.MeshBasicMaterial({map:paraTex(w.desc), transparent:true, toneMapped:false}));
-    desc.position.set(0, w.about ? IY - ih/2 - .06 - dh/2 : IY - ih/2 - G - dh/2 + .02, .125); g.add(desc);   // a little more air under the image
+    desc.position.set(0, w.about ? IY - ih/2 - .19 - dh/2 : IY - ih/2 - G - dh/2 + .02, .125); g.add(desc);   // a little more air under the image
   }
   // the Explore button is part of the showcase, at hand height so Michel can press it
   let btn;
   {
-    const bw = 1.1, bh = .34, by = w.about ? .42 : .06 + G + BTN/2;
+    const bw = 1.1, bh = .34, by = w.about ? .95 : .06 + G + BTN/2;
     btn = new THREE.Group(); btn.position.set(0, by, .12); g.add(btn);
     const bezel = new THREE.Mesh(pillGeo(bw + .07, bh + .07, .025, .006), M.alu); btn.add(bezel);
     const capMat = new THREE.MeshStandardMaterial({ color: 0x1d1d1f, roughness: .3, metalness: 0, emissive: 0x1d1d1f, emissiveIntensity: .05 });
@@ -2458,7 +2458,7 @@ const grade = new ShaderPass({
         c = mix(vec3(l), c, 1.16 + .22*(1. - smoothstep(.0, .35, sat)));      // more colour, most where things were greyest
         c = mix(c, c*c*(3. - 2.*c), .14); c = max(c, 0.); }                    // a little contrast so nothing feels washed out
       c *= mix(1., smoothstep(1.05, .35, r), .32);
-      c += (h(vUv*vec2(1920.,1080.) + fract(uT*7.)) - .5) * .012;
+      c += (h(vUv*vec2(1920.,1080.)) - .5) * .008;   // a still, fine dither: no crawling grain over text
       c = mix(c, vec3(1.), uFlash); gl_FragColor = vec4(c,1.); }`
 });
 composer.addPass(grade);
@@ -3141,7 +3141,7 @@ function frame(now){
     desiredLook.lerp(tmp.set(x*.35, y + 1.6, -4), w);
     if(t >= 1){ trip = null; hero.object.scale.set(1,1,1); hero.object.visible = true; }
   }
-  { const pk = 1 - .82*zoomK; desired.x += lookS.x*1.6*pk; desired.y += lookS.y*.9*pk*(1 - .5*zoomK); desiredLook.x += lookS.x*3.2*pk; desiredLook.y += lookS.y*1.6*pk*(1 - .5*zoomK); }   // in close, the cursor only nudges the view
+  { const pk = 1 - .96*zoomK;   /* parked at a card, it holds almost still so the text stays steady */ desired.x += lookS.x*1.6*pk; desired.y += lookS.y*.9*pk*(1 - .5*zoomK); desiredLook.x += lookS.x*3.2*pk; desiredLook.y += lookS.y*1.6*pk*(1 - .5*zoomK); }   // in close, the cursor only nudges the view
   desired.x += Math.sin(time*.3)*.15; desired.y += Math.sin(time*.41)*.08;
   if(tele && tele.base){ camera.position.copy(tele.base.p); camLook.copy(tele.base.l); }   // the telescope blend sits on top of the normal camera, never feeds back into it
   if(focus){
