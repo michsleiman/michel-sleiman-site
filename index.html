@@ -845,8 +845,6 @@ body.outside #hudBR,body.outside #prog{opacity:0;pointer-events:none}
 <script type="module">
 import * as THREE from "three";
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
-import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
-import { GTAOPass } from "three/addons/postprocessing/GTAOPass.js";
 import { N8AOPass } from "./vendor/N8AO.js";
 import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
 import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
@@ -916,7 +914,6 @@ const CAREER = [
 const LANGS = ["English","Arabic","French","Italian"];
 const PRACTICE = ["Product strategy","Design systems","UX research & usability testing","Interaction & motion design","Prototyping","Accessibility (WCAG)","AI-assisted design workflows","Design leadership & mentoring"];
 const TOOLS = ["Figma","Claude","UserTesting","Jira","Notion","Adobe Suite","HTML/CSS"];
-const ALB_CORES = [[0,1,2],[3,4,5],[6,7],[8,9]];   // which albums hang in the stairwell below floor k
 
 /* ============================ helpers ============================ */
 const $ = s => document.querySelector(s);
@@ -1204,7 +1201,6 @@ for(let k=1;k<LAST;k++){
   run(hx0, hz0, hx1, hz0); run(hx1, hz0, hx1, hz1); run(hx1, hz1, hx0, hz1); run(hx0, hz1, hx0, 2.15); run(hx0, .65, hx0, hz0);
 }
 // wayfinding: each floor announces itself on the end wall by the spiral, like signage in a real building
-const SIGN_LINE = { 1: "Spectra and the AI design transformation", 2: "Brand experiences for Armani, Moncler, SHAA and Istituto Marangoni", 3: "The Realtor.ca design system", 4: "Let's grab a coffee" };
 function plaqueTex(k){
   // the floor's name leads; the level number sits beside it, smaller
   const F = FLOORS[k], w = 1024, h = 512, c = document.createElement("canvas"); c.width = w; c.height = h; const x = c.getContext("2d");
@@ -1693,15 +1689,6 @@ function cardTex(kind, title, foot, {w=1200,h=760,bg="#f5f5f7",big=170,accent="#
   }, tt);
 }
 function whenFont(draw, t){ draw(); if(document.fonts && document.fonts.load) Promise.all([document.fonts.load('600 92px Inter'), document.fonts.load('400 72px Inter'), document.fonts.load('300 100px Inter'), document.fonts.load('200 100px Inter'), document.fonts.load('500 44px Inter'), document.fonts.load('400 100px "Newsreader"'), document.fonts.load('500 100px "Newsreader"'), document.fonts.load('italic 400 60px "Newsreader"'), document.fonts.load('italic 500 60px "Newsreader"')]).then(()=>{ draw(); t.needsUpdate = true; }).catch(()=>{}); return t; }
-function titleTex(title){
-  const w = 2048, h = 230, c = document.createElement("canvas"); c.width=w; c.height=h; const x=c.getContext("2d");
-  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
-  return whenFont(()=>{ x.clearRect(0,0,w,h); x.textAlign = "center"; x.textBaseline = "alphabetic"; x.fillStyle = "#1d1d1f";
-    let fs = 112; x.font = `400 ${fs}px "Newsreader", Georgia, serif`;
-    while(x.measureText(title).width > w*.9 && fs > 50){ fs -= 4; x.font = `400 ${fs}px "Newsreader", Georgia, serif`; }
-    x.fillText(title, w/2, 150);
-    x.fillStyle = "#1d1d1f"; x.fillRect(w/2 - 36, 196, 72, 3); }, t);
-}
 function paraTex(text){
   // the line under each piece: Inter, balanced lines (no lonely last word), a calm measure and generous leading
   const w = 3072, h = 600, c = document.createElement("canvas"); c.width=w; c.height=h; const x=c.getContext("2d");   // 1.5x: the strokes stay solid when the card is seen small
@@ -1777,7 +1764,6 @@ function buildBadge(g, ww, wh, i){
 
 /* ============================ stations ============================ */
 const STATIONS = [], pickables = [];
-const IMG_Y = 2.6;
 WORK.forEach((w,i)=>{
   const k = w.floor, x = stationX(k, w.t), y = fy(k);
   CUR = FG[k];
@@ -1869,7 +1855,6 @@ function galleryTex(k, titles){
     x.fillStyle = "#7a7670"; x.font = `400 34px Inter, Arial, sans-serif`; if("letterSpacing" in x) x.letterSpacing = "-.3px"; x.fillText(titles.join("  ·  "), 2, 182); if("letterSpacing" in x) x.letterSpacing = "0px"; }, t);
 }
 // salon hang: one large print and four smaller ones around it, each with its own brass picture light
-const SALON = [ {x:-1.25, y:4.0, w:2.24, h:1.76, top:true}, {x:1.25, y:4.0, w:2.24, h:1.76, top:true}, {x:-1.25, y:1.98, w:2.24, h:1.76}, {x:1.25, y:1.98, w:2.24, h:1.76} ];   // four large prints, evenly framed
 HANG.forEach((prints, k)=>{
   CUR = FG[k+1];
   const sd = side(k), X0 = sd*(W/2 - S/2), y0 = fy(k+1), wallZ = -D/2 - .17, mat = .14;   // centred on the stairwell wall
@@ -2427,16 +2412,8 @@ function goPress(id){ goStation(id); const wi = WORK.findIndex(x=>x.id===id); le
 /* ============================ post ============================ */
 const composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(innerWidth*DPR, innerHeight*DPR, { type:THREE.HalfFloatType, samples: small ? 2 : 4 }));
 // ambient occlusion: N8AO reconstructs normals from depth, so the scene is drawn once (GTAO drew it twice)
-const USE_GTAO = new URLSearchParams(location.search).get("ao") === "gtao";
 let gtao;
-if(USE_GTAO){
-  composer.addPass(new RenderPass(scene, camera));
-  gtao = new GTAOPass(scene, camera, innerWidth, innerHeight);
-  gtao.updateGtaoMaterial({ radius:.9, distanceExponent:1.4, thickness:1.2, scale:1.1, samples:8 });
-  gtao.updatePdMaterial({ lumaPhi:10, depthPhi:2, normalPhi:3, radius:6, rings:2, samples:10 });
-  gtao.blendIntensity = .9; gtao.enabled = !small;
-  composer.addPass(gtao);
-} else {
+{
   const n8 = new N8AOPass(scene, camera, innerWidth, innerHeight);
   Object.assign(n8.configuration, { aoRadius: 1.6, distanceFalloff: 1.0, intensity: 2.2, color: new THREE.Color(0x2a2622), halfRes: true, depthAwareUpsampling: true, gammaCorrection: false, screenSpaceRadius: false });
   n8.setQualityMode("Medium");
