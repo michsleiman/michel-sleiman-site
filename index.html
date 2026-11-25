@@ -63,13 +63,13 @@ canvas#gl{position:fixed;inset:0;width:100vw;height:100vh;display:block}
 #intro h1 em{font-style:italic;color:var(--ink2)}
 #intro h1 .dot{font-weight:400;color:var(--blue)}
 #intro h1 u{text-decoration:none}
-#intro .trust{margin-top:28px;padding-top:18px;margin-left:calc(1.9em*11/16 + clamp(12px,1.2vw,18px));position:relative}
+#intro .trust{margin-top:28px;padding-top:18px;margin-left:0;position:relative}
 #intro .trust::before{content:"";position:absolute;left:0;top:0;width:min(380px,70vw);height:1px;background:linear-gradient(90deg,rgba(29,29,31,.35),rgba(29,29,31,0));transform:scaleX(0);transform-origin:left;transition:transform 1.3s cubic-bezier(.2,.8,.2,1) .55s}
 #intro .tk{font:500 10px var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--ink3);opacity:0;transition:opacity 1s .7s}
 #intro .names{list-style:none;display:flex;align-items:center;margin-top:10px}
 #intro .names li{font:italic 500 clamp(19px,1.55vw,24px)/1 var(--body);color:var(--ink);letter-spacing:.01em;opacity:0;transform:translateY(8px);transition:opacity .9s,transform .9s}
-#intro .names li+li::before{content:"\00B7";margin:0 14px;color:var(--ink3);font-style:normal}
-#intro .names li:nth-child(1){transition-delay:.85s}#intro .names li:nth-child(2){transition-delay:.97s}#intro .names li:nth-child(3){transition-delay:1.09s}
+#intro .names{gap:clamp(20px,2vw,30px)}.names li.more{font-style:normal;font-weight:400;font-family:var(--sans);font-size:.72em;color:var(--ink2);letter-spacing:0}
+#intro .names li:nth-child(1){transition-delay:.85s}#intro .names li:nth-child(2){transition-delay:.97s}#intro .names li:nth-child(3){transition-delay:1.09s}.names li:nth-child(4){transition-delay:1.21s}
 body.titled #intro .eyebrow,body.titled #intro .names li{opacity:1;transform:none}
 body.titled #intro .eyebrow .dash,body.titled #intro .trust::before{transform:none}
 body.titled #intro .inr::before,body.titled #intro .tk,body.titled #intro h1 sup{opacity:1}
@@ -1123,7 +1123,6 @@ CUR = FG[0];
 box(W + 3.2, 1.05, .3, M.white, -.2, fy(0) + .52, -D/2 - .75);
 box(.3, 1.05, D + 1.4, M.white, -W/2 - ROOFEXT + .15, fy(0) + .52, -.2);   // left parapet, now on the roof's own edge
 box(W + 3.35, .06, .42, M.alu, -.2, fy(0) + 1.08, -D/2 - .75, false); box(.42, .06, D + 1.5, M.alu, -W/2 - ROOFEXT + .15, fy(0) + 1.08, -.2, false);   // metal copings
-box(W + 3.22, .035, .02, M.gap, -.2, fy(0) + .18, -D/2 - .59, false);
 // pergola
 {
   const px0 = W/2 - S - 9.5, px1 = W/2 - S - .8, pz0 = -D/2 + .2, pz1 = -D/2 + 4.8, top = fy(0) + 3.4;
@@ -1852,7 +1851,8 @@ function galleryTex(k, titles){
   return whenFont(()=>{ x.clearRect(0,0,w,h); x.textBaseline = "alphabetic";
     x.fillStyle = "#1d1d1f"; x.font = `500 184px "Newsreader", Georgia, serif`; x.fillText("Photography", 0, 184);
     x.fillRect(4, 244, 128, 6);
-    x.fillStyle = "#4a4743"; x.font = `500 70px Inter, Arial, sans-serif`; if("letterSpacing" in x) x.letterSpacing = "-.6px"; x.fillText(titles.join("  ·  "), 4, 366); if("letterSpacing" in x) x.letterSpacing = "0px"; }, t);
+    x.fillStyle = "#3d3a36"; let fs2 = 100; x.font = `500 ${fs2}px Inter, Arial, sans-serif`; if("letterSpacing" in x) x.letterSpacing = "-.8px";
+    const line = titles.join("  ·  "); while(x.measureText(line).width > w - 10 && fs2 > 60){ fs2 -= 4; x.font = `500 ${fs2}px Inter, Arial, sans-serif`; } x.fillText(line, 4, 376); if("letterSpacing" in x) x.letterSpacing = "0px"; }, t);
 }
 // salon hang: one large print and four smaller ones around it, each with its own brass picture light
 HANG.forEach((prints, k)=>{
@@ -1881,8 +1881,8 @@ HANG.forEach((prints, k)=>{
     PHOTOS.push({ai: pr.ai, k, mesh:p, mat:pm, g, base:g.position.z, p: pr.p});
   });
   // heading on the wall, the series below it
-  const hd = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 2.6*220/1024), new THREE.MeshBasicMaterial({map: galleryTex(k, [...new Set([a0, a1, a2])].map(i=>ALBUMS[i].title)), transparent:true, toneMapped:false}));
-  const outer = ROW[ROW.length - 1]; hd.position.set(X0 + sd*outer.x - outer.w/2 + 1.3, y0 + .78, wallZ + .02); add(hd); STAIRHD.push({ m: hd, k, y0: hd.position.y, t: 0 });   // under the print nearest the end wall   // left-aligned under the row   // a gallery label under the cluster, left-aligned with it
+  const hd = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 3.4*220/1024), new THREE.MeshBasicMaterial({map: galleryTex(k, [...new Set([a0, a1, a2])].map(i=>ALBUMS[i].title)), transparent:true, toneMapped:false}));
+  const outer = ROW[ROW.length - 1]; hd.position.set(X0 + sd*outer.x - outer.w/2 + 1.7, y0 + .82, wallZ + .02); add(hd); STAIRHD.push({ m: hd, k, y0: hd.position.y, t: 0 });   // under the print nearest the end wall   // left-aligned under the row   // a gallery label under the cluster, left-aligned with it
   // an oak bench facing the prints, and a plinth with an open photo book
   box(2.9, .06, .62, M.walnut, X0, y0 + .44, -3.7); for(const dx of [-1.3, 1.3]) box(.06, .41, .52, M.alu, X0 + dx, y0 + .205, -3.7, false);
 
@@ -1995,7 +1995,7 @@ const ROOF = {};
   }
   // ---- a green roof with wildflowers (and the little tree), where the old planter stood ----
   { const gx0 = -W/2 + .2, gx1 = -15.8, gz0 = -6.45, gz1 = -3.7, gw = gx1 - gx0, gd = gz1 - gz0, gcx = (gx0+gx1)/2, gcz = (gz0+gz1)/2;
-    box(gw, .38, gd, M.trav, gcx, y0 + .19, gcz); box(gw + .06, .04, gd + .06, M.alu, gcx, y0 + .39, gcz, false);
+    box(gw, .38, gd, M.white, gcx, y0 + .19, gcz);   // the bed reads as part of the parapet: same white, no metal lip
     const soil = new THREE.Mesh(new THREE.PlaneGeometry(gw - .12, gd - .12), new THREE.MeshStandardMaterial({color:0x7d8a63, roughness:1})); soil.rotation.x = -Math.PI/2; soil.position.set(gcx, y0 + .385, gcz); soil.receiveShadow = true; add(soil);
     const n = 520, gim = new THREE.InstancedMesh(grassGeo, M.grassA, n), m = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler();
     for(let i=0;i<n;i++){ e.set((Math.random()-.5)*.6, Math.random()*6, (Math.random()-.5)*.6); q.setFromEuler(e); const sc = .25 + Math.random()*.5;
