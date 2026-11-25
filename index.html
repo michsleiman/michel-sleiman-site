@@ -1847,12 +1847,12 @@ const frameMat = new THREE.MeshStandardMaterial({color:0x2b2724, roughness:.5, m
 // every series gets a print; People and Landscapes get a second one
 const HANG = [[0,1,2],[3,4,5],[6,7,8],[9,5,6]].map((list,k)=>list.map((ai,j)=>({ai, p: ALBUMS[ai].photos[k===3 && j>0 ? 1 : 0]})));
 function galleryTex(k, titles){
-  const w = 1024, h = 220, c = document.createElement("canvas"); c.width = w; c.height = h; const x = c.getContext("2d");
-  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
+  const w = 2048, h = 440, c = document.createElement("canvas"); c.width = w; c.height = h; const x = c.getContext("2d");   // 2x, like the card captions: solid strokes from across the room
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = maxAniso;
   return whenFont(()=>{ x.clearRect(0,0,w,h); x.textBaseline = "alphabetic";
-    x.fillStyle = "#1d1d1f"; x.font = `400 92px "Newsreader", Georgia, serif`; x.fillText("Photographs", 0, 92);
-    x.fillRect(2, 122, 64, 3);
-    x.fillStyle = "#7a7670"; x.font = `400 34px Inter, Arial, sans-serif`; if("letterSpacing" in x) x.letterSpacing = "-.3px"; x.fillText(titles.join("  ·  "), 2, 182); if("letterSpacing" in x) x.letterSpacing = "0px"; }, t);
+    x.fillStyle = "#1d1d1f"; x.font = `500 184px "Newsreader", Georgia, serif`; x.fillText("Photography", 0, 184);
+    x.fillRect(4, 244, 128, 6);
+    x.fillStyle = "#4a4743"; x.font = `500 70px Inter, Arial, sans-serif`; if("letterSpacing" in x) x.letterSpacing = "-.6px"; x.fillText(titles.join("  ·  "), 4, 366); if("letterSpacing" in x) x.letterSpacing = "0px"; }, t);
 }
 // salon hang: one large print and four smaller ones around it, each with its own brass picture light
 HANG.forEach((prints, k)=>{
@@ -3164,7 +3164,7 @@ function frame(now){
   if(dwellSt !== lastArrive){ lastArrive = dwellSt; if(dwellSt >= 0){ const st = STATIONS[dwellSt]; st.power = 1; } }
   STATIONS.forEach(st=>{ if(st.power > 0){ st.power = Math.max(0, st.power - dt*1.4); const e = st.power; st.powerK = Math.sin(Math.min(1, (1 - e)*1.6)*Math.PI)*e; } else st.powerK = 0; });
   // M2: the stairwell headings lift into place as he passes them
-  STAIRHD.forEach(h=>{ const on = (s.type==="stairs" || s.type==="step") && s.k === h.k; h.t = damp(h.t, on ? 1 : 0, 3, dt); h.m.position.y = h.y0 - .12 + .12*h.t; h.m.material.opacity = .45 + .55*h.t; });
+  STAIRHD.forEach(h=>{ const on = (s.type==="stairs" || s.type==="step") && s.k === h.k; h.t = damp(h.t, on ? 1 : 0, 3, dt); h.m.position.y = h.y0 - .12 + .12*h.t; h.m.material.opacity = 1; });
   if(!introDone || focus || panelOpen || tele){ hovered = null; rayDirty = true; }
   else if(rayDirty || camera.position.distanceToSquared(rayCam) > 1e-5){ rayDirty = false; rayCam.copy(camera.position); ray.setFromCamera(mouse, camera); const hit = ray.intersectObjects(pickables, false)[0]; hovered = hit ? hit.object : null; }
   { const c = hovered ? "pointer" : "default"; if(canvas.style.cursor !== c) canvas.style.cursor = c; }
